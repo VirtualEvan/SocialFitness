@@ -3,19 +3,15 @@
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 
-require_once(__DIR__."/../model/User.php");
-require_once(__DIR__."/../model/UserMapper.php");
+require_once(__DIR__."/../model/Exercise.php");
+require_once(__DIR__."/../model/ExerciseMapper.php");
 
 require_once(__DIR__."/../controller/BaseController.php");
 
 /**
- * Class UsersController
- *
- * Controller to login, logout and user registration
- *
- * @author lipido <lipido@gmail.com>
+ * Class ExerciseController
  */
-class UsersController extends BaseController {
+class ExercisesController extends BaseController {
 
   /**
    * Reference to the UserMapper to interact
@@ -23,12 +19,12 @@ class UsersController extends BaseController {
    *
    * @var UserMapper
    */
-  private $userMapper;
+  private $exerciseMapper;
 
   public function __construct() {
     parent::__construct();
 
-    $this->userMapper = new UserMapper();
+    $this->exerciseMapper = new ExerciseMapper();
 
     // Users controller operates in a "welcome" layout
     // different to the "default" layout where the internal
@@ -36,89 +32,61 @@ class UsersController extends BaseController {
     $this->view->setLayout("default");
   }
 
- /**
-   * Action to login
-   * @return void
-   */
-  public function login() {
-    if ( isset( $_POST["email"] ) && isset( $_POST["password"] ) ){ // reaching via HTTP Post...
-      //process login form
-      $username = $this->userMapper->isValidUser( $_POST["email"], $_POST["password"]);
-      if ( $username != NULL ) {
-
-      	$_SESSION["currentuser"]=$username->getName();
-
-      	// send user to the restricted area (HTTP 302 code)
-      	$this->view->redirect("users", "index");
-
-      }else{
-      	$errors = array();
-      	$errors["general"] = "Username is not valid";
-      	$this->view->setVariable("errors", $errors);
-      }
-    }
-
-    // render the view (/view/users/login.php)
-    $this->view->render("users", "login");
-  }
-
   /**
-    * Action to list users
-    * @return void
-    */
+  * Action to list exercises
+  * @return void
+  */
   public function index() {
 
     // obtain the data from the database
-    $users = $this->userMapper->findAll();
+    $exercices = $this->exerciseMapper->findAll();
 
     // put the array containing Post object to the view
-    $this->view->setVariable("users", $users);
+    $this->view->setVariable("exercises", $exercices);
 
     // render the view (/view/posts/index.php)
-    $this->view->render("users", "index");
+    $this->view->render("exercises", "index");
   }
 
-
  /**
-   * Action to register
+   * Action to add exercice
    * @return void
    */
   public function add() {
 
-    $user = new User();
+    $exercise = new Exercise();
 
-    if (isset($_POST["name"]) && isset($_POST["password"]) && isset($_POST["email"]) && isset($_POST["type"]) && isset($_POST["phone"])){ // reaching via HTTP Post...
+    if ( isset($_POST["name"]) && isset($_POST["type"]) && isset($_POST["details"]) && isset($_POST["difficulty"]) ){ // reaching via HTTP Post...
 
       // populate the User object with data form the form
-      $user->setName($_POST["name"]);
-      $user->setPassword($_POST["password"]);
-      $user->setEmail($_POST["email"]);
-      $user->setType($_POST["type"]);
-      $user->setPhone($_POST["phone"]);
+      $exercise->setName($_POST["name"]);
+      $exercise->setType($_POST["type"]);
+      $exercise->setDetails($_POST["details"]);
+      $exercise->setDifficulty($_POST["difficulty"]);
 
       try{
-      	$user->checkIsValidForRegister(); // if it fails, ValidationException
+      	$exercise->checkIsValidForAdd(); // if it fails, ValidationException
 
       	// check if user exists in the database
-      	if (!$this->userMapper->emailExists( $_POST["email"] ) ){
+      	if (!$this->exerciseMapper->nameExists( $_POST["email"] ) ){
 
       	  // save the User object into the database
-      	  $this->userMapper->add($user);
+      	  $this->exerciseMapper->add($exercise);
 
       	  // POST-REDIRECT-GET
       	  // Everything OK, we will redirect the user to the list of posts
       	  // We want to see a message after redirection, so we establish
       	  // a "flash" message (which is simply a Session variable) to be
       	  // get in the view after redirection.
-      	  $this->view->setFlash( "User " . $user->getName() . " successfully added. Please login now" );
+      	  $this->view->setFlash( "Exercise " . $exercise->getName() . " successfully added" );
 
       	  // perform the redirection. More or less:
       	  // header("Location: index.php?controller=users&action=login")
       	  // die();
-      	  $this->view->redirect( "users", "login" );
+      	  $this->view->redirect( "exercises", "index" );
       	} else {
         	  $errors = array();
-        	  $errors["email"] = "Email already exists";
+        	  $errors["name"] = "An exercise with that name already exists";
         	  $this->view->setVariable("errors", $errors);
       	}
       }catch(ValidationException $ex) {
@@ -130,10 +98,10 @@ class UsersController extends BaseController {
     }
 
     // Put the User object visible to the view
-    $this->view->setVariable("user", $user);
+    $this->view->setVariable("exercise", $exercise);
 
     // render the view (/view/users/register.php)
-    $this->view->render("users", "add");
+    $this->view->render("exercises", "add");
 
   }
 
@@ -154,8 +122,8 @@ class UsersController extends BaseController {
     }
 
      // Get the User object from the database
-    $userid = $_GET["id"];
-    $user = $this->userMapper->findById($userid);
+    $exerciseid = $_GET["id"];
+    $exercise = $this->exerciseMapper->findById($exerciseid);
 
     // TODO:Check if the User author is the currentUser (in Session)
     //if ($this->currentUser->getType() != "admin") {
@@ -163,24 +131,24 @@ class UsersController extends BaseController {
     //}
 
     // Does the user exist?
-    if ($user == NULL) {
-      throw new Exception("No such user with id: ".$userid);
+    if ($exercise == NULL) {
+      throw new Exception("No such exercise with id: ".$exerciseid);
     }
 
     // Delete the User object from the database
-    $this->userMapper->delete($user);
+    $this->exerciseMapper->delete($exercise);
 
     // POST-REDIRECT-GET
     // Everything OK, we will redirect the user to the list of posts
     // We want to see a message after redirection, so we establish
     // a "flash" message (which is simply a Session variable) to be
     // get in the view after redirection.
-    $this->view->setFlash( sprintf( i18n("User \"%s\" successfully deleted"),$user->getName() ) );
+    $this->view->setFlash( sprintf( i18n("Exercise \"%s\" successfully deleted"),$exercise->getName() ) );
 
     // perform the redirection. More or less:
     // header("Location: index.php?controller=posts&action=index")
     // die();
-    $this->view->redirect("users", "index");
+    $this->view->redirect("exercises", "index");
 
   }
 
@@ -196,7 +164,7 @@ class UsersController extends BaseController {
 
   public function edit() {
     if (!isset($_GET["id"])) {
-      throw new Exception("A user id is mandatory");
+      throw new Exception("A exercise id is mandatory");
     }
 
     if (!isset($this->currentUser)) {
@@ -209,41 +177,40 @@ class UsersController extends BaseController {
     //}
 
     // Get the User object from the database
-    $userid = $_GET["id"];
-    $user = $this->userMapper->findById($userid);
+    $exerciseid = $_GET["id"];
+    $exercise = $this->exerciseMapper->findById($exerciseid);
 
     // Does the user exist?
-    if ($user == NULL) {
-      throw new Exception("no such user with id: ".$userid);
+    if ($exercise == NULL) {
+      throw new Exception("no such user with id: ".$exerciseid);
     }
 
     if (isset($_POST["submit"])) { // reaching via HTTP Post...
 
-      // populate the Post object with data form the form
-      $user->setName($_POST["name"]);
-      $user->setPassword($_POST["password"]);
-      $user->setEmail($_POST["email"]);
-      $user->setType($_POST["type"]);
-      $user->setPhone($_POST["phone"]);
+      // populate the Exercise object with data form the form
+      $exercise->setName($_POST["name"]);
+      $exercise->setType($_POST["type"]);
+      $exercise->setDetails($_POST["details"]);
+      $exercise->setDifficulty($_POST["difficulty"]);
 
       try {
         // validate Post object
-        $user->checkIsValidForUpdate(); // if it fails, ValidationException
+        $exercise->checkIsValidForUpdate(); // if it fails, ValidationException
 
         // update the Post object in the database
-        $this->userMapper->update($user);
+        $this->exerciseMapper->update($exercise);
 
         // POST-REDIRECT-GET
         // Everything OK, we will redirect the user to the list of posts
         // We want to see a message after redirection, so we establish
         // a "flash" message (which is simply a Session variable) to be
         // get in the view after redirection.
-        $this->view->setFlash( sprintf( i18n( "User \"%s\" successfully updated"),$user ->getName() ) );
+        $this->view->setFlash( sprintf( i18n( "Exercise \"%s\" successfully updated"),$exercise->getName() ) );
 
         // perform the redirection. More or less:
         // header("Location: index.php?controller=posts&action=index")
         // die();
-        $this->view->redirect("users", "index");
+        $this->view->redirect("exercises", "index");
 
       }catch(ValidationException $ex) {
         // Get the errors array inside the exepction...
@@ -253,10 +220,10 @@ class UsersController extends BaseController {
       }
     }
     // Put the User object visible to the view
-    $this->view->setVariable("user", $user);
+    $this->view->setVariable("exercise", $exercise);
 
     // render the view (/view/users/edit.php)
-    $this->view->render("users", "edit");
+    $this->view->render("exercises", "edit");
   }
 
   /**
@@ -270,35 +237,20 @@ class UsersController extends BaseController {
       throw new Exception("ID is mandatory");
     }
 
-    $userid = $_GET["id"];
+    $exerciseid = $_GET["id"];
 
     // find the Post object in the database
-    $user = $this->userMapper->findById($userid);
+    $exercise = $this->exerciseMapper->findById($exerciseid);
 
-    if ($user == NULL) {
-      throw new Exception("No such user with id: ".$userid);
+    if ($exercise == NULL) {
+      throw new Exception("No such exercise with id: ".$exerciseid);
     }
 
     // put the Post object to the view
-    $this->view->setVariable("user", $user);
+    $this->view->setVariable("exercise", $exercise);
 
     // render the view (/view/posts/view.php)
-    $this->view->render("users", "view");
+    $this->view->render("exercises", "view");
 
   }
-
- /**
-   * Action to logout
-   * @return void
-   */
-  public function logout() {
-    session_destroy();
-
-    // perform a redirection. More or less:
-    // header("Location: index.php?controller=users&action=login")
-    // die();
-    $this->view->redirect("users", "login");
-
-  }
-
 }

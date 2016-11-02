@@ -184,6 +184,7 @@ class User {
       if ( !filter_var( $this->email, FILTER_VALIDATE_EMAIL ) ) {
          $errors["email"] = "This is not a valid eMail address";
       }
+      //TODO:Sacar de la base de datos
       if ( !in_Array($this->type, array("athlete", "coach", "admin")) ) {
          $errors["type"] = "That type doen't exist";
       }

@@ -22,6 +22,17 @@
     "User \"%s\" successfully updated" => "Usuario \"%s\" modificado satisfactoriamente",
     "Edit user" => "Editar usuario",
     "View user" => "Consultar usuario",
+    "Edit exercise" => "Editar ejercicio",
+    "Easy" => "Fácil",
+    "Medium" => "Media",
+    "Hard" => "Difícil",
+    "Difficulty" => "Difficulty",
+    "Details" => "Detalles",
+    "Add exercise" => "Añadir ejercicio",
+    "Name" => "Nombre",
+    "Difficulty" => "Dificultad",
+    "Exercise \"%s\" successfully deleted" => "Ejercicio \"%s\" eliminado satisfactoriamente",
+    "Exercise \"%s\" successfully updated" => "Ejercicio \"%s\" modificado satisfactoriamente",
     "" => "",
   )
 ?>

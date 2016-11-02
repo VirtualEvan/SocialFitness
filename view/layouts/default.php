@@ -21,7 +21,7 @@
       <nav id="menu" style="background-color:grey">
 	<ul>
 	<li><a href="index.php?controller=users&amp;action=index"><?= i18n("Users") ?></a></li>
-  <li><a href="index.php?controller=exercices&amp;action=index"><?= i18n("Exercises") ?></a></li>
+  <li><a href="index.php?controller=exercises&amp;action=index"><?= i18n("Exercises") ?></a></li>
   <li><a href="index.php?controller=users&amp;action=logout">Logout</a></li>
 
 	<?php //TODO: ARREGLAR ESTA PUTA MIERDA

@@ -97,6 +97,7 @@ class UserMapper {
 
   /**
    * Checks if a given username is already in the database
+   *TODO:here
    *
    * @param string $username the username to check
    * @return boolean true if the username exists, false otherwise
