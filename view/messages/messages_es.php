@@ -33,6 +33,7 @@
     "Difficulty" => "Dificultad",
     "Exercise \"%s\" successfully deleted" => "Ejercicio \"%s\" eliminado satisfactoriamente",
     "Exercise \"%s\" successfully updated" => "Ejercicio \"%s\" modificado satisfactoriamente",
+    "Exercises" => "Ejercicios",
     "" => "",
   )
 ?>
