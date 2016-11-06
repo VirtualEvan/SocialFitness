@@ -6,17 +6,20 @@
  $view->setVariable("title", "Login");
  $errors = $view->getVariable("errors");
 ?>
+<div class="col-md-12">
+  <h1><?= i18n("Login") ?></h1>
+  <?= isset($errors["general"])?$errors["general"]:"" ?>
 
-<h1><?= i18n("Login") ?></h1>
-<?= isset($errors["general"])?$errors["general"]:"" ?>
+  <form action="index.php?controller=users&amp;action=login" method="POST">
+    <div class="form-group">
+      <label><?= i18n("Email")?>:</label>
+      <input type="text" class="form-control" name="email">
+    </div>
 
-<form action="index.php?controller=users&amp;action=login" method="POST">
-<?= i18n("Email")?>: <input type="text" name="email">
-<?= i18n("Password")?>: <input type="password" name="password">
-<input type="submit" value="<?= i18n("Login") ?>">
-</form>
-
-<p><?= i18n("Not user?")?> <a href="index.php?controller=users&amp;action=register"><?= i18n("Register here!")?></a></p>
-<?php $view->moveToFragment("css");?>
-    <link rel="stylesheet" type="text/css" src="css/style2.css">
-<?php $view->moveToDefaultFragment(); ?>
+    <div class="form-group">
+      <label><?= i18n("Password")?>:</label>
+      <input type="password" class="form-control" name="password">
+    </div>
+    <input type="submit" class="btn btn-success" value="<?= i18n("Login") ?>">
+  </form>
+</div>

@@ -15,6 +15,7 @@
     "Phone" => "Teléfono",
     "Main page" => "Página principal",
     "Delete" => "Eliminar",
+    "Edit" => "Editar",
     "Welcome to SocialFitness!" => "Bienvenido a SocialFitness!",
     "Hello %s" => "Hola %s",
     "User management" => "Administración de usuarios",
@@ -34,6 +35,7 @@
     "Exercise \"%s\" successfully deleted" => "Ejercicio \"%s\" eliminado satisfactoriamente",
     "Exercise \"%s\" successfully updated" => "Ejercicio \"%s\" modificado satisfactoriamente",
     "Exercises" => "Ejercicios",
+    "Management options" => "Opciones administrativas",
     "" => "",
   )
 ?>

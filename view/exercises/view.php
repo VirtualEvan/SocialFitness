@@ -8,34 +8,33 @@
  $currentuser = $view->getVariable("currentusername");
 
  $view->setVariable("title", i18n("View user"));
+?>
+<div class="col-md-12">
 
-?><h1><?=i18n("Main page")?></h1>
+  <h1><?=i18n("Main page")?></h1>
 
-<table border="1">
-  <tr>
-    <tr>
-      <th><?= i18n("Name")?></th>
-      <th><?= i18n("Type")?></th>
-      <th><?= i18n("Difficulty")?></th>
+  <table class="table table-striped table-condensed">
+    <tr class="info">
+        <th><?= i18n("Name")?></th>
+        <th><?= i18n("Type")?></th>
+        <th><?= i18n("Difficulty")?></th>
     </tr>
-  </tr>
 
-  <tr>
-    <td>
-      <?= htmlentities( $exercise->getName() ) ?></a>
-    </td>
-    <td>
-      <?= htmlentities( $exercise->getType() ) ?></a>
-    </td>
-    <td>
-      <?= htmlentities( $exercise->getDifficulty() ) ?></a>
-    </td>
-  </tr>
-</table>
-<br>
-<h3><?= i18n("Details")?></h3>
-<?=$exercise->getDetails();?>
-
+    <tr>
+      <td>
+        <?= htmlentities( $exercise->getName() ) ?></a>
+      </td>
+      <td>
+        <?= htmlentities( $exercise->getType() ) ?></a>
+      </td>
+      <td>
+        <?= htmlentities( $exercise->getDifficulty() ) ?></a>
+      </td>
+    </tr>
+  </table>
+  <h4><?= i18n("Details")?></h4>
+  <?=$exercise->getDetails();?>
+</div>
 
 
 

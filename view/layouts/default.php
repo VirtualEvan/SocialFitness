@@ -18,14 +18,17 @@
     <?= $view->getFragment("javascript") ?>
   </head>
   <body>
+    <?php
+      $class = $_GET['controller']=="users"?  "class=active": '';
+     ?>
     <!-- header -->
     <header>
       <h1>SocialFitness</h1>
       <nav id="menu" style="background-color:grey">
-	<ul>
-	<li><a href="index.php?controller=users&amp;action=index"><?= i18n("Users") ?></a></li>
-  <li><a href="index.php?controller=exercises&amp;action=index"><?= i18n("Exercises") ?></a></li>
-  <li><a href="index.php?controller=users&amp;action=logout">Logout</a></li>
+	<ul class="nav nav-tabs">
+	<li class=<?php if ($_GET['controller']=="users") {echo "active"; } else {echo "noactive";}?>> <a href="index.php?controller=users&amp;action=index"><?= i18n("Users") ?></a></li>
+  <li class=<?php if ($_GET['controller']=="exercises") {echo "active"; } else {echo "noactive";}?>> <a href="index.php?controller=exercises&amp;action=index"><?= i18n("Exercises") ?></a></li>
+  <li class=<?php if ($_GET['controller']=="something") {echo "active"; } else {echo "noactive";}?>> <a href="index.php?controller=users&amp;action=logout">Logout</a></li>
 
 	<?php //TODO: ARREGLAR ESTA PUTA MIERDA
    if (isset($currentuser)): ?>

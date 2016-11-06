@@ -8,16 +8,19 @@
  $currentuser = $view->getVariable("currentusername");
 
  $view->setVariable("title", "Exercises");
+?>
 
-?><h1><?=i18n("Exercises")?></h1>
-
-<table border="1">
-      <tr>
-        <tr>
-          <th><?= i18n("Name")?></th>
-          <th><?= i18n("Type")?></th>
-          <th><?= i18n("Difficulty")?></th>
-        </tr>
+<div class="col-md-12">
+  <h1><?=i18n("Exercises")?></h1>
+  <?php //if (isset($currentuser)): ?>
+  <p><a href="index.php?controller=exercises&amp;action=add" class="btn btn-info"><?= i18n("Add exercise") ?></a></p>
+  <?php //endif; ?>
+  <table class="table table-striped table-condensed">
+      <tr class="info">
+        <th><?= i18n("Name")?></th>
+        <th><?= i18n("Type")?></th>
+        <th><?= i18n("Difficulty")?></th>
+        <th><?= i18n("Management options")?></th>
       </tr>
 
       <?php foreach ($exercises as $exercise): ?>
@@ -32,16 +35,11 @@
           <a href="index.php?controller=exercises&amp;action=view&amp;id=<?= $exercise->getId() ?>"><?= htmlentities( $exercise->getDifficulty() ) ?></a>
         </td>
         <td>
-          <a href="index.php?controller=exercises&amp;action=delete&amp;id=<?= $exercise->getId() ?>"><?= i18n("Delete") ?></a>
-        </td>
-        <td>
-          <a href="index.php?controller=exercises&amp;action=edit&amp;id=<?= $exercise->getId() ?>"><?= i18n("Edit") ?></a>
+          <a href="index.php?controller=exercises&amp;action=delete&amp;id=<?= $exercise->getId() ?>" class="btn btn-danger"><?= i18n("Delete") ?></a>
+          <a href="index.php?controller=exercises&amp;action=edit&amp;id=<?= $exercise->getId() ?>" class="btn btn-warning"><?= i18n("Edit") ?></a>
         </td>
       </tr>
     <?php endforeach; ?>
-
-    </table>
-    <?php //if (isset($currentuser)): ?>
-      <a href="index.php?controller=exercises&amp;action=add"><?= i18n("Add exercise") ?></a>
-    <?php //endif; ?>
+  </table>
+</div>
 
