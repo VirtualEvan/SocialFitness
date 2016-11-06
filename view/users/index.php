@@ -6,15 +6,20 @@
 
   $users = $view->getVariable("users");
   $currentuser = $view->getVariable("currentusername");
+  $currentusertype = $view->getVariable("currentusertype");
+
 
   $view->setVariable("title", i18n("User management"));
 ?>
 
 <div class="col-md-12">
   <h1><?=i18n("User management")?></h1>
-  <?php //if (isset($currentuser)): ?>
-    <p><a href="index.php?controller=users&amp;action=add" class="btn btn-info"><?= i18n("Add user") ?></a></p>
-  <?php //endif; ?>
+  <?php
+    if( $currentusertype == "admin"): ?>
+      <p><a href="index.php?controller=users&amp;action=add" class="btn btn-info"><?= i18n("Add user") ?></a></p>
+  <?php
+    endif
+  ?>
   <table class="table table-striped table-condensed">
     <tr class="info">
       <th><?= i18n("Name")?></th>
@@ -22,7 +27,12 @@
       <th><?= i18n("Type")?></th>
       <th><?= i18n("Phone")?></th>
       <th><?= i18n("Password")?></th>
-      <th><?= i18n("Management options")?></th>
+      <?php
+        if( $currentusertype == "admin"): ?>
+          <th><?= i18n("Management options")?></th>
+      <?php
+        endif
+      ?>
     </tr>
 
     <?php foreach ($users as $user): ?>
@@ -42,11 +52,16 @@
       <td>
         <a href="index.php?controller=users&amp;action=view&amp;id=<?= $user->getId() ?>"><?= htmlentities( $user->getPassword() ) ?></a>
       </td>
-      <td>
-        <a href="index.php?controller=users&amp;action=delete&amp;id=<?= $user->getId() ?>" class="btn btn-danger"><?= i18n("Delete") ?></a>
+      <?php
+        if( $currentusertype == "admin"): ?>
+          <td>
+            <a href="index.php?controller=users&amp;action=delete&amp;id=<?= $user->getId() ?>" class="btn btn-danger"><?= i18n("Delete") ?></a>
 
-        <a href="index.php?controller=users&amp;action=edit&amp;id=<?= $user->getId() ?>" class="btn btn-warning"><?= i18n("Edit") ?></a>
-      </td>
+            <a href="index.php?controller=users&amp;action=edit&amp;id=<?= $user->getId() ?>" class="btn btn-warning"><?= i18n("Edit") ?></a>
+          </td>
+      <?php
+        endif
+      ?>
     </tr>
   <?php endforeach; ?>
   </table>

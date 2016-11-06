@@ -39,12 +39,28 @@ class BaseController {
 	     session_start();
     }
 
-    if(isset($_SESSION["currentuser"])) {
+    if(isset($_SESSION["currentuser"]) && isset($_SESSION["currenttype"])) {
 
-      $this->currentUser = new User($_SESSION["currentuser"]);
+      $this->currentUser = new User(null,$_SESSION["currenttype"],null,$_SESSION["currentuser"],null,null);
       //add current user to the view, since some views require it
       $this->view->setVariable("currentusername",
 				  $this->currentUser->getName());
+      $this->view->setVariable("currentusertype",
+				  $this->currentUser->getType());
+    }
+  }
+
+  //Checks privileges for 1 or 2 types of user
+  public function checkPrivileges($type1, $type2=null){
+    if($type2!=null){
+      if ($this->currentUser->getType()!=$type1 && $this->currentUser->getType()!=$type2){
+        throw new Exception("You have no privileges to do that");
+      }
+    }
+    else{
+      if ($this->currentUser->getType()!=$type1){
+        throw new Exception("You have no privileges to do that");
+      }
     }
   }
 }

@@ -41,12 +41,14 @@ class UsersController extends BaseController {
    * @return void
    */
   public function login() {
+    $this->view->setLayout('welcome');
     if ( isset( $_POST["email"] ) && isset( $_POST["password"] ) ){ // reaching via HTTP Post...
       //process login form
       $username = $this->userMapper->isValidUser( $_POST["email"], $_POST["password"]);
       if ( $username != NULL ) {
 
-      	$_SESSION["currentuser"]=$username->getName();
+        $_SESSION["currentuser"]=$username->getName();
+      	$_SESSION["currenttype"]=$username->getType();
 
       	// send user to the restricted area (HTTP 302 code)
       	$this->view->redirect("users", "index");
@@ -84,7 +86,7 @@ class UsersController extends BaseController {
    * @return void
    */
   public function add() {
-
+    $this->checkPrivileges("admin");
     $user = new User();
 
     if (isset($_POST["name"]) && isset($_POST["password"]) && isset($_POST["email"]) && isset($_POST["type"]) && isset($_POST["phone"])){ // reaching via HTTP Post...
@@ -115,7 +117,7 @@ class UsersController extends BaseController {
       	  // perform the redirection. More or less:
       	  // header("Location: index.php?controller=users&action=login")
       	  // die();
-      	  $this->view->redirect( "users", "login" );
+      	  $this->view->redirect( "users", "index" );
       	} else {
         	  $errors = array();
         	  $errors["email"] = "Email already exists";
@@ -139,13 +141,15 @@ class UsersController extends BaseController {
 
   /**
    * Action to delete a user
+   * @throws Exception if the current logged user is not an admin
    * @throws Exception if no id was provided
    * @throws Exception if no user is in session
    * @throws Exception if there is not any user with the provided id
-   * @throws Exception if the current logged user is not an admin
    * @return void
    */
   public function delete() {
+    $this->checkPrivileges("admin");
+
     if (!isset($_GET["id"])) {
       throw new Exception("ID is mandatory");
     }
@@ -187,14 +191,16 @@ class UsersController extends BaseController {
   /**
    * Action to edit a user
    *
+   * @throws Exception if the current logged user is not an admin
    * @throws Exception if no id was provided
    * @throws Exception if no user is in session
    * @throws Exception if there is not any user with the provided id
-   * @throws Exception if the current logged user is not an admin
    * @return void
    */
 
   public function edit() {
+    $this->checkPrivileges("admin");
+
     if (!isset($_GET["id"])) {
       throw new Exception("A user id is mandatory");
     }
@@ -202,6 +208,7 @@ class UsersController extends BaseController {
     if (!isset($this->currentUser)) {
       throw new Exception("Not in session. Managing actions requires login");
     }
+
 
     // TODO:Check if the current user is admin
     //if ($post->getAuthor() != $this->currentUser) {

@@ -23,7 +23,7 @@
     <main>
       <!-- flash message -->
       <div id="flash">
-	<?= $view->popFlash() ?>
+	       <?= $view->popFlash() ?>
       </div>
       <?= $view->getFragment(ViewManager::DEFAULT_FRAGMENT) ?>
     </main>

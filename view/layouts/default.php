@@ -4,7 +4,9 @@
  require_once(__DIR__."/../../core/ViewManager.php");
  $view = ViewManager::getInstance();
  $currentuser = $view->getVariable("currentusername");
-
+ if (!isset($currentuser)){
+   $view->redirect("users", "login");
+ }
 ?><!DOCTYPE html>
 <html>
   <head>
@@ -22,30 +24,25 @@
       $class = $_GET['controller']=="users"?  "class=active": '';
      ?>
     <!-- header -->
-    <header>
+    <header class="col-md-12">
       <h1>SocialFitness</h1>
-      <nav id="menu" style="background-color:grey">
-	<ul class="nav nav-tabs">
-	<li class=<?php if ($_GET['controller']=="users") {echo "active"; } else {echo "noactive";}?>> <a href="index.php?controller=users&amp;action=index"><?= i18n("Users") ?></a></li>
-  <li class=<?php if ($_GET['controller']=="exercises") {echo "active"; } else {echo "noactive";}?>> <a href="index.php?controller=exercises&amp;action=index"><?= i18n("Exercises") ?></a></li>
-  <li class=<?php if ($_GET['controller']=="something") {echo "active"; } else {echo "noactive";}?>> <a href="index.php?controller=users&amp;action=logout">Logout</a></li>
-
-	<?php //TODO: ARREGLAR ESTA PUTA MIERDA
-   if (isset($currentuser)): ?>
-	  <li><?= sprintf(i18n("Hello %s"), $currentuser) ?>
-	  <a 	href="index.php?controller=users&amp;action=logout">(Logout)</a>
-	  </li>
-
-	<?php else: ?>
-	  <li><a href="index.php?controller=users&amp;action=login"><?= i18n("Login") ?></a></li>
-	  <?php endif ?>
-	</ul>
+      <h3><?= sprintf(i18n("Logged as %s"), $currentuser) ?></h3  >
+      <nav id="menu">
+      	<ul class="nav nav-tabs">
+        	<li class=<?php if ($_GET['controller']=="users") {echo "active"; } else {echo "noactive";}?>>
+            <a href="index.php?controller=users&amp;action=index"><?= i18n("Users") ?></a>
+          </li>
+          <li class=<?php if ($_GET['controller']=="exercises") {echo "active"; } else {echo "noactive";}?>>
+            <a href="index.php?controller=exercises&amp;action=index"><?= i18n("Exercises") ?></a>
+          </li>
+          <a href="index.php?controller=users&amp;action=logout" class="btn btn-default pull-right"><?= i18n("Logout") ?></a>
+      	</ul>
       </nav>
     </header>
 
-    <main>
+    <main class="col-md-12">
       <div id="flash">
-	<?= $view->popFlash() ?>
+	       <?= $view->popFlash()//TODO: CONTROLAR ESTO ?>
       </div>
 
       <?= $view->getFragment(ViewManager::DEFAULT_FRAGMENT) ?>

@@ -36,6 +36,8 @@
     "Exercise \"%s\" successfully updated" => "Ejercicio \"%s\" modificado satisfactoriamente",
     "Exercises" => "Ejercicios",
     "Management options" => "Opciones administrativas",
+    "Logout" => "Desconectar",
+    "Logged as %s" => "Registrado como %s",
     "" => "",
   )
 ?>

@@ -53,7 +53,7 @@ class ExercisesController extends BaseController {
    * @return void
    */
   public function add() {
-
+    $this->checkPrivileges("coach");
     $exercise = new Exercise();
 
     if ( isset($_POST["name"]) && isset($_POST["type"]) && isset($_POST["details"]) && isset($_POST["difficulty"]) ){ // reaching via HTTP Post...
@@ -107,13 +107,14 @@ class ExercisesController extends BaseController {
 
   /**
    * Action to delete a user
+   * @throws Exception if the current logged user is not an coach
    * @throws Exception if no id was provided
    * @throws Exception if no user is in session
    * @throws Exception if there is not any user with the provided id
-   * @throws Exception if the current logged user is not an admin
    * @return void
    */
   public function delete() {
+    $this->checkPrivileges("coach");
     if (!isset($_GET["id"])) {
       throw new Exception("ID is mandatory");
     }
@@ -155,14 +156,15 @@ class ExercisesController extends BaseController {
   /**
    * Action to edit a user
    *
+   * @throws Exception if the current logged user is not a coach
    * @throws Exception if no id was provided
    * @throws Exception if no user is in session
    * @throws Exception if there is not any user with the provided id
-   * @throws Exception if the current logged user is not an admin
    * @return void
    */
 
   public function edit() {
+    $this->checkPrivileges("coach");
     if (!isset($_GET["id"])) {
       throw new Exception("A exercise id is mandatory");
     }
