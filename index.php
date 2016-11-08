@@ -9,7 +9,7 @@ define("DEFAULT_CONTROLLER", "users");
 /**
  * Default action if any action is passed in the URL
  */
-define("DEFAULT_ACTION", "add");
+define("DEFAULT_ACTION", "index");
 
 /**
  * Main router (single entry-point for all requests)

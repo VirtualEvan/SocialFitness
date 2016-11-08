@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="public/css/style.min.css" type="text/css">
     <link rel="stylesheet" href="public/css/bootstrap-multiselect.min.css" type="text/css">
+    <link rel="stylesheet" href="public/css/flags.css" type="text/css">
     <?= $view->getFragment("css") ?>
     <?= $view->getFragment("javascript") ?>
   </head>
