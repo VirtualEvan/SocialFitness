@@ -38,6 +38,7 @@
     "Management options" => "Opciones administrativas",
     "Logout" => "Desconectar",
     "Logged as %s" => "Registrado como %s",
+    "Machines" => "Máquinas",
     "" => "",
   )
 ?>
