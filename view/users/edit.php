@@ -7,7 +7,7 @@
  $user = $view->getVariable("user");
  $view->setVariable("title", "Add user");
 ?>
-<div class="col-md-12">
+<div class="col-md-12 button-buffer">
   <h1><?= i18n("Edit user")?></h1>
   <form action="index.php?controller=users&amp;action=edit&amp;id=<?= $user->getId() ?>" method="POST">
     <div class="form-group">

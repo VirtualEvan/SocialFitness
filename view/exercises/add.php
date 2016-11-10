@@ -9,7 +9,7 @@
  $view->setVariable("title", "Add exercise");
 ?>
 
-<div class="col-md-12">
+<div class="col-md-12 button-buffer">
   <h1><?= i18n("Add exercise")?></h1>
   <form action="index.php?controller=exercises&amp;action=add" method="POST">
     <div class="form-group">

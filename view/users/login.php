@@ -6,7 +6,7 @@
  $view->setVariable("title", "Login");
  $errors = $view->getVariable("errors");
 ?>
-<div class="col-md-12">
+<div class="col-md-12 button-buffer">
   <h1><?= i18n("Login") ?></h1>
   <?= isset($errors["general"])?$errors["general"]:"" ?>
 
