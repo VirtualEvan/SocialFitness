@@ -70,7 +70,7 @@ class MaquinaMapper {
     $maquina = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if($maquina != null) {
-      return new Maquina( $maquina["id_maquina"], $maquina["ubicacion"], $maquina["nombre_maquina"]);
+      return new Maquina( $maquina["id_maquina"], $maquina["nombre_maquina"], $maquina["ubicacion"]);
     } else {
       return NULL;
     }
@@ -89,7 +89,7 @@ class MaquinaMapper {
     $maquinas = array();
 
     foreach ($maquinas_db as $maquina) {
-      array_push( $maquinas, new Maquina( $maquina["id_maquina"], $maquina["ubicacion"], $maquina["nombre_maquina"]) );
+      array_push( $maquinas, new Maquina( $maquina["id_maquina"], $maquina["nombre_maquina"], $maquina["ubicacion"]) );
     }
 
     return $maquinas;

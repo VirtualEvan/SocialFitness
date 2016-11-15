@@ -5,6 +5,7 @@ require_once(__DIR__."/../core/I18n.php");
 
 require_once(__DIR__."/../model/Exercise.php");
 require_once(__DIR__."/../model/ExerciseMapper.php");
+require_once(__DIR__."/../model/MaquinaMapper.php");
 
 require_once(__DIR__."/../controller/BaseController.php");
 
@@ -14,17 +15,26 @@ require_once(__DIR__."/../controller/BaseController.php");
 class ExercisesController extends BaseController {
 
   /**
+   * Reference to the ExerciseMapper to interact
+   * with the database
+   *
+   * @var ExerciseMapper
+   */
+  private $exerciseMapper;
+
+  /**
    * Reference to the UserMapper to interact
    * with the database
    *
    * @var UserMapper
    */
-  private $exerciseMapper;
+  private $machineMapper;
 
   public function __construct() {
     parent::__construct();
 
     $this->exerciseMapper = new ExerciseMapper();
+    $this->machineMapper = new MaquinaMapper();
 
     // Users controller operates in a "welcome" layout
     // different to the "default" layout where the internal
@@ -39,10 +49,10 @@ class ExercisesController extends BaseController {
   public function index() {
 
     // obtain the data from the database
-    $exercices = $this->exerciseMapper->findAll();
+    $exercises = $this->exerciseMapper->findAll();
 
     // put the array containing Post object to the view
-    $this->view->setVariable("exercises", $exercices);
+    $this->view->setVariable("exercises", $exercises);
 
     // render the view (/view/posts/index.php)
     $this->view->render("exercises", "index");
@@ -63,12 +73,19 @@ class ExercisesController extends BaseController {
       $exercise->setType($_POST["type"]);
       $exercise->setDetails($_POST["details"]);
       $exercise->setDifficulty($_POST["difficulty"]);
+      if( $_POST['machine'] != "" ){
+        $machine = new Maquina($_POST["machine"]);
+      }
+      else {
+        $machine = new Maquina();
+      }
+      $exercise->setMachine($machine);
 
       try{
       	$exercise->checkIsValidForAdd(); // if it fails, ValidationException
 
       	// check if user exists in the database
-      	if (!$this->exerciseMapper->nameExists( $_POST["email"] ) ){
+      	if (!$this->exerciseMapper->nameExists( $_POST["name"] ) ){
 
       	  // save the User object into the database
       	  $this->exerciseMapper->add($exercise);
@@ -96,6 +113,9 @@ class ExercisesController extends BaseController {
       	$this->view->setVariable("errors", $errors);
       }
     }
+
+    $machines = $this->machineMapper->findAll();
+    $this->view->setVariable("machines", $machines);
 
     // Put the User object visible to the view
     $this->view->setVariable("exercise", $exercise);
@@ -194,6 +214,13 @@ class ExercisesController extends BaseController {
       $exercise->setType($_POST["type"]);
       $exercise->setDetails($_POST["details"]);
       $exercise->setDifficulty($_POST["difficulty"]);
+      if( $_POST['machine'] != "" ){
+        $machine = new Maquina($_POST["machine"]);
+      }
+      else {
+        $machine = new Maquina();
+      }
+      $exercise->setMachine($machine);
 
       try {
         // validate Post object
@@ -221,6 +248,10 @@ class ExercisesController extends BaseController {
         $this->view->setVariable("errors", $errors);
       }
     }
+
+    $machines = $this->machineMapper->findAll();
+    $this->view->setVariable("machines", $machines);
+
     // Put the User object visible to the view
     $this->view->setVariable("exercise", $exercise);
 

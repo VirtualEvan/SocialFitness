@@ -25,6 +25,7 @@
         <th><?= i18n("Name")?></th>
         <th><?= i18n("Type")?></th>
         <th><?= i18n("Difficulty")?></th>
+        <th><?= i18n("Machine")?></th>
         <?php
           if( $currentusertype == "coach"): ?>
             <th><?= i18n("Management options")?></th>
@@ -43,6 +44,9 @@
         </td>
         <td>
           <a href="index.php?controller=exercises&amp;action=view&amp;id=<?= $exercise->getId() ?>"><?= htmlentities( $exercise->getDifficulty() ) ?></a>
+        </td>
+        <td>
+          <a href="index.php?controller=exercises&amp;action=view&amp;id=<?= $exercise->getId() ?>"><?= htmlentities( $exercise->getMachine()->getName() ) ?></a>
         </td>
         <?php
           if( $currentusertype == "coach"): ?>

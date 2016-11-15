@@ -4,6 +4,7 @@
  $view = ViewManager::getInstance();
 
  $exercise = $view->getVariable("exercise");
+ $machines = $view->getVariable("machines");
  $errors = $view->getVariable("errors");
 
  $view->setVariable("title", "Edit exercise");
@@ -34,6 +35,17 @@
         <option value="easy" selected> <?= i18n("Easy") ?>: </option>
         <option value="medium"> <?= i18n("Medium") ?> </option>:
         <option value="hard"> <?= i18n("Hard") ?>: </option>
+      </select>
+      <?= isset($errors["difficulty"])?$errors["difficulty"]:"" ?>
+    </div>
+
+    <div class="form-group">
+      <label><?= i18n("Machine")?>:</label>
+      <select name="machine" class="form-control">
+        <option> <?= i18n("") ?> </option>
+        <?php foreach ($machines as $machine): ?>
+          <option value="<?= $machine->getId() ?>" <?php if($machine->getId()==$exercise->getMachine()->getId()){echo "selected";} ?> > <?= $machine->getName() ?> </option>
+        <?php endforeach; ?>
       </select>
       <?= isset($errors["difficulty"])?$errors["difficulty"]:"" ?>
     </div>

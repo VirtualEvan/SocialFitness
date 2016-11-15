@@ -18,6 +18,7 @@
         <th><?= i18n("Name")?></th>
         <th><?= i18n("Type")?></th>
         <th><?= i18n("Difficulty")?></th>
+        <th><?= i18n("Machine")?></th>
     </tr>
 
     <tr>
@@ -29,6 +30,9 @@
       </td>
       <td>
         <?= htmlentities( $exercise->getDifficulty() ) ?></a>
+      </td>
+      <td>
+        <?= htmlentities( $exercise->getMachine()->getName() ) ?></a>
       </td>
     </tr>
   </table>

@@ -2,6 +2,7 @@
 // file: model/UserMapper.php
 
 require_once(__DIR__."/../core/PDOConnection.php");
+require_once(__DIR__."/../model/Maquina.php");
 
 /**
  * Class UserMapper
@@ -30,8 +31,8 @@ class ExerciseMapper {
    * @return void
    */
   public function add($exercise) {
-    $stmt = $this->db->prepare( "INSERT INTO ejercicio (nombre_ejercicio, tipo_ejercicio, detalles_ejercicio, dificultad_ejercicio) values (?,?,?,?)" );
-    $stmt->execute(array( $exercise->getName(), $exercise->getType(), $exercise->getDetails(), $exercise->getDifficulty() ) );
+    $stmt = $this->db->prepare( "INSERT INTO ejercicio (nombre_ejercicio, tipo_ejercicio, detalles_ejercicio, dificultad_ejercicio, id_maquina) VALUES (?,?,?,?,?)" );
+    $stmt->execute(array( $exercise->getName(), $exercise->getType(), $exercise->getDetails(), $exercise->getDifficulty(), $exercise->getMachine()->getId() ) );
   }
 
   /**
@@ -54,8 +55,8 @@ class ExerciseMapper {
    * @return void
    */
   public function update(Exercise $exercise) {
-    $stmt = $this->db->prepare("UPDATE ejercicio set nombre_ejercicio=?, tipo_ejercicio=?, detalles_ejercicio=?, dificultad_ejercicio=? where id_ejercicio=?");
-    $stmt->execute( array( $exercise->getName(), $exercise->getType(), $exercise->getDetails(), $exercise->getDifficulty(), $exercise->getId() ) );
+    $stmt = $this->db->prepare("UPDATE ejercicio SET nombre_ejercicio=?, tipo_ejercicio=?, detalles_ejercicio=?, dificultad_ejercicio=?, id_maquina=? WHERE id_ejercicio=?");
+    $stmt->execute( array( $exercise->getName(), $exercise->getType(), $exercise->getDetails(), $exercise->getDifficulty(),$exercise->getMachine()->getId(), $exercise->getId() ) );
   }
 
   /**
@@ -66,12 +67,13 @@ class ExerciseMapper {
    * TODO: this
    */
   public function findById($exerciseid){
-    $stmt = $this->db->prepare("SELECT * FROM ejercicio WHERE id_ejercicio=?");
+    $stmt = $this->db->prepare("SELECT * FROM ejercicio LEFT JOIN maquina USING (id_maquina) WHERE id_ejercicio=?" );
     $stmt->execute(array($exerciseid));
     $exercise = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if($exercise != null) {
-      return new Exercise( $exercise["id_ejercicio"], $exercise["nombre_ejercicio"], $exercise['tipo_ejercicio'], $exercise["detalles_ejercicio"], $exercise["dificultad_ejercicio"] );
+      $maquina = new Maquina( $exercise['id_maquina'], $exercise['nombre_maquina'], $exercise['ubicacion'] );
+      return new Exercise( $exercise["id_ejercicio"], $exercise["nombre_ejercicio"], $exercise['tipo_ejercicio'], $exercise["detalles_ejercicio"], $exercise["dificultad_ejercicio"], $maquina );
     } else {
       return NULL;
     }
@@ -84,13 +86,14 @@ class ExerciseMapper {
    * @return mixed Array of Users instances
    */
   public function findAll() {
-    $stmt = $this->db->query( "SELECT * FROM ejercicio" );
+    $stmt = $this->db->query( "SELECT * FROM ejercicio LEFT JOIN maquina USING (id_maquina)" );
     $exercises_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $exercises = array();
 
     foreach ($exercises_db as $exercise) {
-      array_push( $exercises, new Exercise( $exercise["id_ejercicio"], $exercise["nombre_ejercicio"], $exercise["tipo_ejercicio"], $exercise["detalles_ejercicio"], $exercise["dificultad_ejercicio"] ) );
+      $maquina = new Maquina( $exercise['id_maquina'], $exercise['nombre_maquina'], $exercise['ubicacion'] );
+      array_push( $exercises, new Exercise( $exercise["id_ejercicio"], $exercise["nombre_ejercicio"], $exercise["tipo_ejercicio"], $exercise["detalles_ejercicio"], $exercise["dificultad_ejercicio"], $maquina ) );
     }
 
     return $exercises;

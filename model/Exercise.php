@@ -42,6 +42,12 @@ class Exercise {
    */
   private $difficulty;
 
+  /**
+   * The machine if needed
+   * @var int
+   */
+  private $machine;
+
 
 
   /**
@@ -50,12 +56,13 @@ class Exercise {
    * @param string $username The name of the user
    * @param string $password The password of the user
    */
-  public function __construct($id=NULL, $name=NULL, $type=NULL, $details=NULL,  $difficulty=NULL) {
+  public function __construct($id=NULL, $name=NULL, $type=NULL, $details=NULL, $difficulty=NULL, $machine=NULL) {
     $this->id = $id;
     $this->name = $name;
     $this->type = $type;
     $this->details = $details;
     $this->difficulty = $difficulty;
+    $this->machine = $machine;
   }
 
   /**
@@ -139,6 +146,24 @@ class Exercise {
    */
   public function setDifficulty($difficulty) {
     $this->difficulty = $difficulty;
+  }
+
+  /**
+   * Gets the machine if needed
+   *
+   * @return int The machine if needed
+   */
+  public function getMachine() {
+    return $this->machine;
+  }
+  /**
+   * Sets the machine if needed
+   *
+   * @param int $machine The difficulty of this exercise
+   * @return void
+   */
+  public function setMachine($machine) {
+    $this->machine = $machine;
   }
 
   /**
