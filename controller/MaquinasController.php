@@ -76,7 +76,7 @@ class MaquinasController extends BaseController {
       	  // We want to see a message after redirection, so we establish
       	  // a "flash" message (which is simply a Session variable) to be
       	  // get in the view after redirection.
-      	  $this->view->setFlash( "Maquina " . $maquina->getName() . " añadida correctamente" );
+      	  $this->view->setFlash( sprintf( i18n("Machine \"%s\" successfully added"),$maquina->getName() ) );
 
       	  // perform the redirection. More or less:
       	  // header("Location: index.php?controller=users&action=login")
@@ -84,7 +84,7 @@ class MaquinasController extends BaseController {
       	  $this->view->redirect( "maquinas", "index" );
       	} else {
         	  $errors = array();
-        	  $errors["name"] = "An maquina with that name already exists";
+        	  $errors["name"] = "A machine with that name already exists";
         	  $this->view->setVariable("errors", $errors);
       	}
       }catch(ValidationException $ex) {
@@ -143,7 +143,7 @@ class MaquinasController extends BaseController {
     // We want to see a message after redirection, so we establish
     // a "flash" message (which is simply a Session variable) to be
     // get in the view after redirection.
-    $this->view->setFlash( sprintf( i18n("Maquina \"%s\" successfully deleted"),$maquina->getName() ) );
+    $this->view->setFlash( sprintf( i18n("Machine \"%s\" successfully deleted"),$maquina->getName() ) );
 
     // perform the redirection. More or less:
     // header("Location: index.php?controller=posts&action=index")
@@ -205,7 +205,7 @@ class MaquinasController extends BaseController {
         // We want to see a message after redirection, so we establish
         // a "flash" message (which is simply a Session variable) to be
         // get in the view after redirection.
-        $this->view->setFlash( sprintf( i18n( "Maquina \"%s\" successfully updated"),$maquina ->getName() ) );
+        $this->view->setFlash( sprintf( i18n( "Machine \"%s\" successfully updated"),$maquina ->getName() ) );
 
         // perform the redirection. More or less:
         // header("Location: index.php?controller=posts&action=index")
