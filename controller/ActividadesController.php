@@ -7,7 +7,7 @@ require_once(__DIR__."/../controller/BaseController.php");
 /**
  * Class ExerciseController
  */
-class ActividadController extends BaseController {
+class ActividadesController extends BaseController {
   /**
    * Reference to the UserMapper to interact
    * with the database
@@ -57,7 +57,7 @@ class ActividadController extends BaseController {
       	$actividad->checkIsValidForAdd(); // if it fails, ValidationException
         if (!$this->actividadMapper->nameExists( $_POST["nombre"] ) ){
            $this->actividadMapper->add($actividad);
-      	   $this->view->setFlash( "Actividad " . $actividad->getNombre() . " añadida correctamente" );
+      	   $this->view->setFlash( "Activity " . $actividad->getNombre() . " successfully added" );
       	  // POST-REDIRECT-GET
       	  // Everything OK, we will redirect the user to the list of posts
       	  // We want to see a message after redirection, so we establish
@@ -68,6 +68,8 @@ class ActividadController extends BaseController {
       	  // header("Location: index.php?controller=users&action=login")
       	  // die();
       	  //$this->view->redirect( "actividades", "index" );
+          $this->view->redirect( "actividades", "index" );
+
           } else {
             $errors = array();
             $errors["nombre"] = "Ya existe una actividad con ese nombre";
@@ -119,11 +121,11 @@ class ActividadController extends BaseController {
     // We want to see a message after redirection, so we establish
     // a "flash" message (which is simply a Session variable) to be
     // get in the view after redirection.
-    $this->view->setFlash( sprintf( i18n("Actividad \"%s\" borrada correctamente"),$actividad->getNombre() ) );
+    $this->view->setFlash( sprintf( i18n("Activity \"%s\" successfully deleted"),$actividad->getNombre() ) );
     // perform the redirection. More or less:
     // header("Location: index.php?controller=posts&action=index")
     // die();
-    $this->view->redirect("actividad", "index");
+    $this->view->redirect("actividades", "index");
   }
   /**
    * Action to edit a user
@@ -157,7 +159,7 @@ class ActividadController extends BaseController {
 
     // Does the user exist?
     if ($actividad == NULL) {
-      throw new Exception("no such actividad with id: ".$actividadid);
+      throw new Exception("No such activity with id: ".$actividadid);
     }
     if (isset($_POST["submit"])) { // reaching via HTTP Post...
       // populate the Exercise object with data form the form
@@ -177,7 +179,7 @@ class ActividadController extends BaseController {
         // We want to see a message after redirection, so we establish
         // a "flash" message (which is simply a Session variable) to be
         // get in the view after redirection.
-        $this->view->setFlash( sprintf( i18n( "Actividad \"%s\" actualizada"),$actividad->getName() ) );
+        $this->view->setFlash( sprintf( i18n( "Activity \"%s\" successfully updated"),$actividad->getNombre() ) );
         // perform the redirection. More or less:
         // header("Location: index.php?controller=posts&action=index")
         // die();
@@ -213,6 +215,6 @@ class ActividadController extends BaseController {
     // put the Post object to the view
     $this->view->setVariable("actividad", $actividad);
     // render the view (/view/posts/view.php)
-    $this->view->render("actividad", "view");
+    $this->view->render("actividades", "view");
   }
 }

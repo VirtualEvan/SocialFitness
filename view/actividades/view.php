@@ -5,19 +5,19 @@
  $view = ViewManager::getInstance();
 
  $actividad = $view->getVariable("actividad");
- 
 
- $view->setVariable("title", i18n("ver actividad"));
 
-?><h1><?=i18n("Main page")?></h1>
+ $view->setVariable("title", i18n("View activity"));
+
+?><h1><?=i18n("View activity")?></h1>
 
 <table border="2">
   <tr>
-    <th><?= i18n("Nombre")?></th>
-    <th><?= i18n("Horario")?></th>
-    <th><?= i18n("Descripcion")?></th>
-    <th><?= i18n("Num_Plazas")?></th>
-    <th><?= i18n("Entrenador")?></th>
+    <th><?= i18n("Full name")?></th>
+    <th><?= i18n("Schedule")?></th>
+    <th><?= i18n("Description")?></th>
+    <th><?= i18n("Capacity")?></th>
+    <th><?= i18n("Coach")?></th>
 
   </tr>
 

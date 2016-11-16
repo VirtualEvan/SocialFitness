@@ -11,7 +11,7 @@
   <?php
     $view->setVariable("title", i18n("View user"));
   ?>
-  <h1><?=i18n("Main page")?></h1>
+  <h1><?=i18n("View user")?></h1>
   <table class="table table-striped table-condensed">
     <tr class="info">
       <th><?= i18n("Name")?></th>

@@ -11,7 +11,7 @@
 ?>
 <div class="col-md-12">
 
-  <h1><?=i18n("Main page")?></h1>
+  <h1><?=i18n("View exercise")?></h1>
 
   <table class="table table-striped table-condensed">
     <tr class="info">

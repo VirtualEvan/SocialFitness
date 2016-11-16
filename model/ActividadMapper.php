@@ -48,7 +48,7 @@ class ActividadMapper {
    * @return void
    */
   public function update(Actividad $actividad) {
-    $stmt = $this->db->prepare("UPDATE actividad set nombre=?, set horario=?, descripcion=?, num_plazas=?, entrenador=?where id_actividad=?");
+    $stmt = $this->db->prepare("UPDATE actividad SET nombre=?, horario=?, descripcion=?, num_plazas=?, entrenador=? WHERE id_actividad=?");
     $stmt->execute( array( $actividad->getNombre(),$actividad->getHorario(), $actividad->getDescripcion(), $actividad->getNum_plazas(), $actividad->getEntrenador(), $actividad->getId() ) );
   }
   /**
@@ -86,9 +86,9 @@ class ActividadMapper {
     $actividades = array();
 
     foreach ($actividades_db as $actividad) {
-      array_push( $actividades, new Actividad( 
-        $actividad["id_actividad"], $actividad["nombre"],  
-        $actividad["horario"], 
+      array_push( $actividades, new Actividad(
+        $actividad["id_actividad"], $actividad["nombre"],
+        $actividad["horario"],
         $actividad["descripcion"],
         $actividad["num_plazas"],
         $actividad["entrenador"] ));
@@ -108,5 +108,5 @@ class ActividadMapper {
       return true;
     }
   }
-  
+
 }
