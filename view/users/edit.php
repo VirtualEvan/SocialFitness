@@ -43,6 +43,6 @@
       <input type="text" class="form-control" name="phone" value="<?= $user->getPhone() ?>">
       <?= isset($errors["phone"])?$errors["phone"]:"" ?>
     </div>
-    <input type="submit" class="btn btn-warning" name="submit"  value= <?= i18n("Add")?> >
+    <input type="submit" class="btn btn-warning" name="submit"  value= <?= i18n("Edit")?> >
   </form>
 </div>

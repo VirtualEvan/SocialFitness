@@ -55,7 +55,7 @@ class MaquinaMapper {
    */
   public function update(Maquina $maquina) {
     $stmt = $this->db->prepare("UPDATE maquina set ubicacion=?, nombre_maquina=? where id_maquina=?");
-    $stmt->execute( array(  $maquina->getId(), $maquina->getUbicacion(), $maquina->getName()) );
+    $stmt->execute( array(   $maquina->getUbicacion(), $maquina->getName(), $maquina->getId() ) );
   }
 
   /**

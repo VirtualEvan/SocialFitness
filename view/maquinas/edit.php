@@ -23,7 +23,7 @@
       <?= isset($errors["ubicacion"])?$errors["ubicacion"]:"" ?>
     </div>
 
-    <input type="submit" class="btn btn-warning" value= <?= i18n("Edit")?> >
+    <input type="submit" name="submit" class="btn btn-warning" value= <?= i18n("Edit")?> >
   </form>
 
 </div>

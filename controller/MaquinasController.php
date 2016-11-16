@@ -168,6 +168,10 @@ class MaquinasController extends BaseController {
       throw new Exception("A maquina id is mandatory");
     }
 
+    if (!isset($this->currentUser)) {
+      throw new Exception("Not in session. Managing actions requires login");
+    }
+
     /*if (!isset($this->currentUser)) {
       throw new Exception("Not in session. Managing actions requires login");
     }*/
@@ -178,12 +182,12 @@ class MaquinasController extends BaseController {
     //}
 
     // Get the User object from the database
-    $maquinaid = $_REQUEST["id"];
+    $maquinaid = $_GET["id"];
     $maquina = $this->maquinaMapper->findById($maquinaid);
 
     // Does the user exist?
     if ($maquina == NULL) {
-      throw new Exception("no such maquina with id: ".$maquinaid);
+      throw new Exception("No such maquina with id: ".$maquinaid);
     }
 
     if (isset($_POST["submit"])) { // reaching via HTTP Post...
