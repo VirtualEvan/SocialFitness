@@ -9,22 +9,22 @@
 ?>
 <h1><?= i18n("Edit actividad")?></h1>
 <form action="index.php?controller=actividad&amp;action=edit&amp;id=<?= $actividad->getId() ?>" method="POST">
-      <?= i18n("Full name")?>: <input type="text" name="nombre"	value="">
+      <?= i18n("Full name")?>: <input type="text" name="nombre"	value="<?= $actividad->getNombre() ?>">
       <?= isset($errors["nombre"])?$errors["nombre"]:"" ?><br>
 
-      <?= i18n("Horario")?>: <input type="text" name="horario"	value="">
+      <?= i18n("Horario")?>: <input type="text" name="horario"	value="<?= $actividad->getHorario() ?>">
       <?= isset($errors["horario"])?$errors["horario"]:"" ?><br>
 
-      <?= i18n("Descripcion")?>: <input type="text" name="descripcion"	value="">
+      <?= i18n("Descripcion")?>: <input type="text" name="descripcion"	value="<?= $actividad->getDescripcion() ?>">
       <?= isset($errors["descripcion"])?$errors["descripcion"]:"" ?><br>
 
-      <?= i18n("Num Plazas")?>: <input type="text" name="num_plazas"	value="">
+      <?= i18n("Num Plazas")?>: <input type="text" name="num_plazas"	value="<?= $actividad->getNum_plazas() ?>">
       <?= isset($errors["num_plazas"])?$errors["num_plazas"]:"" ?><br>
 
-      <?= i18n("Entrenador")?>: <input type="text" name="entrenador"	value="">
+      <?= i18n("Entrenador")?>: <input type="text" name="entrenador"	value="<?= $actividad->getEntrenador() ?>">
       <?= isset($errors["entrenador"])?$errors["entrenador"]:"" ?><br>
 
-		
+
 
       <input type="submit" value= <?= i18n("Edit")?> >
 </form>

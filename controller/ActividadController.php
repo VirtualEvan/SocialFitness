@@ -51,9 +51,9 @@ class ActividadController extends BaseController {
       $actividad->setNum_plazas($_POST["num_plazas"]);
       $actividad->setEntrenador($_POST["entrenador"]);
 
-      
+
       try{
-        
+
       	$actividad->checkIsValidForAdd(); // if it fails, ValidationException
         if (!$this->actividadMapper->nameExists( $_POST["nombre"] ) ){
            $this->actividadMapper->add($actividad);
@@ -63,7 +63,7 @@ class ActividadController extends BaseController {
       	  // We want to see a message after redirection, so we establish
       	  // a "flash" message (which is simply a Session variable) to be
       	  // get in the view after redirection.
-      	  
+
       	  // perform the redirection. More or less:
       	  // header("Location: index.php?controller=users&action=login")
       	  // die();
@@ -135,9 +135,13 @@ class ActividadController extends BaseController {
    * @return void
    */
   public function edit() {
-    
+
      if (!isset($_REQUEST["id"])) {
       throw new Exception("A actividad id is mandatory");
+    }
+
+    if (!isset($this->currentUser)) {
+      throw new Exception("Not in session. Managing actions requires login");
     }
 
     /*if (!isset($this->currentUser)) {
@@ -150,7 +154,7 @@ class ActividadController extends BaseController {
     // Get the User object from the database
     $actividadid = $_REQUEST["id"];
     $actividad = $this->actividadMapper->findById($actividadid);
-  
+
     // Does the user exist?
     if ($actividad == NULL) {
       throw new Exception("no such actividad with id: ".$actividadid);
