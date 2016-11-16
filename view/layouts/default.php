@@ -47,7 +47,7 @@
             <a href="index.php?controller=tabla&amp;action=index"><?= i18n("Tables") ?></a>
           </li>
           <li class=<?php if ($_GET['controller']=="tabla") {echo "active"; } else {echo "noactive";}?>>
-            <a href="index.php?controller=sesiones&amp;action=index&amp;id="<?= $currentuserid ?>""><?= i18n("Sessions") ?></a>
+            <a href="index.php?controller=sesiones&amp;action=index&amp;id=<?= $currentuserid ?>"><?= i18n("Sessions") ?></a>
           </li>
           <a href="index.php?controller=users&amp;action=logout" class="btn btn-default pull-right"><?= i18n("Logout") ?></a>
       	</ul>
