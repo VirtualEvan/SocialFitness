@@ -9,7 +9,7 @@
 
  $view->setVariable("title", i18n("View user"));
 ?>
-<div class="col-md-12">
+<div class="col-md-12 botton-buffer">
 
   <h1><?=i18n("View exercise")?></h1>
 
