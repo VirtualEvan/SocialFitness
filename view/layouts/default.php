@@ -4,6 +4,7 @@
  require_once(__DIR__."/../../core/ViewManager.php");
  $view = ViewManager::getInstance();
  $currentuser = $view->getVariable("currentusername");
+ $currentuserid = $view->getVariable("currentuserid");
  if (!isset($currentuser)){
    $view->redirect("users", "login");
  }
@@ -40,9 +41,13 @@
             <a href="index.php?controller=maquinas&amp;action=index"><?= i18n("Machines") ?></a>
           </li>
            <li class=<?php if ($_GET['controller']=="actividades") {echo "active"; } else {echo "noactive";}?>>
-            <a href="index.php?controller=actividad&amp;action=index"><?= i18n("Actividades") ?></a>
-          </li> <li class=<?php if ($_GET['controller']=="tabla") {echo "active"; } else {echo "noactive";}?>>
-            <a href="index.php?controller=tabla&amp;action=index"><?= i18n("Tablas") ?></a>
+            <a href="index.php?controller=actividades&amp;action=index"><?= i18n("Activities") ?></a>
+          </li>
+          <li class=<?php if ($_GET['controller']=="tabla") {echo "active"; } else {echo "noactive";}?>>
+            <a href="index.php?controller=tabla&amp;action=index"><?= i18n("Tables") ?></a>
+          </li>
+          <li class=<?php if ($_GET['controller']=="tabla") {echo "active"; } else {echo "noactive";}?>>
+            <a href="index.php?controller=sesiones&amp;action=index&amp;id="<?= $currentuserid ?>""><?= i18n("Sessions") ?></a>
           </li>
           <a href="index.php?controller=users&amp;action=logout" class="btn btn-default pull-right"><?= i18n("Logout") ?></a>
       	</ul>
