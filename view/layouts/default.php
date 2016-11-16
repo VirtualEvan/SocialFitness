@@ -39,6 +39,11 @@
           <li class=<?php if ($_GET['controller']=="maquinas") {echo "active"; } else {echo "noactive";}?>>
             <a href="index.php?controller=maquinas&amp;action=index"><?= i18n("Machines") ?></a>
           </li>
+           <li class=<?php if ($_GET['controller']=="actividades") {echo "active"; } else {echo "noactive";}?>>
+            <a href="index.php?controller=actividad&amp;action=index"><?= i18n("Actividades") ?></a>
+          </li> <li class=<?php if ($_GET['controller']=="tabla") {echo "active"; } else {echo "noactive";}?>>
+            <a href="index.php?controller=tabla&amp;action=index"><?= i18n("Tablas") ?></a>
+          </li>
           <a href="index.php?controller=users&amp;action=logout" class="btn btn-default pull-right"><?= i18n("Logout") ?></a>
       	</ul>
       </nav>
