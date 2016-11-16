@@ -39,14 +39,16 @@ class BaseController {
 	     session_start();
     }
 
-    if(isset($_SESSION["currentuser"]) && isset($_SESSION["currenttype"])) {
+    if(isset($_SESSION["currentuser"]) && isset($_SESSION["currenttype"]) && isset($_SESSION["currentid"])) {
 
-      $this->currentUser = new User(null,$_SESSION["currenttype"],null,$_SESSION["currentuser"],null,null);
+      $this->currentUser = new User($_SESSION["currentid"],$_SESSION["currenttype"],null,$_SESSION["currentuser"],null,null);
       //add current user to the view, since some views require it
       $this->view->setVariable("currentusername",
 				  $this->currentUser->getName());
       $this->view->setVariable("currentusertype",
 				  $this->currentUser->getType());
+      $this->view->setVariable("currentuserid",
+				  $this->currentUser->getId());
     }
   }
 

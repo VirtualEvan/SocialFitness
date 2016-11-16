@@ -47,6 +47,7 @@ class UsersController extends BaseController {
       $username = $this->userMapper->isValidUser( $_POST["email"], $_POST["password"]);
       if ( $username != NULL ) {
 
+        $_SESSION["currentid"]=$username->getId();
         $_SESSION["currentuser"]=$username->getName();
       	$_SESSION["currenttype"]=$username->getType();
 
