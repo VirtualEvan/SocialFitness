@@ -49,7 +49,7 @@ class TablaMapper {
    * @return void
    */
   public function update(Tabla $tabla) {
-    $stmt = $this->db->prepare("UPDATE tabla_ejercicios set nombre=?, set num_ejercicios=?, tipo=?, dificultad=?where id_tabla_ejercicios=?");
+    $stmt = $this->db->prepare("UPDATE tabla_ejercicios SET nombre=?, num_ejercicios=?, tipo=?, dificultad=? WHERE id_tabla_ejercicios=?");
     $stmt->execute( array( $tabla->getNombre(),$tabla->getNum_ejercicios(), $tabla->getTipo(), $tabla->getDificultad(), $tabla->getId() ) );
   }
   /**
@@ -71,7 +71,7 @@ class TablaMapper {
        $tabla["num_ejercicios"],
        $tabla['tipo'],
        $tabla["dificultad"]);
-       
+
     } else {
       return NULL;
     }
@@ -88,12 +88,12 @@ class TablaMapper {
     $tablas = array();
 
     foreach ($tabla_db as $tabla) {
-      array_push( $tablas, new Tabla( 
-        $tabla["id_tabla_ejercicios"], $tabla["nombre"],  
-        $tabla["num_ejercicios"], 
+      array_push( $tablas, new Tabla(
+        $tabla["id_tabla_ejercicios"], $tabla["nombre"],
+        $tabla["num_ejercicios"],
         $tabla["tipo"],
         $tabla["dificultad"]));
-      
+
     }
     return $tablas;
   }
@@ -110,5 +110,5 @@ class TablaMapper {
       return true;
     }
   }
-  
+
 }

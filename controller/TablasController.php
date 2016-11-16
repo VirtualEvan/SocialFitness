@@ -42,7 +42,7 @@ class TablasController extends BaseController {
   public function add() {
     $tabla = new Tabla();
 
-    if ( isset($_POST["nombre"]) && isset($_POST["num_ejercicios"]) && isset($_POST["tipo"]) && isset($_POST["dificultad"])  ){ 
+    if ( isset($_POST["nombre"]) && isset($_POST["num_ejercicios"]) && isset($_POST["tipo"]) && isset($_POST["dificultad"])  ){
      // reaching via HTTP Post...
       // populate the User object with data form the form
    //die($_POST['entrenador']);
@@ -50,10 +50,10 @@ class TablasController extends BaseController {
       $tabla->setNum_ejercicios($_POST["num_ejercicios"]);
       $tabla->setTipo($_POST["tipo"]);
       $tabla->setDificultad($_POST["dificultad"]);
-   
-      
+
+
       try{
-        
+
       	$tabla->checkIsValidForAdd(); // if it fails, ValidationException
         if (!$this->tablaMapper->nameExists( $_POST["nombre"] ) ){
            $this->tablaMapper->add($tabla);
@@ -63,7 +63,7 @@ class TablasController extends BaseController {
       	  // We want to see a message after redirection, so we establish
       	  // a "flash" message (which is simply a Session variable) to be
       	  // get in the view after redirection.
-      	  
+
       	  // perform the redirection. More or less:
       	  // header("Location: index.php?controller=users&action=login")
       	  // die();
@@ -165,7 +165,7 @@ class TablasController extends BaseController {
       $tabla->setNum_ejercicios($_POST["num_ejercicios"]);
       $tabla->setTipo($_POST["tipo"]);
       $tabla->setDificultad($_POST["dificultad"]);
-      
+
 
       try {
         // validate Post object
@@ -177,7 +177,7 @@ class TablasController extends BaseController {
         // We want to see a message after redirection, so we establish
         // a "flash" message (which is simply a Session variable) to be
         // get in the view after redirection.
-        $this->view->setFlash( sprintf( i18n( "Tabla \"%s\" successfully updated"),$actividad->getNombre() ) );
+        $this->view->setFlash( sprintf( i18n( "Tabla \"%s\" successfully updated"),$tabla->getNombre() ) );
         // perform the redirection. More or less:
         // header("Location: index.php?controller=posts&action=index")
         // die();
@@ -208,8 +208,8 @@ class TablasController extends BaseController {
     }
 
     $tablaid = $_REQUEST["id"];
-  
-  
+
+
     // find the Post object in the database
     $tabla = $this->tablaMapper->findById($tablaid);
     if ($tabla == NULL) {
