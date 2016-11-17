@@ -7,7 +7,7 @@
  $maquina = $view->getVariable("maquina");
  $view->setVariable("title", "Edit maquina");
 ?>
-<div class="col-md-12 botton-buffer">
+<div class="col-md-12">
 
   <h1><?= i18n("Edit Maquina")?></h1>
   <form action="index.php?controller=maquinas&amp;action=edit&amp;id=<?= $maquina->getId() ?>" method="POST">

@@ -7,7 +7,7 @@
  $user = $view->getVariable("user");
  $currentuser = $view->getVariable("currentusername");
  ?>
- <div class="col-md-12 botton-buffer">
+ <div class="col-md-12">
   <?php
     $view->setVariable("title", i18n("View user"));
   ?>
