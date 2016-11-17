@@ -53,11 +53,11 @@
       	</ul>
       </nav>
     </header>
+    <div id="flash" >
+      <?= $view->popFlash() ?>
+    </div>
 
     <main class="col-md-12">
-      <div id="flash">
-	       <?= $view->popFlash()//TODO: CONTROLAR ESTO ?>
-      </div>
 
       <?= $view->getFragment(ViewManager::DEFAULT_FRAGMENT) ?>
     </main>

@@ -5,7 +5,18 @@
 
 #flash {
   background-color:rgb(1, 167, 237);
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  width: 30%;
+  border-radius: 8px;
+  color: white;
+  z-index: 100;
   animation: backgroundflash 5s forwards;
+  text-align: center;
+  margin-top: 5%;
 }
 
 .botton-buffer {
