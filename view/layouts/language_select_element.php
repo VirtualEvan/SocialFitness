@@ -2,7 +2,7 @@
 // file: view/layouts/language_select_element.php
 ?>
 <br/>
-<div id="languagechooser" class="btn-group col-md-12">
+<div id="languagechooser" class="btn-group col-md-12 navbar navbar-fixed-bottom">
 	<a class="btn btn-default" href="index.php?controller=language&amp;action=change&amp;lang=en">
 			<span class="flag flag-us" alt="English" lang="en"></span> <?= i18n("English") ?>
 
