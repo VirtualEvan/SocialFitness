@@ -15,31 +15,51 @@
    $view->redirect("users", "login");
  }
 ?>
+  <div class="col-md-12 button-buffer">
     <h1><?= i18n("Add session")?></h1>
     <form action="index.php?controller=sessions&amp;action=add&amp;id=<?= $currentuserid ?>" method="POST">
       <div class="form-group">
-          <?= i18n("Full name")?>: <input type="text" name="name" value="">
+          <label><?= i18n("Full name")?>:</label>
+           <input type="text" class="form-control" name="name" value="">
+           <div class="help-block">
           <?= isset($errors["name"])?$errors["name"]:"" ?><br>
         </div>
+      </div>
+
     <div class="form-group">
-    	  <?= i18n("description_session")?>: <input type="text" name="description_session" value="">
+    	  <label><?= i18n("Description session")?>:</label>
+         <input type="text" class="form-control" name="description_session" value="">
+         <div class="help-block">
           <?= isset($errors["description_session"])?$errors["description_session"]:"" ?><br>
           </div>
+        </div>
+
     <div class="form-group">
-    	  <?= i18n("id_user")?>: <input type="text" name="id_user" value=<?= $currentuserid ?>>
+    	  <label><?= i18n("id_user")?>:</label>
+         <input type="text" class="form-control" name="id_user" value=<?= $currentuserid ?>>
+         <div class="help-block">
           <?= isset($errors["id_user"])?$errors["id_user"]:"" ?><br>
           </div>
-
-    <div class="form-group">
-    	  <?= i18n("tiempo")?>: <input type="text" name="time" value="">
-          <?= isset($errors["time"])?$errors["time"]:"" ?><br>
           </div>
 
     <div class="form-group">
-    	<?= i18n("data")?>: <input type="text" name="date" value="">
-          <?= isset($errors["data"])?$errors["data"]:"" ?><br>
+    	  <label><?= i18n("tiempo")?>:</label>
+         <input type="text" class="form-control" name="time" value="">
+         <div class="help-block">
+          <?= isset($errors["time"])?$errors["time"]:"" ?><br>
+          </div>
+          </div>
+
     <div class="form-group">
-          <input type="submit" value= <?= i18n("Add")?> >
+    	 <label><?= i18n("data")?>:</label>
+        <input type="text"class="form-control" name="date" value="">
+        <div class="help-block">
+          <?= isset($errors["data"])?$errors["data"]:"" ?><br>
+          </div>
+
+    <div class="form-group">
+          <input type="submit" class="btn btn-info" value= <?= i18n("Add")?> >
         </div>
       </div>
     </form>
+</div>
