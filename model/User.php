@@ -204,7 +204,27 @@ class User {
     }
 
     try{
-      $this->checkIsValidForRegister();
+      if (strlen($this->name) < 5) {
+	       $errors["name"] = "Name must be at least 5 characters length";
+      }
+      if (strlen($this->password) != 0){
+        if (strlen($this->password) < 5) {
+  	       $errors["password"] = "Password must be at least 5 characters length";
+        }
+      }
+      if ( !filter_var( $this->email, FILTER_VALIDATE_EMAIL ) ) {
+         $errors["email"] = "This is not a valid eMail address";
+      }
+      //TODO:Sacar de la base de datos
+      if ( !in_Array($this->type, array("athlete", "coach", "admin")) ) {
+         $errors["type"] = "That type doen't exist";
+      }
+      if (strlen($this->phone) < 9) {
+         $errors["phone"] = "Phone must have 9 digits";
+      }
+      if (sizeof($errors)>0){
+	       throw new ValidationException($errors, "User is not valid");
+      }
     }catch(ValidationException $ex) {
       foreach ($ex->getErrors() as $key=>$error) {
 	       $errors[$key] = $error;

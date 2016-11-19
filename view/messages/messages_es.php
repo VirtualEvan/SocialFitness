@@ -57,6 +57,7 @@
     "View exercise" => "Ver ejercicio",
     "View activity" => "Ver actividad",
     "Location" => "Ubicación",
+    "Edit profile" => "Editar perfil",
     "" => "",
   )
 ?>

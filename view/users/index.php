@@ -16,7 +16,7 @@
   <h1><?=i18n("User management")?></h1>
   <?php
     if( $currentusertype == "admin"): ?>
-      <p><a href="index.php?controller=users&amp;action=add" class="btn btn-info"><?= i18n("Add user") ?></a></p>
+      <p><a href="index.php?controller=users&amp;action=add" class="btn btn-info"><?= i18n("Add user"); ?></a></p>
   <?php
     endif
   ?>
@@ -26,7 +26,6 @@
       <th><?= i18n("Email")?></th>
       <th><?= i18n("Type")?></th>
       <th><?= i18n("Phone")?></th>
-      <th><?= i18n("Password")?></th>
       <?php
         if( $currentusertype == "admin"): ?>
           <th><?= i18n("Management options")?></th>
@@ -48,9 +47,6 @@
       </td>
       <td>
         <a href="index.php?controller=users&amp;action=view&amp;id=<?= $user->getId() ?>"><?= htmlentities( $user->getPhone() ) ?></a>
-      </td>
-      <td>
-        <a href="index.php?controller=users&amp;action=view&amp;id=<?= $user->getId() ?>"><?= htmlentities( $user->getPassword() ) ?></a>
       </td>
       <?php
         if( $currentusertype == "admin"): ?>

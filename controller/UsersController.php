@@ -56,7 +56,7 @@ class UsersController extends BaseController {
 
       }else{
       	$errors = array();
-      	$errors["general"] = "Username is not valid";
+      	$errors["general"] = "Username or password is not valid";
       	$this->view->setVariable("errors", $errors);
       }
     }
@@ -210,12 +210,6 @@ class UsersController extends BaseController {
       throw new Exception("Not in session. Managing actions requires login");
     }
 
-
-    // TODO:Check if the current user is admin
-    //if ($post->getAuthor() != $this->currentUser) {
-    //  throw new Exception("logged user is not the author of the post id ".$postid);
-    //}
-
     // Get the User object from the database
     $userid = $_GET["id"];
     $user = $this->userMapper->findById($userid);
@@ -241,16 +235,8 @@ class UsersController extends BaseController {
         // update the Post object in the database
         $this->userMapper->update($user);
 
-        // POST-REDIRECT-GET
-        // Everything OK, we will redirect the user to the list of posts
-        // We want to see a message after redirection, so we establish
-        // a "flash" message (which is simply a Session variable) to be
-        // get in the view after redirection.
         $this->view->setFlash( sprintf( i18n( "User \"%s\" successfully updated"),$user ->getName() ) );
 
-        // perform the redirection. More or less:
-        // header("Location: index.php?controller=posts&action=index")
-        // die();
         $this->view->redirect("users", "index");
 
       }catch(ValidationException $ex) {
@@ -266,6 +252,63 @@ class UsersController extends BaseController {
     // render the view (/view/users/edit.php)
     $this->view->render("users", "edit");
   }
+
+  public function selfedit() {
+
+    if (!isset($_GET["id"])) {
+      throw new Exception("A user id is mandatory");
+    }
+
+    if (!isset($this->currentUser)) {
+      throw new Exception("Not in session. Managing actions requires login");
+    }
+
+    if ($_GET["id"] != $this->currentUser->getId()) {
+      throw new Exception("You can't modify this profile");
+    }
+
+    // Get the User object from the database
+    $userid = $_GET["id"];
+    $user = $this->userMapper->findById($userid);
+
+    // Does the user exist?
+    if ($user == NULL) {
+      throw new Exception("no such user with id: ".$userid);
+    }
+
+    if (isset($_POST["submit"])) { // reaching via HTTP Post...
+
+      // populate the Post object with data form the form
+      $user->setName($_POST["name"]);
+      $user->setPassword($_POST["password"]);
+      $user->setEmail($_POST["email"]);
+      $user->setPhone($_POST["phone"]);
+
+      try {
+        // validate Post object
+        $user->checkIsValidForUpdate(); // if it fails, ValidationException
+
+        // update the Post object in the database
+        $this->userMapper->selfupdate($user);
+
+        $this->view->setFlash( sprintf( i18n( "User \"%s\" successfully updated"),$user ->getName() ) );
+
+        $this->view->redirect("users", "view&id=".$userid);
+
+      }catch(ValidationException $ex) {
+        // Get the errors array inside the exepction...
+        $errors = $ex->getErrors();
+        // And put it to the view as "errors" variable
+        $this->view->setVariable("errors", $errors);
+      }
+    }
+    // Put the User object visible to the view
+    $this->view->setVariable("user", $user);
+
+    // render the view (/view/users/edit.php)
+    $this->view->render("users", "selfedit");
+  }
+
 
   /**
    * Action to view a given user

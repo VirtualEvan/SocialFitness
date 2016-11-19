@@ -31,7 +31,7 @@ class UserMapper {
    */
   public function add($user) {
     $stmt = $this->db->prepare( "INSERT INTO usuario (tipo, email, nombre_usuario, telefono, contrasena) values (?,?,?,?,?)" );
-    $stmt->execute(array( $user->getType(), $user->getEmail(), $user->getName(), $user->getPhone(), $user->getPassword() ) );
+    $stmt->execute(array( $user->getType(), $user->getEmail(), $user->getName(), $user->getPhone(), MD5($user->getPassword()) ) );
   }
 
   /**
@@ -54,8 +54,32 @@ class UserMapper {
    * @return void
    */
   public function update(User $user) {
-    $stmt = $this->db->prepare("UPDATE usuario set tipo=?, email=?, nombre_usuario=?, telefono=?, contrasena=? where id_usuario=?");
-    $stmt->execute( array( $user->getType(), $user->getEmail(), $user->getName(), $user->getPhone(), $user->getPassword(), $user->getId() ) );
+    if( strlen($user->getPassword()) != 0 ){
+      $stmt = $this->db->prepare("UPDATE usuario SET tipo=?, email=?, nombre_usuario=?, telefono=?, contrasena=? WHERE id_usuario=?");
+      $stmt->execute( array( $user->getType(), $user->getEmail(), $user->getName(), $user->getPhone(), MD5($user->getPassword()), $user->getId() ) );
+    }
+    else {
+      $stmt = $this->db->prepare("UPDATE usuario SET tipo=?, email=?, nombre_usuario=?, telefono=? WHERE id_usuario=?");
+      $stmt->execute( array( $user->getType(), $user->getEmail(), $user->getName(), $user->getPhone(), $user->getId() ) );
+    }
+  }
+
+  /**
+   * Updates a User in the database
+   *
+   * @param User $user The user to be updated
+   * @throws PDOException if a database error occurs
+   * @return void
+   */
+  public function selfupdate(User $user) {
+    if( strlen($user->getPassword()) != 0 ){
+      $stmt = $this->db->prepare("UPDATE usuario SET email=?, nombre_usuario=?, telefono=?, contrasena=? WHERE id_usuario=?");
+      $stmt->execute( array( $user->getEmail(), $user->getName(), $user->getPhone(), MD5($user->getPassword()), $user->getId() ) );
+    }
+    else {
+      $stmt = $this->db->prepare("UPDATE usuario SET email=?, nombre_usuario=?, telefono=? WHERE id_usuario=?");
+      $stmt->execute( array( $user->getEmail(), $user->getName(), $user->getPhone(), $user->getId() ) );
+    }
   }
 
   /**
@@ -120,7 +144,7 @@ class UserMapper {
    */
   public function isValidUser($email, $password) {
     $stmt = $this->db->prepare("SELECT * FROM usuario where email=? and contrasena=? GROUP BY id_usuario");
-    $stmt->execute(array($email, $password));
+    $stmt->execute(array($email, MD5($password)));
     $users_db = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($users_db > 0) {
       return new User( $users_db["id_usuario"], $users_db["tipo"], $users_db["email"], $users_db["nombre_usuario"], $users_db["telefono"], null );
