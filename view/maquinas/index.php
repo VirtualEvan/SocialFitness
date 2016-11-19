@@ -9,15 +9,22 @@
 
   $view->setVariable("title", i18n("Maquinas"));
 ?>
-
+<div class="col-md-12">
 <h1><?=i18n("Gestion Maquinas")?></h1>
 
-<table border="1">
-  <tr>
-    <th><?= i18n("Name")?></th>
-    <th><?= i18n("Ubicacion")?></th>
-  </tr>
+<?php //if (isset($currentmaquina)): ?>
+<div class="form-group">
+  <a href="index.php?controller=maquinas&amp;action=add" class="btn btn-info"><?= i18n("Add machine") ?></a>
+</div>
+<?php //endif; ?>
+<table class="table table-striped table-condensed">
+<tr class="info">
 
+    <th><?= i18n("Name")?></th>
+    <th><?= i18n("Location")?></th>
+    <th><?= i18n("Options")?></th>
+
+</tr>
   <?php foreach ($maquinas as $maquina): ?>
   <tr>
     <td>
@@ -27,17 +34,13 @@
       <a href="index.php?controller=maquinas&amp;action=view&amp;id=<?= $maquina->getId() ?>"><?= htmlentities( $maquina->getUbicacion() ) ?></a>
     </td>
     <td>
-      <a href="index.php?controller=maquinas&amp;action=delete&amp;id=<?= $maquina->getId() ?>"><?= i18n("Delete") ?></a>
-    </td>
-    <td>
-      <a href="index.php?controller=maquinas&amp;action=edit&amp;id=<?= $maquina->getId() ?>"><?= i18n("Edit") ?></a>
+      <a href="index.php?controller=maquinas&amp;action=delete&amp;id=<?= $maquina->getId() ?>" class="btn btn-danger"><?= i18n("Delete") ?></a>
+
+      <a href="index.php?controller=maquinas&amp;action=edit&amp;id=<?= $maquina->getId() ?>" class="btn btn-warning"><?= i18n("Edit") ?></a>
     </td>
   </tr>
 <?php endforeach; ?>
 </table>
 
-<?php //if (isset($currentmaquina)): ?>
-
-  <a href="index.php?controller=maquinas&amp;action=add"><?= i18n("Add maquina") ?></a>
-  <a href="index.php?controller=maquinas&amp;action=edit"><?= i18n("Edit") ?></a>
-<?php //endif; ?>
+  </table>
+</div>
