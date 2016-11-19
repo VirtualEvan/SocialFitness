@@ -12,10 +12,10 @@
 
 
 <div class="col-md-12">
-    <h1><?=i18n("Sesiones")?></h1>
+    <h1><?=i18n("Sessions")?></h1>
 
   <?php //if (isset($currentsession)): ?>
-      <a href="index.php?controller=sessions&amp;action=add"class="btn btn-info"><?= i18n("Add Session") ?></a>
+      <a href="index.php?controller=sessions&amp;action=add"class="btn btn-info"><?= i18n("Add session") ?></a>
   <?php //endif; ?>
 <br> </br>
 <table class="table table-striped table-condensed">

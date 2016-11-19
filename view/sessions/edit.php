@@ -16,7 +16,7 @@ if (!isset($currentuser)){
 ?>
 
 <div class="col-md-12 button-buffer">
-<h1><?= i18n("Edit Session")?></h1>
+<h1><?= i18n("Edit session")?></h1>
 <div class="col-md-6">
 <form action="index.php?controller=sessions&amp;action=edit&amp;id=<?= $session->getID() ?>" method="POST">
     <div class="form-group">

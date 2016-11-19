@@ -50,15 +50,15 @@
     "View activity" => "Ver actividad",
     "Location" => "Ubicación",
     "Edit profile" => "Editar perfil",
-    "" => "",
-    //////IAGO///////
-
+    "Description" => "Descripción",
+    "Sessions" => "Sesiones",
     "Date" => "Fecha",
     "Time" => "Tiempo",
     "Options" => "Opciones",
     "Machine" => "Máquina",
     "Add machine" => "Añadir máquina",
-    "Add session" => "Añadir sesion",
-    "Edit session" => "Editar sesion",
+    "Add session" => "Añadir sesión",
+    "Edit session" => "Editar sesión",
+    "" => "",
   )
 ?>
