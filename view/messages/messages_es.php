@@ -53,14 +53,11 @@
     "" => "",
     //////IAGO///////
 
-    "Name" => "Nombre",
     "Date" => "Fecha",
     "Time" => "Tiempo",
-    "Description" => "Descripción",
-    "Location" => "Ubicacion",
     "Options" => "Opciones",
-    "Machine" => "Maquina",
-    "Add machine" => "Añadir maquina",
+    "Machine" => "Máquina",
+    "Add machine" => "Añadir máquina",
     "Add session" => "Añadir sesion",
     "Edit session" => "Editar sesion",
   )
