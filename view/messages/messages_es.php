@@ -59,6 +59,8 @@
     "Add machine" => "Añadir máquina",
     "Add session" => "Añadir sesión",
     "Edit session" => "Editar sesión",
+    "Exercise tables" => "Tablas de ejercicios",
+    "There are no exercise tables defined" => "No hay tablas de ejercicios definidas",
     "" => "",
   )
 ?>

@@ -5,7 +5,9 @@
  $view = ViewManager::getInstance();
  $errors = $view->getVariable("errors");
  $user = $view->getVariable("user");
- $view->setVariable("title", "Add user");
+ $tables = $view->getVariable("tables");
+ $selected = $view->getVariable("selected");
+ $view->setVariable("title", "Edit user");
 ?>
 <div class="col-md-12">
   <h1><?= i18n("Edit user")?></h1>
@@ -43,6 +45,29 @@
       <input type="text" class="form-control" name="phone" value="<?= $user->getPhone() ?>">
       <?= isset($errors["phone"])?$errors["phone"]:"" ?>
     </div>
+
+    <div class="form-group">
+      <label><?= i18n("Exercise tables")?>:</label>
+      <?php if(count($tables) > 0): ?>
+			<select multiple class="select-con-buscador form-control" name="tables[]">
+				<?php
+					foreach($tables as $table){
+        ?>
+					<option value="<?= $table->getId() ?>" <?php if ( in_array($table->getId(),$selected) ){echo "selected";} ?>>  <?= $table->getNombre() ?> </option>;
+        <?php
+        	}
+				?>
+			</select>
+    <?php else: ?>
+			<div class="alert alert-info">
+				<?= i18n("There are no exercise tables defined")?>
+			</div>
+			<?php endif; ?>
+      <div class="help-block">
+        <?= isset($errors["type"])?$errors["type"]:"" ?>
+      </div>
+    </div>
+
     <input type="submit" class="btn btn-warning" name="submit"  value= <?= i18n("Edit")?> >
   </form>
 </div>

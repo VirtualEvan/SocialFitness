@@ -30,8 +30,33 @@ class UserMapper {
    * @return void
    */
   public function add($user) {
-    $stmt = $this->db->prepare( "INSERT INTO usuario (tipo, email, nombre_usuario, telefono, contrasena) values (?,?,?,?,?)" );
+    $stmt = $this->db->prepare( "INSERT INTO usuario (tipo, email, nombre_usuario, telefono, contrasena) VALUES (?,?,?,?,?)" );
     $stmt->execute(array( $user->getType(), $user->getEmail(), $user->getName(), $user->getPhone(), MD5($user->getPassword()) ) );
+
+    return $this->db->lastInsertId();
+  }
+
+  public function setTables ($tables, $userId) {
+    foreach($tables as $value) {
+      $stmt = $this->db->prepare( "INSERT INTO tabla_ejercicios_usuario (id_tabla_ejercicios, id_usuario) VALUES (?,?)" );
+      $stmt->execute(array( $value, $userId ) );
+    }
+  }
+
+  public function updateTables ($tables, $userid) {
+    $this->db->exec( 'DELETE FROM tabla_ejercicios_usuario WHERE id_usuario='.$userid );
+    foreach($tables as $value) {
+      $stmt = $this->db->prepare( "INSERT INTO tabla_ejercicios_usuario (id_tabla_ejercicios, id_usuario) VALUES (?,?)" );
+      $stmt->execute(array( $value, $userid ) );
+    }
+  }
+
+  public function tablesByUserId($userid){
+    $stmt = $this->db->prepare("SELECT id_tabla_ejercicios FROM tabla_ejercicios_usuario WHERE id_usuario=?");
+    $stmt->execute(array($userid));
+    $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    return $tables;
   }
 
   /**

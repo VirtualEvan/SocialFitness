@@ -7,6 +7,7 @@
  $user = $view->getVariable("user");
  $currentuser = $view->getVariable("currentusername");
  $currentuserid = $view->getVariable("currentuserid");
+ $currentusertype = $view->getVariable("currentusertype")
  ?>
  <div class="col-md-12">
   <?php
@@ -14,7 +15,9 @@
   ?>
   <h1><?=i18n("View user")?></h1>
   <?php
-    if( $currentuserid == $user->getId()): ?>
+    if( $currentuserid == $user->getId() ||
+        $currentusertype == 'coach'
+    ): ?>
       <p><a href="index.php?controller=users&amp;action=selfedit&amp;id=<?= $user->getId() ?>" class="btn btn-warning"><?= i18n("Edit profile"); ?></a></p>
   <?php
     endif

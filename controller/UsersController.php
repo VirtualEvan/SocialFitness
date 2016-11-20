@@ -5,6 +5,8 @@ require_once(__DIR__."/../core/I18n.php");
 
 require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../model/UserMapper.php");
+require_once(__DIR__."/../model/Tabla.php");
+require_once(__DIR__."/../model/TablaMapper.php");
 
 require_once(__DIR__."/../controller/BaseController.php");
 
@@ -25,10 +27,19 @@ class UsersController extends BaseController {
    */
   private $userMapper;
 
+  /**
+   * Reference to the TableMapper to interact
+   * with the database
+   *
+   * @var TableMapper
+   */
+  private $tableMapper;
+
   public function __construct() {
     parent::__construct();
 
     $this->userMapper = new UserMapper();
+    $this->tableMapper = new TablaMapper();
 
     // Users controller operates in a "welcome" layout
     // different to the "default" layout where the internal
@@ -89,7 +100,7 @@ class UsersController extends BaseController {
   public function add() {
     $this->checkPrivileges("admin");
     $user = new User();
-
+    $selected = array();
     if (isset($_POST["name"]) && isset($_POST["password"]) && isset($_POST["email"]) && isset($_POST["type"]) && isset($_POST["phone"])){ // reaching via HTTP Post...
 
       // populate the User object with data form the form
@@ -98,6 +109,9 @@ class UsersController extends BaseController {
       $user->setEmail($_POST["email"]);
       $user->setType($_POST["type"]);
       $user->setPhone($_POST["phone"]);
+      if (isset($_POST['tables'])){
+        $selected = $_POST['tables'];
+      }
 
       try{
       	$user->checkIsValidForRegister(); // if it fails, ValidationException
@@ -106,18 +120,10 @@ class UsersController extends BaseController {
       	if (!$this->userMapper->emailExists( $_POST["email"] ) ){
 
       	  // save the User object into the database
-      	  $this->userMapper->add($user);
-
-      	  // POST-REDIRECT-GET
-      	  // Everything OK, we will redirect the user to the list of posts
-      	  // We want to see a message after redirection, so we establish
-      	  // a "flash" message (which is simply a Session variable) to be
-      	  // get in the view after redirection.
+      	  $userId=$this->userMapper->add($user);
+          $this->userMapper->setTables($selected,$userId);
       	  $this->view->setFlash( "User " . $user->getName() . " successfully added. Please login now" );
 
-      	  // perform the redirection. More or less:
-      	  // header("Location: index.php?controller=users&action=login")
-      	  // die();
       	  $this->view->redirect( "users", "index" );
       	} else {
         	  $errors = array();
@@ -127,6 +133,7 @@ class UsersController extends BaseController {
       }catch(ValidationException $ex) {
       	// Get the errors array inside the exepction...
       	$errors = $ex->getErrors();
+
       	// And put it to the view as "errors" variable
       	$this->view->setVariable("errors", $errors);
       }
@@ -134,6 +141,11 @@ class UsersController extends BaseController {
 
     // Put the User object visible to the view
     $this->view->setVariable("user", $user);
+
+    // Put the Tables visible to the view
+    $tables = $this->tableMapper->findAll();
+    $this->view->setVariable("tables", $tables);
+    $this->view->setVariable("selected", $selected);
 
     // render the view (/view/users/register.php)
     $this->view->render("users", "add");
@@ -162,11 +174,6 @@ class UsersController extends BaseController {
     $userid = $_GET["id"];
     $user = $this->userMapper->findById($userid);
 
-    // TODO:Check if the User author is the currentUser (in Session)
-    //if ($this->currentUser->getType() != "admin") {
-    //  throw new Exception("The logged user is not an admin");
-    //}
-
     // Does the user exist?
     if ($user == NULL) {
       throw new Exception("No such user with id: ".$userid);
@@ -175,16 +182,8 @@ class UsersController extends BaseController {
     // Delete the User object from the database
     $this->userMapper->delete($user);
 
-    // POST-REDIRECT-GET
-    // Everything OK, we will redirect the user to the list of posts
-    // We want to see a message after redirection, so we establish
-    // a "flash" message (which is simply a Session variable) to be
-    // get in the view after redirection.
     $this->view->setFlash( sprintf( i18n("User \"%s\" successfully deleted"),$user->getName() ) );
 
-    // perform the redirection. More or less:
-    // header("Location: index.php?controller=posts&action=index")
-    // die();
     $this->view->redirect("users", "index");
 
   }
@@ -201,6 +200,8 @@ class UsersController extends BaseController {
 
   public function edit() {
     $this->checkPrivileges("admin");
+
+    $selected = array();
 
     if (!isset($_GET["id"])) {
       throw new Exception("A user id is mandatory");
@@ -227,6 +228,9 @@ class UsersController extends BaseController {
       $user->setEmail($_POST["email"]);
       $user->setType($_POST["type"]);
       $user->setPhone($_POST["phone"]);
+      if (isset($_POST['tables'])){
+        $selected = $_POST['tables'];
+      }
 
       try {
         // validate Post object
@@ -234,6 +238,7 @@ class UsersController extends BaseController {
 
         // update the Post object in the database
         $this->userMapper->update($user);
+        $this->userMapper->updateTables($selected,$userid);
 
         $this->view->setFlash( sprintf( i18n( "User \"%s\" successfully updated"),$user ->getName() ) );
 
@@ -246,14 +251,23 @@ class UsersController extends BaseController {
         $this->view->setVariable("errors", $errors);
       }
     }
+    else {
+      $selected = $this->userMapper->tablesByUserId($userid);
+    }
     // Put the User object visible to the view
     $this->view->setVariable("user", $user);
+
+    // Put the Tables visible to the view
+    $tables = $this->tableMapper->findAll();
+    $this->view->setVariable("tables", $tables);
+    $this->view->setVariable("selected", $selected);
 
     // render the view (/view/users/edit.php)
     $this->view->render("users", "edit");
   }
 
   public function selfedit() {
+    $selected = array();
 
     if (!isset($_GET["id"])) {
       throw new Exception("A user id is mandatory");
@@ -263,7 +277,9 @@ class UsersController extends BaseController {
       throw new Exception("Not in session. Managing actions requires login");
     }
 
-    if ($_GET["id"] != $this->currentUser->getId()) {
+    if ($_GET["id"] != $this->currentUser->getId() &&
+        $this->currentUser->getType() != 'coach'
+    ) {
       throw new Exception("You can't modify this profile");
     }
 
@@ -283,6 +299,9 @@ class UsersController extends BaseController {
       $user->setPassword($_POST["password"]);
       $user->setEmail($_POST["email"]);
       $user->setPhone($_POST["phone"]);
+      if (isset($_POST['tables'])){
+        $selected = $_POST['tables'];
+      }
 
       try {
         // validate Post object
@@ -290,6 +309,7 @@ class UsersController extends BaseController {
 
         // update the Post object in the database
         $this->userMapper->selfupdate($user);
+        $this->userMapper->updateTables($selected,$userid);
 
         $this->view->setFlash( sprintf( i18n( "User \"%s\" successfully updated"),$user ->getName() ) );
 
@@ -302,8 +322,16 @@ class UsersController extends BaseController {
         $this->view->setVariable("errors", $errors);
       }
     }
+    else {
+      $selected = $this->userMapper->tablesByUserId($userid);
+    }
     // Put the User object visible to the view
     $this->view->setVariable("user", $user);
+
+    // Put the Tables visible to the view
+    $tables = $this->tableMapper->findAll();
+    $this->view->setVariable("tables", $tables);
+    $this->view->setVariable("selected", $selected);
 
     // render the view (/view/users/edit.php)
     $this->view->render("users", "selfedit");
