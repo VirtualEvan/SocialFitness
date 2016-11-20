@@ -5,25 +5,35 @@
  $view = ViewManager::getInstance();
 
  $tablas = $view->getVariable("tabla");
+ $currentuser = $view->getVariable("currentusername");
+ $currentusertype = $view->getVariable("currentusertype");
 
 
  $view->setVariable("title", "Tablas");
 
 ?>
-<h1><?=i18n("Tablas")?></h1>
-
-<table border="1">
-      <tr>
-        <tr>
-          <th><?= i18n("Nombre")?></th>
-          <th><?= i18n("Num Ejercicios")?></th>
-          <th><?= i18n("Tipo")?></th>
-          <th><?= i18n("Duracion")?></th>
-
-        </tr>
+<div class="col-md-12">
+  <h1><?=i18n("Tablas")?></h1>
+  <?php
+    if( $currentusertype == "coach"): ?>
+      <p><a href="index.php?controller=tablas&amp;action=add" class="btn btn-info"><?= i18n("Añadir tabla") ?></a></p>
+  <?php
+    endif
+  ?>
+<table class="table table-striped table-condensed">
+      <tr class="info">
+        <th><?= i18n("Nombre")?></th>
+        <th><?= i18n("Num ejercicios")?></th>
+        <th><?= i18n("Tipo")?></th>
+        <th><?= i18n("Dificultad")?></th>
+        <?php
+          if( $currentusertype == "coach"): ?>
+            <th><?= i18n("Management options")?></th>
+        <?php
+          endif
+        ?>
       </tr>
-
-      <?php foreach ($tablas as $tabla): ?>
+       <?php foreach ($tablas as $tabla): ?>
       <tr>
         <td>
           <a href="index.php?controller=tablas&amp;action=view&amp;id=<?= $tabla->getId() ?>"><?= htmlentities( $tabla->getNombre() ) ?></a>
@@ -38,17 +48,17 @@
           <a href="index.php?controller=tablas&amp;action=view&amp;id=<?= $tabla->getId() ?>"><?= htmlentities( $tabla->getDificultad() ) ?></a>
         </td>
         
-        <td>
-          <a href="index.php?controller=tablas&amp;action=delete&amp;id=<?= $tabla->getId() ?>"><?= i18n("Eliminar") ?></a>
-        </td>
-         <td>
-         <a href="index.php?controller=tablas&amp;action=edit&amp;id=<?= $tabla->getId() ?>"><?= i18n("Edit") ?></a>
-    </td>
+        <?php
+         if( $currentusertype == "coach"): ?>
+            <td>
+              <a href="index.php?controller=tablas&amp;action=delete&amp;id=<?= $tabla->getId() ?>" class="btn btn-danger"><?= i18n("Delete") ?></a>
+              <a href="index.php?controller=tablas&amp;action=edit&amp;id=<?= $tabla->getId() ?>" class="btn btn-warning"><?= i18n("Edit") ?></a>
+            </td>
+        <?php
+          endif
+        ?>
       </tr>
     <?php endforeach; ?>
-
     </table>
-    <?php //if (isset($currentuser)): ?>
-      <a href="index.php?controller=tablas&amp;action=add"><?= i18n("Add tabla") ?></a>
-    <?php //endif; ?>
+    </div>
 
