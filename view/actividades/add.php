@@ -7,25 +7,52 @@
  $actividad = $view->getVariable("actividad");
  $view->setVariable("title", "Add activity");
 ?>
-<h1><?= i18n("Add activity")?></h1>
-<form action="index.php?controller=actividades&amp;action=add" method="POST">
-
-      <?= i18n("Full name")?>: <input type="text" name="nombre"	value="<?= $actividad->getNombre() ?>">
-      <?= isset($errors["nombre"])?$errors["nombre"]:"" ?><br>
-
-      <?= i18n("Schedule")?>: <input type="text" name="horario"	value="<?= $actividad->getHorario() ?>">
-      <?= isset($errors["horario"])?$errors["horario"]:"" ?><br>
-
-      <?= i18n("Description")?>: <input type="text" name="descripcion"	value="<?= $actividad->getDescripcion() ?>">
-      <?= isset($errors["descripcion"])?$errors["descripcion"]:"" ?><br>
-
-      <?= i18n("Capacity")?>: <input type="text" name="num_plazas"	value="<?= $actividad->getNum_plazas() ?>">
-      <?= isset($errors["num_plazas"])?$errors["num_plazas"]:"" ?><br>
-
-      <?= i18n("Coach")?>: <input type="text" name="entrenador"	value="<?= $actividad->getEntrenador() ?>">
-      <?= isset($errors["entrenador"])?$errors["entrenador"]:"" ?><br>
 
 
+<div class="col-md-12 button-buffer">
+  <h1><?= i18n("Añadir actividad")?></h1>
+  <form action="index.php?controller=actividades&amp;action=add" method="POST">
+    <div class="form-group">
+      <label><?= i18n("Nombre")?>:</label>
+      <input type="text" class="form-control" name="nombre"   value="">
+      <div class="help-block">
+        <?= isset($errors["nombre"])?$errors["nombre"]:"" ?>
+      </div>
+    </div>
 
-      <input type="submit" value= <?= i18n("Add")?> >
-</form>
+    <div class="form-group">
+      <label><?= i18n("Horario")?>:</label>
+      <input type="text" class="form-control" name="horario"   value="">
+      <div class="help-block">
+        <?= isset($errors["horario"])?$errors["horario"]:"" ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label><?= i18n("Descripcion")?>:</label>
+      <input type="text" class="form-control" name="descripcion"   value="">
+      <div class="help-block">
+        <?= isset($errors["descripcion"])?$errors["descripcion"]:"" ?>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label><?= i18n("Num Plazas")?>:</label>
+      <input type="text" class="form-control" name="num_plazas"   value="">
+      <div class="help-block">
+        <?= isset($errors["num_plazas"])?$errors["num_plazas"]:"" ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label><?= i18n("Entrenador")?>:</label>
+      <input type="text" class="form-control" name="entrenador"   value="">
+      <div class="help-block">
+        <?= isset($errors["entrenador"])?$errors["entrenador"]:"" ?>
+      </div>
+    </div>
+
+
+    <input type="submit" class="btn btn-info" value= <?= i18n("Add")?> >
+    </form>
+    </div>

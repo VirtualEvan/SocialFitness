@@ -9,17 +9,19 @@
 
  $view->setVariable("title", i18n("View activity"));
 
-?><h1><?=i18n("View activity")?></h1>
+?>
+<div class="col-md-12">
 
-<table border="2">
-  <tr>
-    <th><?= i18n("Full name")?></th>
-    <th><?= i18n("Schedule")?></th>
-    <th><?= i18n("Description")?></th>
-    <th><?= i18n("Capacity")?></th>
-    <th><?= i18n("Coach")?></th>
+  <h1><?=i18n("Ver actividad")?></h1>
 
-  </tr>
+  <table class="table table-striped table-condensed">
+    <tr class="info">
+        <th><?= i18n("Name")?></th>
+        <th><?= i18n("Horario")?></th>
+        <th><?= i18n("Descripcion")?></th>
+        <th><?= i18n("Numero Plazas")?></th>
+        <th><?= i18n("Entrenador")?></th>
+    </tr>
 
   <tr>
     <td>
