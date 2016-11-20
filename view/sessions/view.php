@@ -4,7 +4,7 @@
  require_once(__DIR__."/../../core/ViewManager.php");
  $view = ViewManager::getInstance();
 
- $maquina = $view->getVariable("maquina");
+ $session = $view->getVariable("session");
  $currentmaquina = $view->getVariable("currentmaquinaname");
 
  $view->setVariable("title", i18n("View maquina"));
@@ -17,23 +17,28 @@
    $view->redirect("users", "login");
  }
 
-?><h1><?=i18n("Main page")?></h1>
+?><h1><?=i18n("Session")?></h1>
 
-<table border="2">
-  <tr>
+<table class="table table-striped table-condensed">
+  <tr class="info">
     <th><?= i18n("Name")?></th>
-    <th><?= i18n("Ubicacion")?></th>
-
+    <th><?= i18n("Description")?></th>
+  	<th><?= i18n("Time")?></th>
+  	<th><?= i18n("Date")?></th>
   </tr>
 
   <tr>
     <td>
-      <?= htmlentities( $maquina->getUbicacion() ) ?></a>
-
+      <?= htmlentities( $session->getName() ) ?></a>
     </td>
     <td>
-        <?= htmlentities( $maquina->getName() ) ?></a>
+      <?= htmlentities( $session->getDescription() ) ?></a>
     </td>
-
+    <td>
+      <?= htmlentities( $session->getTime() ) ?></a>
+    </td>
+    <td>
+      <?= htmlentities( $session->getDate() ) ?></a>
+    </td>
   </tr>
 </table>

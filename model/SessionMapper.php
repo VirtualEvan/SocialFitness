@@ -55,7 +55,7 @@ class SessionMapper {
    */
   public function update(Session $session) {
     $stmt = $this->db->prepare("UPDATE sesion set  nombre_sesion=?, descripcion_sesion=?, fecha_sesion=?, hora_sesion=? where id_sesion=?");
-    $stmt->execute( array(  $session->getName(),$session->getId(), $session->getDescription(), $session->getDate(),$session->getTime()) );
+    $stmt->execute( array($session->getName(), $session->getDescription(), $session->getDate(),$session->getTime(),$session->getId()) );
   }
 
   /**

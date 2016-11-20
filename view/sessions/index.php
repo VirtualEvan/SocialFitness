@@ -24,7 +24,6 @@
   <th><?= i18n("Description")?></th>
 	<th><?= i18n("Time")?></th>
 	<th><?= i18n("Date")?></th>
-	<th><?= i18n("ID")?></th>
   <th><?= i18n("Options")?></th>
 
   </tr>
@@ -43,9 +42,6 @@
     </td>
     <td>
       <a href="index.php?controller=sessions&amp;action=view&amp;id=<?= $session->getId() ?>"><?= htmlentities( $session->getDate() ) ?></a>
-    </td>
-    <td>
-      <a href="index.php?controller=sessions&amp;action=view&amp;id=<?= $session->getId() ?>"><?= htmlentities( $session->getId() ) ?></a>
     </td>
     <td>
       <a href="index.php?controller=sessions&amp;action=delete&amp;id=<?= $session->getId() ?>"class="btn btn-danger"><?= i18n("Delete") ?></a>

@@ -35,15 +35,7 @@
         </div>
 
     <div class="form-group">
-    	  <label><?= i18n("id_user")?>:</label>
-         <input type="text" class="form-control" name="id_user" value=<?= $currentuserid ?>>
-         <div class="help-block">
-          <?= isset($errors["id_user"])?$errors["id_user"]:"" ?><br>
-          </div>
-          </div>
-
-    <div class="form-group">
-    	  <label><?= i18n("tiempo")?>:</label>
+    	  <label><?= i18n("Time")?>:</label>
          <input type="text" class="form-control" name="time" value="">
          <div class="help-block">
           <?= isset($errors["time"])?$errors["time"]:"" ?><br>
@@ -51,10 +43,10 @@
           </div>
 
     <div class="form-group">
-    	 <label><?= i18n("data")?>:</label>
+    	 <label><?= i18n("Date")?>:</label>
         <input type="text"class="form-control" name="date" value="">
         <div class="help-block">
-          <?= isset($errors["data"])?$errors["data"]:"" ?><br>
+          <?= isset($errors["date"])?$errors["date"]:"" ?><br>
           </div>
 
     <div class="form-group">
