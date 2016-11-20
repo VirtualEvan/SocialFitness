@@ -64,6 +64,8 @@
     "Exercise tables assigned" => "Tablas de ejercicios asignadas",
     "Number of exercises" => "Número de ejercicios",
     "Duration" => "Duración",
+    "View session" => "Ver sesión",
+    "View machine" => "Ver máquina",
     "" => "",
   )
 ?>

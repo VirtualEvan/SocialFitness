@@ -7,7 +7,7 @@
  $exercise = $view->getVariable("exercise");
  $currentuser = $view->getVariable("currentusername");
 
- $view->setVariable("title", i18n("View user"));
+ $view->setVariable("title", i18n("View exercise"));
 ?>
 <div class="col-md-12">
 

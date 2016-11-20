@@ -7,24 +7,23 @@
  $maquina = $view->getVariable("maquina");
  $currentmaquina = $view->getVariable("currentmaquinaname");
 
- $view->setVariable("title", i18n("View maquina"));
+ $view->setVariable("title", i18n("View machine"));
 
-?><h1><?=i18n("Main page")?></h1>
+?><h1><?=i18n("View machine")?></h1>
 
-<table border="2">
-  <tr>
+<table class="table table-striped table-condensed">
+  <tr class="info">
     <th><?= i18n("Name")?></th>
-    <th><?= i18n("Ubicacion")?></th>
+    <th><?= i18n("Location")?></th>
 
   </tr>
 
   <tr>
     <td>
-      <?= htmlentities( $maquina->getUbicacion() ) ?></a>
-
+      <?= htmlentities( $maquina->getName() ) ?></a>
     </td>
     <td>
-        <?= htmlentities( $maquina->getName() ) ?></a>
+      <?= htmlentities( $maquina->getUbicacion() ) ?></a>
     </td>
 
   </tr>

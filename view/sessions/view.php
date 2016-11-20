@@ -7,7 +7,7 @@
  $session = $view->getVariable("session");
  $currentmaquina = $view->getVariable("currentmaquinaname");
 
- $view->setVariable("title", i18n("View maquina"));
+ $view->setVariable("title", i18n("View session"));
 
  require_once(__DIR__."/../../core/ViewManager.php");
  $view = ViewManager::getInstance();
@@ -17,7 +17,7 @@
    $view->redirect("users", "login");
  }
 
-?><h1><?=i18n("Session")?></h1>
+?><h1><?=i18n("View session")?></h1>
 
 <table class="table table-striped table-condensed">
   <tr class="info">
