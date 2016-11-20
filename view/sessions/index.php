@@ -29,7 +29,7 @@
 
   </tr>
 
-  <?php foreach ($sessions as $session): ?>
+  <?php var_dump($sessions); foreach ($sessions as $session): ?>
   <tr>
 
     <td>

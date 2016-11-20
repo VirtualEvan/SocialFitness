@@ -30,7 +30,7 @@ class SessionMapper {
    * @return void
    */
   public function add($session) {
-    $stmt = $this->db->prepare( "INSERT INTO sesion (descripcion_sesion,fecha_sesion,hora_sesion,id_sesion,id_usuario,nombre) values (?,?,?,?,?,?)" );
+    $stmt = $this->db->prepare( "INSERT INTO sesion (descripcion_sesion,fecha_sesion,hora_sesion,id_sesion,id_usuario,nombre_sesion) values (?,?,?,?,?,?)" );
     $stmt->execute(array( $session->getDescription(), $session->getDate(),$session->getTime(), $session->getId(),$session->getIdUser(), $session->getName()) );
   }
 
@@ -54,7 +54,7 @@ class SessionMapper {
    * @return void
    */
   public function update(Session $session) {
-    $stmt = $this->db->prepare("UPDATE sesion set  nombre=?, descripcion_sesion=?, fecha_sesion=?, hora_sesion=? where id_sesion=?");
+    $stmt = $this->db->prepare("UPDATE sesion set  nombre_sesion=?, descripcion_sesion=?, fecha_sesion=?, hora_sesion=? where id_sesion=?");
     $stmt->execute( array(  $session->getName(),$session->getId(), $session->getDescription(), $session->getDate(),$session->getTime()) );
   }
 
@@ -70,7 +70,7 @@ class SessionMapper {
     $session = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if($session != null) {
-      return new Session( $session["nombre"],$session["id_sesion"], $session["descripcion_sesion"], $session["hora_sesion"],$session["fecha_sesion"]);
+      return new Session( $session["nombre_sesion"],$session["id_sesion"], $session["descripcion_sesion"], $session["hora_sesion"],$session["fecha_sesion"]);
     } else {
       return NULL;
     }
@@ -83,7 +83,7 @@ class SessionMapper {
     $sessions = array();
 
     foreach ($sessions_db as $session) {
-      array_push( $sessions, new Session( $session["nombre"], $session["id_sesion"], $session["descripcion_sesion"],$session["hora_sesion"],$session["fecha_sesion"]) );
+      array_push( $sessions, new Session( $session["nombre_sesion"], $session["id_sesion"], $session["descripcion_sesion"],$session["hora_sesion"],$session["fecha_sesion"]) );
     }
 
     return $sessions;
@@ -102,7 +102,7 @@ class SessionMapper {
     $sessions = array();
 
     foreach ($sessions_db as $session) {
-      array_push( $sessions, new Session( $session["nombre"], $session["id_sesion"], $session["descripcion_sesion"],$session["hora_sesion"],$session["fecha_sesion"]) );
+      array_push( $sessions, new Session( $session["nombre_sesion"], $session["id_sesion"], $session["descripcion_sesion"],$session["hora_sesion"],$session["fecha_sesion"]) );
     }
 
     return $sessions;
@@ -110,7 +110,7 @@ class SessionMapper {
 
 
   public function nameExists($name) {
-    $stmt = $this->db->prepare( "SELECT count(nombre) FROM sesion where nombre=?" );
+    $stmt = $this->db->prepare( "SELECT count(nombre_sesion) FROM sesion where nombre_sesion=?" );
     $stmt->execute(array($name));
 
     if ($stmt->fetchColumn() > 0) {
@@ -118,21 +118,4 @@ class SessionMapper {
     }
   }
 
-  /**
-   * Checks if a given username is already in the database
-   *
-   * @param string $username the username to check
-   * @return boolean true if the username exists, false otherwise
-   */
-  /*
-  public function isValidUser($nombre_maquina, $ubicacion) {
-    $stmt = $this->db->prepare("SELECT * FROM maquina where nombre_maquina=? and ubicacion=? GROUP BY id_maquina");
-    $stmt->execute(array($nombre_maquina, $ubicacion));
-    $maquinas_db = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($users_db > 0) {
-      return new User( $users_db["id_usuario"], $users_db["tipo"], $users_db["email"], $users_db["nombre_usuario"], $users_db["telefono"], null );
-    } else  {
-      return NULL;
-    }
-  }*/
 }
