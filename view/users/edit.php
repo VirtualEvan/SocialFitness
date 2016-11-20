@@ -49,7 +49,7 @@
     <div class="form-group">
       <label><?= i18n("Exercise tables")?>:</label>
       <?php if(count($tables) > 0): ?>
-			<select multiple class="select-con-buscador form-control" name="tables[]">
+			<select multiple class="form-control" name="tables[]">
 				<?php
 					foreach($tables as $table){
         ?>

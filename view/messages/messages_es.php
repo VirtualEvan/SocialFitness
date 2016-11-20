@@ -20,7 +20,7 @@
     "Hello %s" => "Hola %s",
     "User management" => "Administración de usuarios",
     "User \"%s\" successfully deleted" => "Usuario \"%s\" eliminado satisfactoriamente",
-    "User \"%s\" successfully updated" => "Usuario \"%s\" modificado satisfactoriamente",
+    "User \"%s\" successfully updated" => "Usuario \"%s\" modificado satisfactorExercise tables assignediamente",
     "Edit user" => "Editar usuario",
     "View user" => "Consultar usuario",
     "Edit exercise" => "Editar ejercicio",
@@ -61,6 +61,9 @@
     "Edit session" => "Editar sesión",
     "Exercise tables" => "Tablas de ejercicios",
     "There are no exercise tables defined" => "No hay tablas de ejercicios definidas",
+    "Exercise tables assigned" => "Tablas de ejercicios asignadas",
+    "Number of exercises" => "Número de ejercicios",
+    "Duration" => "Duración",
     "" => "",
   )
 ?>

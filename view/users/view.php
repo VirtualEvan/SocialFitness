@@ -5,6 +5,8 @@
  $view = ViewManager::getInstance();
 
  $user = $view->getVariable("user");
+ $tables = $view->getVariable("tables");
+ $selected = $view->getVariable("selected");
  $currentuser = $view->getVariable("currentusername");
  $currentuserid = $view->getVariable("currentuserid");
  $currentusertype = $view->getVariable("currentusertype")
@@ -45,6 +47,37 @@
       </td>
     </tr>
   </table>
+
+  <h4><?=i18n("Exercise tables assigned")?></h4>
+  <table class="table table-striped table-condensed">
+    <tr class="info">
+      <th><?= i18n("Name")?></th>
+      <th><?= i18n("Number of exercises")?></th>
+      <th><?= i18n("Type")?></th>
+      <th><?= i18n("Duration")?></th>
+    </tr>
+
+    <?php
+      foreach ($tables as $table):
+        if ( in_array($table->getId(),$selected) ){
+    ?>
+      <tr>
+        <td>
+          <a href="index.php?controller=tablas&amp;action=view&amp;id=<?= $table->getId() ?>"><?= htmlentities( $table->getNombre() ) ?></a>
+        </td>
+        <td>
+          <a href="index.php?controller=tablas&amp;action=view&amp;id=<?= $table->getId() ?>"><?= htmlentities( $table->getNum_ejercicios() ) ?></a>
+        </td>
+        <td>
+          <a href="index.php?controller=tablas&amp;action=view&amp;id=<?= $table->getId() ?>"><?= htmlentities( $table->getTipo() ) ?></a>
+        </td>
+         <td>
+          <a href="index.php?controller=tablas&amp;action=view&amp;id=<?= $table->getId() ?>"><?= htmlentities( $table->getDificultad() ) ?></a>
+        </td>
+      </tr>
+    <?php
+      }
+      endforeach;
+    ?>
+  </table>
 </div>
-
-

@@ -360,6 +360,11 @@ class UsersController extends BaseController {
 
     // put the Post object to the view
     $this->view->setVariable("user", $user);
+    // Put the Tables visible to the view
+    $tables = $this->tableMapper->findAll();
+    $selected = $this->userMapper->tablesByUserId($userid);
+    $this->view->setVariable("tables", $tables);
+    $this->view->setVariable("selected", $selected);
 
     // render the view (/view/posts/view.php)
     $this->view->render("users", "view");
