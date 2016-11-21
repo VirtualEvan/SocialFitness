@@ -47,7 +47,7 @@
     </div>
 
     <div class="form-group">
-      <label><?= i18n("Exercise tables")?>:</label>
+      <label><?= i18n("Training tables")?>:</label>
       <?php if(count($tables) > 0): ?>
 			<select multiple class="form-control" name="tables[]">
 				<?php
@@ -60,7 +60,7 @@
 			</select>
     <?php else: ?>
 			<div class="alert alert-info">
-				<?= i18n("There are no exercise tables defined")?>
+				<?= i18n("There are no training tables defined")?>
 			</div>
 			<?php endif; ?>
       <div class="help-block">

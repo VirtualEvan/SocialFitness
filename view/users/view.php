@@ -48,13 +48,13 @@
     </tr>
   </table>
 
-  <h4><?=i18n("Exercise tables assigned")?></h4>
+  <h4><?=i18n("Assigned training tables")?></h4>
   <table class="table table-striped table-condensed">
     <tr class="info">
       <th><?= i18n("Name")?></th>
       <th><?= i18n("Number of exercises")?></th>
       <th><?= i18n("Type")?></th>
-      <th><?= i18n("Duration")?></th>
+      <th><?= i18n("Dificulty")?></th>
     </tr>
 
     <?php

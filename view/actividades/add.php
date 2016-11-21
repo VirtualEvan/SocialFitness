@@ -5,6 +5,7 @@
  $view = ViewManager::getInstance();
  $errors = $view->getVariable("errors");
  $actividad = $view->getVariable("actividad");
+ $coaches = $view->getVariable("coaches");
  $view->setVariable("title", "Add activity");
 ?>
 
@@ -35,7 +36,7 @@
         <?= isset($errors["descripcion"])?$errors["descripcion"]:"" ?>
       </div>
     </div>
-    
+
     <div class="form-group">
       <label><?= i18n("Seating Capacity")?>:</label>
       <input type="text" class="form-control" name="num_plazas"   value="">
@@ -45,11 +46,13 @@
     </div>
 
     <div class="form-group">
-      <label><?= i18n("Trainer")?>:</label>
-      <input type="text" class="form-control" name="entrenador"   value="">
-      <div class="help-block">
-        <?= isset($errors["entrenador"])?$errors["entrenador"]:"" ?>
-      </div>
+      <label><?= i18n("Coach")?>:</label>
+      <select name="coach" class="form-control">
+        <?php foreach ($coaches as $coach): ?>
+          <option value="<?= $coach->getId() ?>" <?php if($coach->getId()==$actividad->getEntrenador()){echo "selected";} ?> > <?= $coach->getName() ?> </option>
+        <?php endforeach; ?>
+      </select>
+      <?= isset($errors["coach"])?$errors["coach"]:"" ?>
     </div>
 
 

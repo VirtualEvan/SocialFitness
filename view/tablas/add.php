@@ -14,7 +14,7 @@
 
 
 <div class="col-md-12 button-buffer">
-  <h1><?= i18n("Add Table")?></h1>
+  <h1><?= i18n("Add table")?></h1>
   <form action="index.php?controller=tablas&amp;action=add" method="POST">
     <div class="form-group">
       <label><?= i18n("Name")?>:</label>

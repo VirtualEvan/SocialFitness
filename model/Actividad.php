@@ -37,7 +37,7 @@ class Actividad {
    */
   private $entrenador;
 
- 
+
   /**
    * The constructor
    *
@@ -143,7 +143,7 @@ class Actividad {
     $this->entrenador = $entrenador;
   }
 
- 
+
   /**
    * Checks if the current user instance is valid
    * for being registered in the database
@@ -162,14 +162,17 @@ class Actividad {
 	       $errors["horario"] = "El horario tiene que tener al menos 3 caracteres";
       }
       //TODO:Sacar de la base de datos
-     
+
       if (strlen($this->descripcion) < 3 ) {
          $errors["descripcion"] = "La descripcion debe tener  al menos 3 caracteres";
       }
        if ( strlen($this->num_plazas) < 1 ) {
          $errors["num_plazas"] = "Tiene que haber al menos una plaza";
       }
-  
+      if ( strlen($this->entrenador) < 1 ) {
+        $errors["coach"] = "Tiene que haber al menos un entrenador";
+      }
+
       if (sizeof($errors)>0){
 	       throw new ValidationException($errors, "Actividad no valida");
       }

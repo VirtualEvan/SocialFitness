@@ -125,6 +125,25 @@ class UserMapper {
     }
   }
 
+  /**
+   * Loads a User from the database given its id
+   * @throws PDOException if a database error occurs
+   * @return User The User instances
+   * NULL if the User is not found
+   */
+  public function findCoaches(){
+    $stmt = $this->db->query( "SELECT * FROM usuario WHERE tipo='coach'" );
+    $users_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $users = array();
+
+    foreach ($users_db as $user) {
+      array_push( $users, new User( $user["id_usuario"], $user["tipo"], $user["email"], $user["nombre_usuario"] ) );
+    }
+
+    return $users;
+  }
+
 
   /**
    * Retrieves all users

@@ -42,7 +42,7 @@
     <div class="form-group">
       <label><?= i18n("Machine")?>:</label>
       <select name="machine" class="form-control">
-        <option> <?= i18n("") ?> </option>
+        <option></option>
         <?php foreach ($machines as $machine): ?>
           <option value="<?= $machine->getId() ?>" <?php if($machine->getId()==$exercise->getMachine()->getId()){echo "selected";} ?> > <?= $machine->getName() ?> </option>
         <?php endforeach; ?>

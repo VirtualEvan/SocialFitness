@@ -3,6 +3,8 @@ require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../model/Actividad.php");
 require_once(__DIR__."/../model/ActividadMapper.php");
+require_once(__DIR__."/../model/User.php");
+require_once(__DIR__."/../model/UserMapper.php");
 require_once(__DIR__."/../controller/BaseController.php");
 /**
  * Class ExerciseController
@@ -18,6 +20,7 @@ class ActividadesController extends BaseController {
   public function __construct() {
     parent::__construct();
     $this->actividadMapper = new ActividadMapper();
+    $this->userMapper = new UserMapper();
     // Users controller operates in a "welcome" layout
     // different to the "default" layout where the internal
     // menu is displayed
@@ -42,15 +45,14 @@ class ActividadesController extends BaseController {
   public function add() {
     $actividad = new Actividad();
 
-    if ( isset($_POST["nombre"]) && isset($_POST["horario"]) && isset($_POST["descripcion"]) && isset($_POST["num_plazas"]) && isset($_POST["entrenador"])  ){ // reaching via HTTP Post...
+    if ( isset($_POST["nombre"]) && isset($_POST["horario"]) && isset($_POST["descripcion"]) && isset($_POST["num_plazas"]) && isset($_POST["coach"])  ){ // reaching via HTTP Post...
       // populate the User object with data form the form
    //die($_POST['entrenador']);
       $actividad->setNombre($_POST["nombre"]);
       $actividad->setHorario($_POST["horario"]);
       $actividad->setDescripcion($_POST["descripcion"]);
       $actividad->setNum_plazas($_POST["num_plazas"]);
-      $actividad->setEntrenador($_POST["entrenador"]);
-
+      $actividad->setEntrenador($_POST["coach"]);
 
       try{
 
@@ -82,6 +84,9 @@ class ActividadesController extends BaseController {
       	$this->view->setVariable("errors", $errors);
       }
     }
+    $coaches = $this->userMapper->findCoaches();
+    $this->view->setVariable("coaches", $coaches);
+
     // Put the User object visible to the view
     $this->view->setVariable("actividad", $actividad);
     // render the view (/view/users/register.php)
@@ -167,8 +172,7 @@ class ActividadesController extends BaseController {
       $actividad->setHorario($_POST["horario"]);
       $actividad->setDescripcion($_POST["descripcion"]);
       $actividad->setNum_plazas($_POST["num_plazas"]);
-      $actividad->setEntrenador($_POST["entrenador"]);
-
+      $actividad->setEntrenador($_POST["coach"]);
       try {
         // validate Post object
         $actividad->checkIsValidForUpdate(); // if it fails, ValidationException
@@ -191,6 +195,11 @@ class ActividadesController extends BaseController {
         $this->view->setVariable("errors", $errors);
       }
     }
+
+    $coaches = $this->userMapper->findCoaches();
+    $this->view->setVariable("coaches", $coaches);
+
+
     // Put the User object visible to the view
     $this->view->setVariable("actividad", $actividad);
     // render the view (/view/users/edit.php)

@@ -59,7 +59,6 @@
             <td>
               <a href="index.php?controller=actividades&amp;action=delete&amp;id=<?= $actividad->getId() ?>" class="btn btn-danger"><?= i18n("Delete") ?></a>
               <a href="index.php?controller=actividades&amp;action=edit&amp;id=<?= $actividad->getId() ?>" class="btn btn-warning"><?= i18n("Edit") ?></a>
-              <a href="index.php?controller=actividades&amp;action=assign&amp;id=<?= $actividad->getId() ?>" class="btn btn-warning"><?= i18n("Assign trainer") ?></a>
             </td>
         <?php
           endif
