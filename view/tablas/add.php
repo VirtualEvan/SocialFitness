@@ -4,26 +4,27 @@
  require_once(__DIR__."/../../core/ViewManager.php");
  $view = ViewManager::getInstance();
  $errors = $view->getVariable("errors");
- $tabla = $view->getVariable("tablas");
+ $tables = $view->getVariable("tables");
  $exercises = $view->getVariable("exercise");
  $view->setVariable("title", "Add tabla");
  $tables = $view->getVariable("tables");
+ $selected = $view->getVariable("selected");
  $actividades = $view->getVariable("actividad");
 ?>
 
 
 <div class="col-md-12 button-buffer">
-  <h1><?= i18n("Añadir tabla")?></h1>
+  <h1><?= i18n("Add Table")?></h1>
   <form action="index.php?controller=tablas&amp;action=add" method="POST">
     <div class="form-group">
-      <label><?= i18n("Nombre")?>:</label>
+      <label><?= i18n("Name")?>:</label>
       <input type="text" class="form-control" name="nombre"   value="">
       <div class="help-block">
         <?= isset($errors["nombre"])?$errors["nombre"]:"" ?>
       </div>
     </div>
     <div class="form-group">
-          <label><?= i18n("Numero ejercicios")?>:</label>
+          <label><?= i18n("Number of exercises")?>:</label>
             <input type="text" class="form-control" name="num_ejercicios" value="">
             <div class="help-block">
               <?= isset($errors["num_ejercicios"])?$errors["num_ejercicios"]:"" ?>
@@ -31,30 +32,30 @@
           </div>
     
      <div class="form-group">
-            <label><?= i18n("Tipo")?>:</label>
+            <label><?= i18n("Type")?>:</label>
             <select name="tipo" class="form-control">
-              <option value="resistencia" selected> <?= i18n("Resistencia") ?> </option>
-              <option value="flexibilidad"> <?= i18n("Flexibilidad") ?> </option>
-              <option value="fuerza"> <?= i18n("Fuerza") ?> </option>
+              <option value="resistencia" selected> <?= i18n("Resistance") ?> </option>
+              <option value="flexibilidad"> <?= i18n("Flexibility") ?> </option>
+              <option value="fuerza"> <?= i18n("Strengh") ?> </option>
             </select>
             <div class="help-block">
               <?= isset($errors["tipo"])?$errors["tipo"]:"" ?>
       </div>
       </div>
       <div class="form-group">
-            <label><?= i18n("Dificultad")?>:</label>
+            <label><?= i18n("Difficulty")?>:</label>
             <select name="dificultad" class="form-control">
-              <option value="alta" selected> <?= i18n("Alta") ?> </option>
-              <option value="media"> <?= i18n("Media") ?> </option>
-              <option value="baja"> <?= i18n("Baja") ?> </option>
+              <option value="alta" selected> <?= i18n("Hard") ?> </option>
+              <option value="media"> <?= i18n("Medium") ?> </option>
+              <option value="baja"> <?= i18n("Easy") ?> </option>
             </select>
             <div class="help-block">
               <?= isset($errors["dificultad"])?$errors["dificultad"]:"" ?>
        </div>
     </div>
 
-    <!--<div class="form-group">
-      <label><?= i18n("Ejercicios")?>:</label>
+    <div class="form-group">
+      <label><?= i18n("Exercise tables")?>:</label>
       <?php if(count($exercises) > 0): ?>
                   <select multiple class="select-con-buscador form-control" name="exercises[]">
                         <?php
@@ -71,28 +72,10 @@
                   </div>
                   <?php endif; ?>
       <div class="help-block">
-        <?= isset($errors["type"])?$errors["type"]:"" ?>
-      </div>
-    </div>-->
-    <div class="form-group">
-      <label><?= i18n("Exercise tables")?>:</label>
-     
-                  <select multiple class="select-con-buscador form-control" name="tables[]">
-                        <?php
-                              foreach($actividades as $actividad){
-                         ?>
-                              <option value=" Hola">  </option>;
-                         <?php
-            }
-                        ?>
-                  </select>
-                
-                 
-      <div class="help-block">
-        <?= isset($errors["type"])?$errors["type"]:"" ?>
+        <?= isset($errors["raro"])?$errors["raro"]:"" ?>
       </div>
     </div>
-
+    
 
     <input type="submit" class="btn btn-info" value= <?= i18n("Add")?> >
     </form>

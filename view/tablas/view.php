@@ -13,14 +13,14 @@
 
 <div class="col-md-12">
 
-  <h1><?=i18n("Ver tabla")?></h1>
+  <h1><?=i18n("View Table")?></h1>
 
   <table class="table table-striped table-condensed">
     <tr class="info">
         <th><?= i18n("Name")?></th>
-        <th><?= i18n("Numero Ejercicios")?></th>
-        <th><?= i18n("Tipo")?></th>
-        <th><?= i18n("Dificultad")?></th>
+        <th><?= i18n("Number of exercises")?></th>
+        <th><?= i18n("Type")?></th>
+        <th><?= i18n("Dificulty")?></th>
        
     </tr>
   <tr>

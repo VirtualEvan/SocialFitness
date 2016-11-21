@@ -13,19 +13,19 @@
 
 ?>
 <div class="col-md-12">
-  <h1><?=i18n("Tablas")?></h1>
+  <h1><?=i18n("Tables")?></h1>
   <?php
     if( $currentusertype == "coach"): ?>
-      <p><a href="index.php?controller=tablas&amp;action=add" class="btn btn-info"><?= i18n("Añadir tabla") ?></a></p>
+      <p><a href="index.php?controller=tablas&amp;action=add" class="btn btn-info"><?= i18n("Add table") ?></a></p>
   <?php
     endif
   ?>
 <table class="table table-striped table-condensed">
       <tr class="info">
-        <th><?= i18n("Nombre")?></th>
-        <th><?= i18n("Num ejercicios")?></th>
-        <th><?= i18n("Tipo")?></th>
-        <th><?= i18n("Dificultad")?></th>
+        <th><?= i18n("Name")?></th>
+        <th><?= i18n("Number of exercises")?></th>
+        <th><?= i18n("Type")?></th>
+        <th><?= i18n("Dificulty")?></th>
         <?php
           if( $currentusertype == "coach"): ?>
             <th><?= i18n("Management options")?></th>
