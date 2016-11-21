@@ -17,7 +17,7 @@
   <h1><?=i18n("Activities")?></h1>
   <?php
     if( $currentusertype == "admin"): ?>
-      <p><a href="index.php?controller=actividades&amp;action=add" class="btn btn-info"><?= i18n("Añadir actividad") ?></a></p>
+      <p><a href="index.php?controller=actividades&amp;action=add" class="btn btn-info"><?= i18n("Add activity") ?></a></p>
   <?php
     endif
   ?>
@@ -25,11 +25,11 @@
 
   <table class="table table-striped table-condensed">
       <tr class="info">
-        <th><?= i18n("Nombre")?></th>
-        <th><?= i18n("Horario")?></th>
-        <th><?= i18n("Descripcion")?></th>
-        <th><?= i18n("Capacidad")?></th>
-        <th><?= i18n("Entrenador")?></th>
+        <th><?= i18n("Name")?></th>
+        <th><?= i18n("Schedule")?></th>
+        <th><?= i18n("Description")?></th>
+        <th><?= i18n("Seating Capacity")?></th>
+        <th><?= i18n("Trainer")?></th>
         <?php
           if( $currentusertype == "admin"): ?>
             <th><?= i18n("Management options")?></th>
@@ -59,6 +59,7 @@
             <td>
               <a href="index.php?controller=actividades&amp;action=delete&amp;id=<?= $actividad->getId() ?>" class="btn btn-danger"><?= i18n("Delete") ?></a>
               <a href="index.php?controller=actividades&amp;action=edit&amp;id=<?= $actividad->getId() ?>" class="btn btn-warning"><?= i18n("Edit") ?></a>
+              <a href="index.php?controller=actividades&amp;action=assign&amp;id=<?= $actividad->getId() ?>" class="btn btn-warning"><?= i18n("Assign trainer") ?></a>
             </td>
         <?php
           endif

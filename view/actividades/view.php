@@ -12,15 +12,15 @@
 ?>
 <div class="col-md-12">
 
-  <h1><?=i18n("Ver actividad")?></h1>
+  <h1><?=i18n("View Activity")?></h1>
 
   <table class="table table-striped table-condensed">
     <tr class="info">
         <th><?= i18n("Name")?></th>
-        <th><?= i18n("Horario")?></th>
-        <th><?= i18n("Descripcion")?></th>
-        <th><?= i18n("Numero Plazas")?></th>
-        <th><?= i18n("Entrenador")?></th>
+        <th><?= i18n("Schedule")?></th>
+        <th><?= i18n("Description")?></th>
+        <th><?= i18n("Seating Capacity")?></th>
+        <th><?= i18n("Trainer")?></th>
     </tr>
 
   <tr>
