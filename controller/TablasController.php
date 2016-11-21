@@ -3,6 +3,8 @@ require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../model/Tabla.php");
 require_once(__DIR__."/../model/TablaMapper.php");
+require_once(__DIR__."/../model/Exercise.php");
+require_once(__DIR__."/../model/ExerciseMapper.php");
 require_once(__DIR__."/../controller/BaseController.php");
 /**
  * Class ExerciseController
@@ -18,6 +20,7 @@ class TablasController extends BaseController {
   public function __construct() {
     parent::__construct();
     $this->tablaMapper = new TablaMapper();
+    $this->exerciseMapper = new ExerciseMapper();
     // Users controller operates in a "welcome" layout
     // different to the "default" layout where the internal
     // menu is displayed
@@ -42,7 +45,8 @@ class TablasController extends BaseController {
   public function add() {
     $tabla = new Tabla();
 
-    if ( isset($_POST["nombre"]) && isset($_POST["num_ejercicios"]) && isset($_POST["tipo"]) && isset($_POST["dificultad"])  ){
+    $selected = array();
+    if ( isset($_POST["nombre"]) && isset($_POST["num_ejercicios"]) && isset($_POST["tipo"]) && isset($_POST["dificultad"]) && isset($_POST["exercises"]) ) {
      // reaching via HTTP Post...
       // populate the User object with data form the form
    //die($_POST['entrenador']);
@@ -50,23 +54,18 @@ class TablasController extends BaseController {
       $tabla->setNum_ejercicios($_POST["num_ejercicios"]);
       $tabla->setTipo($_POST["tipo"]);
       $tabla->setDificultad($_POST["dificultad"]);
-
+      if (isset($_POST['exercises'])){
+        $selected = $_POST['exercises'];
+      }
 
       try{
 
       	$tabla->checkIsValidForAdd(); // if it fails, ValidationException
         if (!$this->tablaMapper->nameExists( $_POST["nombre"] ) ){
-           $this->tablaMapper->add($tabla);
+           $tableid = $this->tablaMapper->add($tabla);
+           $this->exerciseMapper->setExercises($selected,$tableid);
       	   $this->view->setFlash( "Tabla " . $tabla->getNombre() . " añadida correctamente" );
-      	  // POST-REDIRECT-GET
-      	  // Everything OK, we will redirect the user to the list of posts
-      	  // We want to see a message after redirection, so we establish
-      	  // a "flash" message (which is simply a Session variable) to be
-      	  // get in the view after redirection.
 
-      	  // perform the redirection. More or less:
-      	  // header("Location: index.php?controller=users&action=login")
-      	  // die();
       	  $this->view->redirect( "tablas", "index" );
           } else {
             $errors = array();
@@ -81,7 +80,13 @@ class TablasController extends BaseController {
       }
     }
     // Put the User object visible to the view
-    $this->view->setVariable("tablas", $tabla);
+    $this->view->setVariable("tabla", $tabla);
+
+    // Put the Tables visible to the view
+    $exercises = $this->exerciseMapper->findAll();
+    $this->view->setVariable("exercises", $exercises);
+    $this->view->setVariable("selected", $selected);
+
     // render the view (/view/users/register.php)
     $this->view->render("tablas", "add");
   }
@@ -144,13 +149,7 @@ class TablasController extends BaseController {
       throw new Exception("Not in session. Managing actions requires login");
     }
 
-    /*if (!isset($this->currentUser)) {
-      throw new Exception("Not in session. Managing actions requires login");
-    }*/
-    // TODO:Check if the current user is admin
-    //if ($post->getAuthor() != $this->currentUser) {
-    //  throw new Exception("logged user is not the author of the post id ".$postid);
-    //}
+
     // Get the User object from the database
     $tablaid = $_REQUEST["id"];
     $tabla = $this->tablaMapper->findById($tablaid);
@@ -165,22 +164,19 @@ class TablasController extends BaseController {
       $tabla->setNum_ejercicios($_POST["num_ejercicios"]);
       $tabla->setTipo($_POST["tipo"]);
       $tabla->setDificultad($_POST["dificultad"]);
-
+      if (isset($_POST['exercises'])){
+        $selected = $_POST['exercises'];
+      }
 
       try {
         // validate Post object
         $tabla->checkIsValidForUpdate(); // if it fails, ValidationException
         // update the Post object in the database
         $this->tablaMapper->update($tabla);
-        // POST-REDIRECT-GET
-        // Everything OK, we will redirect the user to the list of posts
-        // We want to see a message after redirection, so we establish
-        // a "flash" message (which is simply a Session variable) to be
-        // get in the view after redirection.
+        $this->exerciseMapper->updateExercises($selected,$tablaid);
+
         $this->view->setFlash( sprintf( i18n( "Tabla \"%s\" successfully updated"),$tabla->getNombre() ) );
-        // perform the redirection. More or less:
-        // header("Location: index.php?controller=posts&action=index")
-        // die();
+
         $this->view->redirect("tablas", "index");
       }catch(ValidationException $ex) {
         // Get the errors array inside the exepction...
@@ -189,11 +185,22 @@ class TablasController extends BaseController {
         $this->view->setVariable("errors", $errors);
       }
     }
+    else {
+      $selected = $this->exerciseMapper->exerciseByTableId($tablaid);
+    }
     // Put the User object visible to the view
     $this->view->setVariable("tabla", $tabla);
+
+    // Put the Tables visible to the view
+    $exercises = $this->exerciseMapper->findAll();
+    $this->view->setVariable("exercises", $exercises);
+    $this->view->setVariable("selected", $selected);
+
     // render the view (/view/users/edit.php)
     $this->view->render("tablas", "edit");
   }
+
+
   /**
    * Action to view a given user
    * @throws Exception If no such user of the given id is found
@@ -212,11 +219,18 @@ class TablasController extends BaseController {
 
     // find the Post object in the database
     $tabla = $this->tablaMapper->findById($tablaid);
+
     if ($tabla == NULL) {
       throw new Exception("No such tabla with id: ".$tablaid);
     }
     // put the Post object to the view
     $this->view->setVariable("tabla", $tabla);
+
+    // Put the Tables visible to the view
+    $exercises = $this->exerciseMapper->findAll();
+    $selected = $this->exerciseMapper->exerciseByTableId($tablaid);
+    $this->view->setVariable("exercises", $exercises);
+    $this->view->setVariable("selected", $selected);
     // render the view (/view/posts/view.php)
     $this->view->render("tablas", "view");
   }

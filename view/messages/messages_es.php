@@ -72,6 +72,7 @@
     "Machine"=>"Maquina",
     "Location"=>"Ubicación",
     "Users" => "Usuarios",
+    "There are not exercises defined" => "No hay ejercicios definidos",
     "" => "",
   )
 ?>

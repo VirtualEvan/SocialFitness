@@ -64,7 +64,7 @@
 			</div>
 			<?php endif; ?>
       <div class="help-block">
-        <?= isset($errors["type"])?$errors["type"]:"" ?>
+        <?= isset($errors["tables"])?$errors["tables"]:"" ?>
       </div>
     </div>
 

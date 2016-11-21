@@ -5,6 +5,8 @@
  $view = ViewManager::getInstance();
  $errors = $view->getVariable("errors");
  $tabla = $view->getVariable("tabla");
+ $exercises = $view->getVariable("exercises");
+ $selected = $view->getVariable("selected");
  $view->setVariable("title", "edit");
 ?>
 
@@ -35,14 +37,37 @@
    <div class="form-group">
             <label><?= i18n("Dificulty")?>:</label>
             <select name="dificultad" class="form-control">
-              <option value="alta" selected> <?= i18n("Hard") ?> </option>
-              <option value="media"> <?= i18n("Medium") ?> </option>
-              <option value="baja"> <?= i18n("Easy") ?> </option>
+              <option value="hard" selected> <?= i18n("Hard") ?> </option>
+              <option value="medium"> <?= i18n("Medium") ?> </option>
+              <option value="easy"> <?= i18n("Easy") ?> </option>
             </select>
             <div class="help-block">
               <?= isset($errors["dificultad"])?$errors["dificultad"]:"" ?>
    </div>
-    <input type="submit" class="btn btn-warning" name="submit" value="<?= i18n("Editar tabla")?>">
+
+   <div class="form-group">
+     <label><?= i18n("Exercises")?>:</label>
+     <?php if(count($exercises) > 0): ?>
+     <select multiple class="form-control" name="exercises[]">
+       <?php var_dump($exercises);
+         foreach($exercises as $exercise){
+       ?>
+         <option value="<?= $exercise->getId() ?>" <?php if ( in_array($exercise->getId(),$selected) ){echo "selected";} ?>>  <?= $exercise->getName() ?> </option>;
+       <?php
+         }
+       ?>
+     </select>
+   <?php else: ?>
+     <div class="alert alert-info">
+       <?= i18n("There are no exercises defined")?>
+     </div>
+     <?php endif; ?>
+     <div class="help-block">
+       <?= isset($errors["exercise"])?$errors["exercise"]:"" ?>
+     </div>
+   </div>
+
+    <input type="submit" class="btn btn-warning" name="submit" value="<?= i18n("Edit")?>">
 
   </form>
 </div>

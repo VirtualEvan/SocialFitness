@@ -99,6 +99,29 @@ class ExerciseMapper {
     return $exercises;
   }
 
+  public function setExercises ($exercises, $tableid) {
+    foreach($exercises as $value) {
+      $stmt = $this->db->prepare( "INSERT INTO ejercicio_tabla_ejercicios (id_tabla_ejercicios, id_ejercicio) VALUES (?,?)" );
+      $stmt->execute(array( $tableid, $value ) );
+    }
+  }
+
+  public function updateExercises ($exercises, $tableid) {
+    $this->db->exec( 'DELETE FROM ejercicio_tabla_ejercicios WHERE id_tabla_ejercicios='.$tableid );
+    foreach($exercises as $value) {
+      $stmt = $this->db->prepare( "INSERT INTO ejercicio_tabla_ejercicios (id_tabla_ejercicios, id_ejercicio) VALUES (?,?)" );
+      $stmt->execute(array( $tableid, $value ) );
+    }
+  }
+
+  public function exerciseByTableId($tableid){
+    $stmt = $this->db->prepare("SELECT id_ejercicio FROM ejercicio_tabla_ejercicios WHERE id_tabla_ejercicios=?");
+    $stmt->execute(array($tableid));
+    $ejercicios = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    return $ejercicios;
+  }
+
   /**
    * Checks if a given username is already in the database
    *TODO:here

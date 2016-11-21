@@ -29,6 +29,7 @@ class TablaMapper {
 
    $stmt->execute(array($tabla->getID(), $tabla->getNombre(),$tabla->getNum_ejercicios(), $tabla->getTipo(), $tabla->getDificultad() ) );
 
+   return $this->db->lastInsertId();
   }
   /**
    * Deletes a User into the database
