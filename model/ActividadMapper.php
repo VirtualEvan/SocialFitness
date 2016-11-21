@@ -1,6 +1,7 @@
 <?php
 // file: model/UserMapper.php
 require_once(__DIR__."/../core/PDOConnection.php");
+require_once(__DIR__."/../model/User.php");
 /**
  * Class UserMapper
  *
@@ -59,40 +60,33 @@ class ActividadMapper {
    * TODO: this
    */
   public function findById($actividadid){
-    $stmt = $this->db->prepare("SELECT * FROM actividad WHERE id_actividad=?");
+    $stmt = $this->db->prepare("SELECT * FROM actividad LEFT JOIN usuario ON id_usuario=entrenador WHERE id_actividad=?");
     $stmt->execute(array($actividadid));
     $actividad = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if($actividad != null) {
-      return new Actividad( $actividad["id_actividad"],
-       $actividad["nombre"],
-       $actividad["horario"],
-       $actividad['descripcion'],
-       $actividad["num_plazas"],
-       $actividad["entrenador"] );
+      $entrenador = new User( $actividad['id_usuario'],NULL,NULL, $actividad['nombre_usuario'] );
+      return new Actividad( $actividad["id_actividad"], $actividad["nombre"], $actividad["horario"], $actividad['descripcion'], $actividad["num_plazas"], $entrenador );
     } else {
       return NULL;
     }
   }
+
   /**
    * Retrieves all users
    * @throws PDOException if a database error occurs
    * @return mixed Array of Users instances
    */
   public function findAll() {
-    $stmt = $this->db->query( "SELECT * FROM actividad" );
+    $stmt = $this->db->query( "SELECT * FROM actividad LEFT JOIN usuario ON id_usuario=entrenador" );
     $actividades_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     $actividades = array();
 
     foreach ($actividades_db as $actividad) {
-      array_push( $actividades, new Actividad(
-        $actividad["id_actividad"], $actividad["nombre"],
-        $actividad["horario"],
-        $actividad["descripcion"],
-        $actividad["num_plazas"],
-        $actividad["entrenador"] ));
+        $entrenador = new User( $actividad['id_usuario'],NULL,NULL, $actividad['nombre_usuario'] );
+      array_push( $actividades, new Actividad( $actividad["id_actividad"], $actividad["nombre"], $actividad["horario"], $actividad['descripcion'], $actividad["num_plazas"], $entrenador ) );
     }
+
     return $actividades;
   }
   /**

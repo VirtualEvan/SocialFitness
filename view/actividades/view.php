@@ -20,7 +20,7 @@
         <th><?= i18n("Schedule")?></th>
         <th><?= i18n("Description")?></th>
         <th><?= i18n("Seating Capacity")?></th>
-        <th><?= i18n("Trainer")?></th>
+        <th><?= i18n("Coach")?></th>
     </tr>
 
   <tr>
@@ -37,7 +37,7 @@
       <?= htmlentities( $actividad->getNum_plazas() ) ?></a>
     </td>
     <td>
-      <?= htmlentities( $actividad->getEntrenador() ) ?></a>
+      <?= htmlentities( $actividad->getEntrenador()->getName() ) ?></a>
     </td>
 
   </tr>

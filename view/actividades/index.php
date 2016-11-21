@@ -29,7 +29,7 @@
         <th><?= i18n("Schedule")?></th>
         <th><?= i18n("Description")?></th>
         <th><?= i18n("Seating Capacity")?></th>
-        <th><?= i18n("Trainer")?></th>
+        <th><?= i18n("Coach")?></th>
         <?php
           if( $currentusertype == "admin"): ?>
             <th><?= i18n("Management options")?></th>
@@ -52,7 +52,7 @@
           <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getNum_plazas() ) ?></a>
         </td>
          <td>
-          <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getEntrenador() ) ?></a>
+          <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getEntrenador()->getName() ) ?></a>
         </td>
         <?php
           if( $currentusertype == "admin"): ?>
