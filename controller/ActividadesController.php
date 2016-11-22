@@ -223,7 +223,71 @@ class ActividadesController extends BaseController {
     }
     // put the Post object to the view
     $this->view->setVariable("actividad", $actividad);
+    // Put the Users visible to the view
+    $users = $this->userMapper->findAll();
+    $selected = $this->actividadMapper->usersByUserId($actividadid);
+    $this->view->setVariable("users", $users);
+    $this->view->setVariable("selected", $selected);
     // render the view (/view/posts/view.php)
     $this->view->render("actividades", "view");
   }
+
+  /**
+    * Action to add actividad
+    * @return void
+    */
+   public function inscription() {
+     if (!isset($_GET['id'])) {
+       throw new Exception("An activity id is required");
+     }
+
+     $actividad = $this->actividadMapper->findById($_GET['id']);
+     if ($actividad == NULL) {
+       throw new Exception("No such activity with id: ".$actividadid);
+     }
+
+     try{
+     	 $this->actividadMapper->alreadyInscribed($_GET['id'], $this->currentUser->getId());
+       $this->actividadMapper->checkCapacity($_GET['id']);
+       $this->actividadMapper->inscribe($_GET['id'], $this->currentUser->getId());
+
+   	   $this->view->setFlash( i18n( "Successfully inscribed" ) );
+
+       $this->view->redirect( "actividades", "index" );
+
+     }catch(ValidationException $ac) {
+      // Get the errors array inside the exepction...
+      $errors = $ac->getErrors();
+      // And put it to the view as "errors" variable
+      $this->view->setVariable("errors", $errors);
+     }
+     // obtain the data from the database
+     $actividades = $this->actividadMapper->findAll();
+     // put the array containing Post object to the view
+     $this->view->setVariable("actividad", $actividades);
+
+     // render the view (/view/users/register.php)
+     $this->view->render("actividades", "index");
+   }
+
+   public function leave() {
+     if (!isset($_GET["id"])) {
+       throw new Exception("ID is mandatory");
+     }
+
+     $actividadid = $_GET["id"];
+     $actividad = $this->actividadMapper->findById($actividadid);
+
+     if ($actividad == NULL) {
+       throw new Exception("No hay actividad con ese id: ".$actividadid);
+     }
+     // Delete the User object from the database
+     $this->actividadMapper->leave($actividadid, $this->currentUser->getId());
+
+     $this->view->setFlash( i18n( "Activity successfully left" ) );
+     // perform the redirection. More or less:
+     // header("Location: index.php?controller=posts&action=index")
+     // die();
+     $this->view->redirect("actividades", "view&id=".$actividadid);
+   }
 }

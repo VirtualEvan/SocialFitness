@@ -73,6 +73,11 @@
     "Location"=>"Ubicación",
     "Users" => "Usuarios",
     "There are not exercises defined" => "No hay ejercicios definidos",
+    "Inscription" => "Inscripción",
+    "Sign up" => "Apuntarse",
+    "Successfully inscribed" => "Inscrito satisfactoriamente",
+    "Leave" => "Abandonar",
+    "Activity successfully left" => " Actividad abandonada satisfactoriamente",
     "" => "",
   )
 ?>

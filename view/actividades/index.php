@@ -7,6 +7,7 @@
  $actividades = $view->getVariable("actividad");
  $currentuser = $view->getVariable("currentusername");
  $currentusertype = $view->getVariable("currentusertype");
+ $errors = $view->getVariable("errors");
 
 
  $view->setVariable("title", i18n("Activity  management"));
@@ -21,7 +22,15 @@
   <?php
     endif
   ?>
-
+  <?php
+  if(isset($errors["activity"])){
+  ?>
+    <div class="alert alert-danger">
+      <?= $errors["activity"] ?>
+    </div>
+  <?php
+  }
+  ?>
 
   <table class="table table-striped table-condensed">
       <tr class="info">
@@ -30,6 +39,7 @@
         <th><?= i18n("Description")?></th>
         <th><?= i18n("Seating Capacity")?></th>
         <th><?= i18n("Coach")?></th>
+        <th><?= i18n("Inscription")?></th>
         <?php
           if( $currentusertype == "admin"): ?>
             <th><?= i18n("Management options")?></th>
@@ -52,8 +62,11 @@
           <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getNum_plazas() ) ?></a>
         </td>
          <td>
-          <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getEntrenador()->getName() ) ?></a>
-        </td>
+           <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getEntrenador()->getName() ) ?></a>
+         </td>
+         <td>
+           <a href="index.php?controller=actividades&amp;action=inscription&amp;id=<?= $actividad->getId() ?>" class="btn btn-success"><?= i18n("Sign up") ?></a>
+         </td>
         <?php
           if( $currentusertype == "admin"): ?>
             <td>

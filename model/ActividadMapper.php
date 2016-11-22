@@ -103,4 +103,48 @@ class ActividadMapper {
     }
   }
 
+  public function alreadyInscribed($activityid, $userid) {
+    $stmt = $this->db->prepare( "SELECT count(id_usuario) FROM actividad_usuario WHERE id_usuario=? AND id_actividad=?" );
+    $stmt->execute(array($userid,$activityid));
+    $errors = array();
+    if ($stmt->fetchColumn() > 0) {
+      $errors["activity"] = "User already inscribed";
+      throw new ValidationException($errors, "User already inscribed");
+    }
+  }
+
+  public function checkCapacity($activityid) {
+    $stmt = $this->db->prepare( "SELECT count(id_actividad) FROM actividad_usuario WHERE id_actividad=?" );
+    $stmt->execute(array($activityid));
+    $inscribed = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $stmt = $this->db->prepare( "SELECT num_plazas FROM actividad WHERE id_actividad=?" );
+    $stmt->execute(array($activityid));
+    $capacity = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $errors = array();
+    if ($capacity["num_plazas"] <= $inscribed["count(id_actividad)"]) {
+      $errors["activity"] = "This activity is full";
+      throw new ValidationException($errors, "This activity is full");
+    }
+  }
+
+  public function inscribe($activityid,$userid) {
+    $stmt = $this->db->prepare( "INSERT INTO actividad_usuario (id_usuario, id_actividad) VALUES (?,?)" );
+    $stmt->execute( array( $userid, $activityid ) );
+  }
+
+  public function usersByUserId($actividadid) {
+    $stmt = $this->db->prepare("SELECT id_usuario FROM actividad_usuario WHERE id_actividad=?");
+    $stmt->execute(array($actividadid));
+    $users = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    return $users;
+  }
+
+  public function leave($activityid,$userid) {
+    $stmt = $this->db->prepare("DELETE from actividad_usuario WHERE id_actividad=? AND id_usuario=?");
+    $stmt->execute(array($activityid,$userid));
+  }
+
 }

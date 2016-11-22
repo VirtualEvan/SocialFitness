@@ -39,7 +39,7 @@
     <label><?= i18n("Coach")?>:</label>
     <select name="coach" class="form-control">
       <?php foreach ($coaches as $coach): ?>
-        <option value="<?= $coach->getId() ?>" <?php if($coach->getId()==$actividad->getEntrenador()){echo "selected";} ?> > <?= $coach->getName() ?> </option>
+        <option value="<?= $coach->getId() ?>" <?php if($coach->getId()==$actividad->getEntrenador()->getId()){echo "selected";} ?> > <?= $coach->getName() ?> </option>
       <?php endforeach; ?>
     </select>
     <?= isset($errors["coach"])?$errors["coach"]:"" ?>
