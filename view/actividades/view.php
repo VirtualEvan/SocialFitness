@@ -76,7 +76,7 @@
       <td>
         <?php
           if( ($currentuserid == $actividad->getEntrenador()->getId()) || ($currentuserid == $user->getId() ) ): ?>
-              <a href="index.php?controller=actividades&amp;action=leave&amp;id=<?= $actividad->getId() ?>" class="btn btn-danger"><?= i18n("Leave") ?></a>
+              <a href="index.php?controller=actividades&amp;action=leave&amp;id=<?= $actividad->getId() ?>&amp;user=<?= $user->getId() ?>" class="btn btn-danger"><?= i18n("Leave") ?></a>
         <?php
           endif
         ?>

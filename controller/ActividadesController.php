@@ -275,14 +275,19 @@ class ActividadesController extends BaseController {
        throw new Exception("ID is mandatory");
      }
 
+     if (!isset($_GET["user"])) {
+       throw new Exception("User is mandatory");
+     }
+
      $actividadid = $_GET["id"];
+     $userid = $_GET["user"];
      $actividad = $this->actividadMapper->findById($actividadid);
 
      if ($actividad == NULL) {
        throw new Exception("No hay actividad con ese id: ".$actividadid);
      }
      // Delete the User object from the database
-     $this->actividadMapper->leave($actividadid, $this->currentUser->getId());
+     $this->actividadMapper->leave($actividadid, $userid);
 
      $this->view->setFlash( i18n( "Activity successfully left" ) );
      // perform the redirection. More or less:
