@@ -47,8 +47,14 @@ CREATE TABLE IF NOT EXISTS `social_fitness`.`actividad` (
   `horario` VARCHAR(45) NOT NULL,
   `descripcion` VARCHAR(200) NOT NULL,
   `num_plazas` INT(3) NOT NULL,
-  `entrenador` INT(5) NOT NULL,
-  PRIMARY KEY (`id_actividad`))
+  `entrenador` INT(5) NULL,
+  PRIMARY KEY (`id_actividad`),
+  INDEX `fk_actividad_usuario_idx` (`entrenador` ASC),
+  CONSTRAINT `fk_actividad_usuario1`
+    FOREIGN KEY (`entrenador`)
+    REFERENCES `social_fitness`.`usuario` (`id_usuario`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -82,8 +88,8 @@ CREATE TABLE IF NOT EXISTS `social_fitness`.`ejercicio` (
   CONSTRAINT `fk_ejercicio_maquina1`
     FOREIGN KEY (`id_maquina`)
     REFERENCES `social_fitness`.`maquina` (`id_maquina`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -120,8 +126,8 @@ CREATE TABLE IF NOT EXISTS `social_fitness`.`sesion` (
   CONSTRAINT `fk_sesion_usuario1`
     FOREIGN KEY (`id_usuario`)
     REFERENCES `social_fitness`.`usuario` (`id_usuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -139,13 +145,13 @@ CREATE TABLE IF NOT EXISTS `social_fitness`.`ejercicio_tabla_ejercicios` (
   CONSTRAINT `fk_tabla_ejercicios_has_ejercicio_tabla_ejercicios1`
     FOREIGN KEY (`id_tabla_ejercicios`)
     REFERENCES `social_fitness`.`tabla_ejercicios` (`id_tabla_ejercicios`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_tabla_ejercicios_has_ejercicio_ejercicio1`
     FOREIGN KEY (`id_ejercicio`)
     REFERENCES `social_fitness`.`ejercicio` (`id_ejercicio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -163,13 +169,13 @@ CREATE TABLE IF NOT EXISTS `social_fitness`.`sesion_tabla_ejercicios` (
   CONSTRAINT `fk_tabla_ejercicios_has_sesion_tabla_ejercicios1`
     FOREIGN KEY (`id_tabla_ejercicios`)
     REFERENCES `social_fitness`.`tabla_ejercicios` (`id_tabla_ejercicios`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_tabla_ejercicios_has_sesion_sesion1`
     FOREIGN KEY (`id_sesion`)
     REFERENCES `social_fitness`.`sesion` (`id_sesion`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -187,13 +193,13 @@ CREATE TABLE IF NOT EXISTS `social_fitness`.`tabla_ejercicios_usuario` (
   CONSTRAINT `fk_tabla_ejercicios_has_usuario_tabla_ejercicios1`
     FOREIGN KEY (`id_tabla_ejercicios`)
     REFERENCES `social_fitness`.`tabla_ejercicios` (`id_tabla_ejercicios`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_tabla_ejercicios_has_usuario_usuario1`
     FOREIGN KEY (`id_usuario`)
     REFERENCES `social_fitness`.`usuario` (`id_usuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -211,13 +217,13 @@ CREATE TABLE IF NOT EXISTS `social_fitness`.`actividad_usuario` (
   CONSTRAINT `fk_usuario_has_actividad_usuario1`
     FOREIGN KEY (`id_usuario`)
     REFERENCES `social_fitness`.`usuario` (`id_usuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_usuario_has_actividad_actividad1`
     FOREIGN KEY (`id_actividad`)
     REFERENCES `social_fitness`.`actividad` (`id_actividad`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -235,13 +241,13 @@ CREATE TABLE IF NOT EXISTS `social_fitness`.`actividad_maquina` (
   CONSTRAINT `fk_maquina_has_actividad_maquina1`
     FOREIGN KEY (`id_maquina`)
     REFERENCES `social_fitness`.`maquina` (`id_maquina`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_maquina_has_actividad_actividad1`
     FOREIGN KEY (`id_actividad`)
     REFERENCES `social_fitness`.`actividad` (`id_actividad`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -259,13 +265,13 @@ CREATE TABLE IF NOT EXISTS `social_fitness`.`ejercicio_usuario` (
   CONSTRAINT `fk_usuario_has_ejercicio_usuario1`
     FOREIGN KEY (`id_usuario`)
     REFERENCES `social_fitness`.`usuario` (`id_usuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_usuario_has_ejercicio_ejercicio1`
     FOREIGN KEY (`id_ejercicio`)
     REFERENCES `social_fitness`.`ejercicio` (`id_ejercicio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -283,13 +289,13 @@ CREATE TABLE IF NOT EXISTS `social_fitness`.`ejercicio_sesion` (
   CONSTRAINT `fk_ejercicio_has_sesion_ejercicio1`
     FOREIGN KEY (`id_ejercicio`)
     REFERENCES `social_fitness`.`ejercicio` (`id_ejercicio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_ejercicio_has_sesion_sesion1`
     FOREIGN KEY (`id_sesion`)
     REFERENCES `social_fitness`.`sesion` (`id_sesion`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 /* Then insert some users for testing: */
