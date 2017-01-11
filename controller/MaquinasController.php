@@ -54,7 +54,7 @@ class MaquinasController extends BaseController {
    * @return void
    */
   public function add() {
-    //$this->checkPrivileges("admin");
+    $this->checkPrivileges("admin");
     $maquina = new Maquina();
 
     if (isset($_POST["name"]) && isset($_POST["ubicacion"])){ // reaching via HTTP Post...
@@ -113,7 +113,7 @@ class MaquinasController extends BaseController {
    * @return void
    */
   public function delete() {
-    //$this->checkPrivileges("admin");
+    $this->checkPrivileges("admin");
     if (!isset($_GET["id"])) {
       throw new Exception("ID is mandatory");
     }
@@ -163,7 +163,7 @@ class MaquinasController extends BaseController {
    */
 
   public function edit() {
-  //  $this->checkPrivileges("admin");
+    $this->checkPrivileges("admin");
     if (!isset($_REQUEST["id"])) {
       throw new Exception("A maquina id is mandatory");
     }

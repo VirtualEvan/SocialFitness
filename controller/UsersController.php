@@ -55,15 +55,21 @@ class UsersController extends BaseController {
     $this->view->setLayout('welcome');
     if ( isset( $_POST["email"] ) && isset( $_POST["password"] ) ){ // reaching via HTTP Post...
       //process login form
-      $username = $this->userMapper->isValidUser( $_POST["email"], $_POST["password"]);
-      if ( $username != NULL ) {
+      $user = $this->userMapper->isValidUser( $_POST["email"], $_POST["password"]);
+      if ( $user != NULL ) {
 
-        $_SESSION["currentid"]=$username->getId();
-        $_SESSION["currentuser"]=$username->getName();
-      	$_SESSION["currenttype"]=$username->getType();
+        $_SESSION["currentid"]=$user->getId();
+        $_SESSION["currentuser"]=$user->getName();
+      	$_SESSION["currenttype"]=$user->getType();
 
       	// send user to the restricted area (HTTP 302 code)
-      	$this->view->redirect("users", "index");
+        if($user->getType() == "admin" || $user->getType() == "coach"){
+          $this->view->redirect("users", "index");
+        }
+        else{
+          $this->view->redirect("users", "view&id=".$user->getId());
+        }
+
 
       }else{
       	$errors = array();
@@ -81,6 +87,7 @@ class UsersController extends BaseController {
     * @return void
     */
   public function index() {
+    $this->checkPrivileges("admin","coach");
 
     // obtain the data from the database
     $users = $this->userMapper->findAll();
@@ -347,6 +354,9 @@ class UsersController extends BaseController {
   public function view(){
     if (!isset($_GET["id"])) {
       throw new Exception("ID is mandatory");
+    }
+    if ( $this->currentUser->getType() == "athlete" && $_GET["id"] != $this->currentUser->getId()) {
+      throw new Exception("You dont have permissions to do that");
     }
 
     $userid = $_GET["id"];

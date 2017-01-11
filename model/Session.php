@@ -180,16 +180,16 @@ class Session {
   public function checkIsValidForAdd() {
       $errors = array();
       if (strlen(trim($this->name)) == 0 ) {
-  $errors["name"] = "name is mandator";
+  $errors["name"] = "Mame is mandatory";
       }
       if (sizeof(trim($this->date)) < 0 ) {
-	$errors["date"] = "date is mandator";
+	$errors["date"] = "Date is mandator";
       }
       if (strlen(trim($this->description_session)) == 0 ) {
-	$errors["description_session"] = "description_session is mandatory";
+	$errors["session_description"] = "A description is mandatory";
       }
       if (sizeof($errors) > 0){
-	throw new ValidationException($errors, "post is not valid");
+	throw new ValidationException($errors, "Session is not valid");
       }
   }
 

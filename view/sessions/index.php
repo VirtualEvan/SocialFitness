@@ -22,7 +22,7 @@
   <tr class="info">
   <th><?= i18n("Name")?></th>
   <th><?= i18n("Description")?></th>
-	<th><?= i18n("Time")?></th>
+	<th><?= i18n("Duration")?></th>
 	<th><?= i18n("Date")?></th>
   <th><?= i18n("Options")?></th>
 

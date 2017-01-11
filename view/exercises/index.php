@@ -40,10 +40,10 @@
           <a href="index.php?controller=exercises&amp;action=view&amp;id=<?= $exercise->getId() ?>"><?= htmlentities( $exercise->getName() ) ?></a>
         </td>
         <td>
-          <a href="index.php?controller=exercises&amp;action=view&amp;id=<?= $exercise->getId() ?>"><?= htmlentities( $exercise->getType() ) ?></a>
+          <a href="index.php?controller=exercises&amp;action=view&amp;id=<?= $exercise->getId() ?>"><?= htmlentities( i18n($exercise->getType()) ) ?></a>
         </td>
         <td>
-          <a href="index.php?controller=exercises&amp;action=view&amp;id=<?= $exercise->getId() ?>"><?= htmlentities( $exercise->getDifficulty() ) ?></a>
+          <a href="index.php?controller=exercises&amp;action=view&amp;id=<?= $exercise->getId() ?>"><?= htmlentities( i18n($exercise->getDifficulty()) ) ?></a>
         </td>
         <td>
           <a href="index.php?controller=exercises&amp;action=view&amp;id=<?= $exercise->getId() ?>"><?= htmlentities( $exercise->getMachine()->getName() ) ?></a>

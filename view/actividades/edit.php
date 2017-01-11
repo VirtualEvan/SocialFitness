@@ -9,28 +9,28 @@
 ?>
 
 <div class="col-md-12 button-buffer">
-  <h1><?= i18n("Editar actividad")?></h1>
+  <h1><?= i18n("Edit activity")?></h1>
   <form action="index.php?controller=actividades&amp;action=edit&amp;id=<?= $actividad->getId() ?>" method="POST">
   <div class="form-group">
-      <label><?= i18n("Nombre")?>:</label>
+      <label><?= i18n("Name")?>:</label>
       <input type="text" class="form-control" name="nombre" value="<?= $actividad->getNombre() ?>">
       <?= isset($errors["nombre"])?$errors["nombre"]:"" ?>
   </div>
 
   <div class="form-group">
-      <label><?= i18n("Horario")?>:</label>
+      <label><?= i18n("Schedule")?>:</label>
       <input type="text" class="form-control" name="horario" value="<?= $actividad->getHorario() ?>">
       <?= isset($errors["horario"])?$errors["horario"]:"" ?>
   </div>
 
   <div class="form-group">
-      <label><?= i18n("Descripcion")?>:</label>
+      <label><?= i18n("Description")?>:</label>
       <input type="text" class="form-control" name="descripcion" value="<?= $actividad->getDescripcion() ?>">
       <?= isset($errors["descripcion"])?$errors["descripcion"]:"" ?>
   </div>
 
   <div class="form-group">
-      <label><?= i18n("Numero de plazas")?>:</label>
+      <label><?= i18n("Seating Capacity")?>:</label>
       <input type="text" class="form-control" name="num_plazas" value="<?= $actividad->getNum_plazas() ?>">
       <?= isset($errors["num_plazas"])?$errors["num_plazas"]:"" ?>
   </div>

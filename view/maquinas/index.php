@@ -5,16 +5,20 @@
   $view = ViewManager::getInstance();
 
   $maquinas = $view->getVariable("maquinas");
-  $currentmaquina = $view->getVariable("currentmaquinaname");
+  $currentusertype = $view->getVariable("currentusertype");
 
-  $view->setVariable("title", i18n("Maquinas"));
+  $view->setVariable("title", i18n("Machines"));
 ?>
 <div class="col-md-12">
-<h1><?=i18n("Gestion Maquinas")?></h1>
+<h1><?=i18n("Machine management")?></h1>
 
-<?php //if (isset($currentmaquina)): ?>
 <div class="form-group">
-  <a href="index.php?controller=maquinas&amp;action=add" class="btn btn-info"><?= i18n("Add machine") ?></a>
+  <?php
+    if( $currentusertype == "admin"): ?>
+      <p><a href="index.php?controller=maquinas&amp;action=add" class="btn btn-info"><?= i18n("Add machine") ?></a></p>
+  <?php
+    endif
+  ?>
 </div>
 <?php //endif; ?>
 <table class="table table-striped table-condensed">
@@ -22,7 +26,12 @@
 
     <th><?= i18n("Name")?></th>
     <th><?= i18n("Location")?></th>
-    <th><?= i18n("Options")?></th>
+    <?php
+      if( $currentusertype == "admin"): ?>
+        <th><?= i18n("Options")?></th>
+    <?php
+      endif
+    ?>
 
 </tr>
   <?php foreach ($maquinas as $maquina): ?>
@@ -33,11 +42,16 @@
     <td>
       <a href="index.php?controller=maquinas&amp;action=view&amp;id=<?= $maquina->getId() ?>"><?= htmlentities( $maquina->getUbicacion() ) ?></a>
     </td>
-    <td>
-      <a href="index.php?controller=maquinas&amp;action=delete&amp;id=<?= $maquina->getId() ?>" class="btn btn-danger"><?= i18n("Delete") ?></a>
+      <?php
+        if( $currentusertype == "admin"): ?>
+          <td>
+            <a href="index.php?controller=maquinas&amp;action=delete&amp;id=<?= $maquina->getId() ?>" class="btn btn-danger"><?= i18n("Delete") ?></a>
 
-      <a href="index.php?controller=maquinas&amp;action=edit&amp;id=<?= $maquina->getId() ?>" class="btn btn-warning"><?= i18n("Edit") ?></a>
-    </td>
+            <a href="index.php?controller=maquinas&amp;action=edit&amp;id=<?= $maquina->getId() ?>" class="btn btn-warning"><?= i18n("Edit") ?></a>
+          </td>
+      <?php
+        endif
+      ?>
   </tr>
 <?php endforeach; ?>
 </table>

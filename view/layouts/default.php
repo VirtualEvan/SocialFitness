@@ -4,6 +4,7 @@
  require_once(__DIR__."/../../core/ViewManager.php");
  $view = ViewManager::getInstance();
  $currentuser = $view->getVariable("currentusername");
+ $currentusertype = $view->getVariable("currentusertype");
  $currentuserid = $view->getVariable("currentuserid");
  if (!isset($currentuser)){
    $view->redirect("users", "login");
@@ -28,12 +29,27 @@
     <!-- header -->
     <header class="col-md-12">
       <h1>SocialFitness</h1>
-      <h3><?= sprintf(i18n("Logged as %s"), $currentuser) ?></h3  >
+      <h3><?= sprintf(i18n("Logged as %s. User permissions: %s"), $currentuser, i18n($currentusertype)) ?></h3  >
       <nav id="menu">
       	<ul class="nav nav-tabs">
-        	<li class=<?php if ($_GET['controller']=="users") {echo "active"; } else {echo "noactive";}?>>
-            <a href="index.php?controller=users&amp;action=index"><?= i18n("Users") ?></a>
-          </li>
+          <?php
+            if( $currentusertype == "admin" || $currentusertype == "coach" ): ?>
+              <td>
+                <li class=<?php if ($_GET['controller']=="users") {echo "active"; } else {echo "noactive";}?>>
+                  <a href="index.php?controller=users&amp;action=index"><?= i18n("Users") ?></a>
+                </li>
+              </td>
+          <?php
+            else:
+          ?>
+              <td>
+                <li class=<?php if ($_GET['controller']=="users") {echo "active"; } else {echo "noactive";}?>>
+                  <a href="index.php?controller=users&amp;action=view&amp;id=<?=$currentuserid?>"><?= i18n("Profile") ?></a>
+                </li>
+              </td>
+          <?php
+            endif
+          ?>
           <li class=<?php if ($_GET['controller']=="exercises") {echo "active"; } else {echo "noactive";}?>>
             <a href="index.php?controller=exercises&amp;action=index"><?= i18n("Exercises") ?></a>
           </li>

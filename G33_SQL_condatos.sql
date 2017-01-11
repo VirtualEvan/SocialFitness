@@ -346,7 +346,7 @@ INSERT INTO ejercicio (id_ejercicio, nombre_ejercicio, tipo_ejercicio, detalles_
 INSERT INTO ejercicio (id_ejercicio, nombre_ejercicio, tipo_ejercicio, detalles_ejercicio, dificultad_ejercicio, id_maquina)
     VALUES (4, 'Pesas', 'strength', 'Subir y bajar', 'medium', 6);
 INSERT INTO ejercicio (id_ejercicio, nombre_ejercicio, tipo_ejercicio, detalles_ejercicio, dificultad_ejercicio, id_maquina)
-    VALUES (5, 'Gimnasia', 'felxibility', 'Sentarse sobre la esfera y estirar', 'hard', 3);
+    VALUES (5, 'Gimnasia', 'flexibility', 'Sentarse sobre la esfera y estirar', 'hard', 3);
 INSERT INTO ejercicio (id_ejercicio, nombre_ejercicio, tipo_ejercicio, detalles_ejercicio, dificultad_ejercicio)
     VALUES (6, 'Respiración', 'endurance', 'Respirar normalmente', 'easy');
 
@@ -354,7 +354,7 @@ INSERT INTO ejercicio (id_ejercicio, nombre_ejercicio, tipo_ejercicio, detalles_
 INSERT INTO tabla_ejercicios (id_tabla_ejercicios, nombre, num_ejercicios, tipo, dificultad)
     VALUES (1, 'Tabla de fuerza',2, 'strenght', 'hard');
 INSERT INTO tabla_ejercicios (id_tabla_ejercicios, nombre, num_ejercicios, tipo, dificultad)
-    VALUES (2, 'Tabla de flexibilidad',1, 'felxibility', 'medium');
+    VALUES (2, 'Tabla de flexibilidad',1, 'flexibility', 'medium');
 INSERT INTO tabla_ejercicios (id_tabla_ejercicios, nombre, num_ejercicios, tipo, dificultad)
     VALUES (3, 'Tabla de resistencia',3, 'endurance', 'easy');
 

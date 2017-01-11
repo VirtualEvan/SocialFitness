@@ -36,7 +36,7 @@ if (!isset($currentuser)){
     </div>
 
     <div class="form-group">
-      <label><?= i18n("Time")?>:</label>
+      <label><?= i18n("Duration")?>:</label>
        <input type="text" class="form-control" name="time" value="<?= $session->getTime() ?>">
        <div class="help-block">
       <?= isset($errors["time"])?$errors["time"]:"" ?><br>

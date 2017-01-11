@@ -27,15 +27,15 @@
       </div>
 
     <div class="form-group">
-    	  <label><?= i18n("Description session")?>:</label>
+    	  <label><?= i18n("Description")?>:</label>
          <input type="text" class="form-control" name="description_session" value="">
          <div class="help-block">
-          <?= isset($errors["description_session"])?$errors["description_session"]:"" ?><br>
+          <?= isset($errors["session_description"])?$errors["description_session"]:"" ?><br>
           </div>
         </div>
 
     <div class="form-group">
-    	  <label><?= i18n("Time")?>:</label>
+    	  <label><?= i18n("Duration")?>:</label>
          <input type="text" class="form-control" name="time" value="">
          <div class="help-block">
           <?= isset($errors["time"])?$errors["time"]:"" ?><br>
