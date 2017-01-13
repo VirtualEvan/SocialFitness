@@ -204,8 +204,8 @@ class User {
     }
 
     try{
-      if (strlen($this->name) < 5) {
-	       $errors["name"] = "Name must be at least 5 characters length";
+      if (strlen($this->name) < 3) {
+	       $errors["name"] = "Name must be at least 3 characters length";
       }
       if (strlen($this->password) != 0){
         if (strlen($this->password) < 5) {

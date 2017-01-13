@@ -225,7 +225,7 @@ class ActividadesController extends BaseController {
     $this->view->setVariable("actividad", $actividad);
     // Put the Users visible to the view
     $users = $this->userMapper->findAll();
-    $selected = $this->actividadMapper->usersByUserId($actividadid);
+    $selected = $this->actividadMapper->usersByActivityId($actividadid);
     $this->view->setVariable("users", $users);
     $this->view->setVariable("selected", $selected);
     // render the view (/view/posts/view.php)

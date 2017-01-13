@@ -46,7 +46,7 @@
   </tr>
 </table>
 
-<h4><?=i18n("Assigned training tables")?></h4>
+<h4><?=i18n("Inscribed users")?></h4>
 <table class="table table-striped table-condensed">
   <tr class="info">
     <th><?= i18n("Name")?></th>

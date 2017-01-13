@@ -134,7 +134,7 @@ class ActividadMapper {
     $stmt->execute( array( $userid, $activityid ) );
   }
 
-  public function usersByUserId($actividadid) {
+  public function usersByActivityId($actividadid) {
     $stmt = $this->db->prepare("SELECT id_usuario FROM actividad_usuario WHERE id_actividad=?");
     $stmt->execute(array($actividadid));
     $users = $stmt->fetchAll(PDO::FETCH_COLUMN);

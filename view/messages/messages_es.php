@@ -94,6 +94,15 @@
     "endurance" => "resistencia",
     "strength" => "fuerza",
     "flexibility" => "flexibilidad",
+    "Send notification" => "Enviar notificación",
+    "Message" => "Mensaje",
+    "Send" => "Enviar",
+    "No recipients selected" => "No se han seleccionado destinatarios",
+    "Notification sent successfully" => "Notificación enviada satisfactoriamente",
+    "Error sending notification" => "Error al enviar la notificación",
+    "Inscribed users" => "Usuarios inscritos",
+    "SocialFitness notification" => "Notificación de SocialFitness",
+    "No message to send" => "No hay mensaje para enviar",
     "" => "",
   )
 ?>

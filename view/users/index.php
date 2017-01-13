@@ -14,12 +14,20 @@
 
 <div class="col-md-12">
   <h1><?=i18n("User management")?></h1>
+  <p>
   <?php
     if( $currentusertype == "admin"): ?>
-      <p><a href="index.php?controller=users&amp;action=add" class="btn btn-info"><?= i18n("Add user"); ?></a></p>
+      <a href="index.php?controller=users&amp;action=add" class="btn btn-info"><?= i18n("Add user"); ?></a>
   <?php
     endif
   ?>
+  <?php
+    if( $currentusertype != "athlete"): ?>
+      <a href="index.php?controller=users&amp;action=notify" class="btn btn-success"><?= i18n("Send notification"); ?></a>
+  <?php
+    endif
+  ?>
+  </p>
   <table class="table table-striped table-condensed">
     <tr class="info">
       <th><?= i18n("Name")?></th>

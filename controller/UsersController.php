@@ -7,6 +7,8 @@ require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../model/UserMapper.php");
 require_once(__DIR__."/../model/Tabla.php");
 require_once(__DIR__."/../model/TablaMapper.php");
+require_once(__DIR__."/../model/Actividad.php");
+require_once(__DIR__."/../model/ActividadMapper.php");
 
 require_once(__DIR__."/../controller/BaseController.php");
 
@@ -395,4 +397,80 @@ class UsersController extends BaseController {
 
   }
 
+  /**
+    * Action to notify
+    * @return void
+    */
+   public function notify() {
+     $this->checkPrivileges("admin","coach");
+     $activitymapper = new ActividadMapper();
+     if(isset($_POST["submit"])){
+       if(empty($_POST['message'])){
+         $users = $this->userMapper->findAll();
+
+         $activities = $activitymapper->findAll();
+
+         $this->view->setVariable("users", $users);
+         $this->view->setVariable("activities", $activities);
+         $this->view->setFlash( i18n("No message to send") );
+
+         // render the view (/view/users/notify.php)
+         $this->view->redirect("users", "notify");
+       }
+
+       if (isset($_POST["users"]) || isset($_POST["activities"])){ // reaching via HTTP Post...
+         try{
+            $usermails = array();
+            if(isset($_POST["users"])){
+              foreach($_POST["users"] as $usr){
+                array_push($usermails, $this->userMapper->findById($usr)->getEmail());
+              }
+            }
+
+            if(isset($_POST["activities"])){
+              foreach($_POST["activities"] as $act){
+                foreach($activitymapper->usersByActivityId($act) as $usr ){
+                  $mail = $this->userMapper->findById($usr)->getEmail();
+                  if(!in_array($mail, $usermails))
+                    array_push($usermails, $mail);
+                }
+              }
+            }
+
+            $email_to = implode(',', $usermails); // your email address
+            $email_subject = i18n('SocialFitness notification'); // email subject line
+            $message = $_POST['message'];
+            $extra = "From: socialfitnessabp@gmail.com\r\nReturn-Path: socialfitnessabp@gmail.com". "\r\n" . "Bcc: " . $email_to;
+
+            if(mail('usuarios', $email_subject, $message, $extra)){
+              $this->view->setFlash( i18n("Notification sent successfully") );
+              $this->view->redirect( "users", "notify" );
+            } else {
+              $this->view->setFlash( i18n("Error sending notification") );
+            }
+         }catch(Exception $ex) {
+           // Get the errors array inside the exepction...
+           //$errors = $ex->getErrors();
+           //$mails = $_POST['mails'];
+           // And put it to the view as "errors" variable
+           echo $ex;
+           die;
+           //$this->view->setVariable("errors", $ex);
+         }
+       }
+       else{
+         $this->view->setFlash( i18n("No recipients selected") );
+       }
+
+     }
+     $users = $this->userMapper->findAll();
+
+     $activities = $activitymapper->findAll();
+
+     $this->view->setVariable("users", $users);
+     $this->view->setVariable("activities", $activities);
+
+     // render the view (/view/users/notify.php)
+     $this->view->render("users", "notify");
+   }
 }
