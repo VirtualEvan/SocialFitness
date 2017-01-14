@@ -123,7 +123,7 @@ class ReservationMapper {
 
     $errors = array();
     if ($capacity["num_plazas"] <= $inscribed["count(id_reserva)"]) {
-      $errors["activity"] = "This activity is full";
+      $errors["activity"] = i18n("This activity is full");
       throw new ValidationException($errors, "This activity is full");
     }
   }

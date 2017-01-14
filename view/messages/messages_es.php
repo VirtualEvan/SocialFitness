@@ -114,6 +114,7 @@
     "Edit reservation" => "Editar reserva",
     "Activity successfully added" => "Actividad añadida satisfactoriamente",
     "Activities reservations" => "Reservas de actividades",
+    "This activity is full" => "Esta actividad está completa",
     "" => "",
   )
 ?>

@@ -205,6 +205,8 @@ class ReservationsController extends BaseController {
       $this->view->setVariable("errors", $errors);
      }
 
+     $this->view->setFlash( i18n( $errors[array_keys($errors)[0]] ) );
+
      // render the view (/view/users/register.php)
      $this->view->redirect("actividades", "view&id=".$activity);
    }
