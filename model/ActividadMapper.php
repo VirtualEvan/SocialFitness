@@ -134,12 +134,34 @@ class ActividadMapper {
     $stmt->execute( array( $userid, $activityid ) );
   }
 
-  public function usersByActivityId($actividadid) {
-    $stmt = $this->db->prepare("SELECT id_usuario FROM actividad_usuario WHERE id_actividad=?");
-    $stmt->execute(array($actividadid));
+  public function usersByReservationId($reservationid) {
+    $stmt = $this->db->prepare("SELECT id_usuario FROM reserva_usuario WHERE id_reserva=?");
+    $stmt->execute(array($reservationid));
     $users = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
     return $users;
+  }
+
+  public function reservationsByActivityId($activityid){
+    $stmt = $this->db->prepare("SELECT id_reserva FROM reserva WHERE actividad=?");
+    $stmt->execute(array($activityid));
+    $reservations = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    return $reservations;
+  }
+
+  public function getFullActivity($userid){
+    $stmt = $this->db->prepare("SELECT actividad.nombre, horario, usuario.nombre_usuario
+                                FROM reserva, reserva_usuario, actividad, usuario
+                                WHERE reserva_usuario.id_usuario=?
+                                AND reserva_usuario.id_reserva = reserva.id_reserva
+                                AND reserva.actividad = actividad.id_actividad
+                                AND actividad.entrenador = usuario.id_usuario
+                                ");
+    $stmt->execute(array($userid));
+    $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $reservations;
   }
 
   public function leave($activityid,$userid) {

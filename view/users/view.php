@@ -9,7 +9,8 @@
  $selected = $view->getVariable("selected");
  $currentuser = $view->getVariable("currentusername");
  $currentuserid = $view->getVariable("currentuserid");
- $currentusertype = $view->getVariable("currentusertype")
+ $currentusertype = $view->getVariable("currentusertype");
+ $activities = $view->getVariable("activities");
  ?>
  <div class="col-md-12">
   <?php
@@ -77,6 +78,33 @@
       </tr>
     <?php
       }
+      endforeach;
+    ?>
+  </table>
+
+  <h4><?=i18n("Activities reservations")?></h4>
+  <table class="table table-striped table-condensed">
+    <tr class="info">
+      <th><?= i18n("Activity")?></th>
+      <th><?= i18n("Schedule")?></th>
+      <th><?= i18n("Coach")?></th>
+    </tr>
+
+    <?php
+      foreach ($activities as $activitie):
+    ?>
+      <tr>
+        <td>
+          <a href="index.php?controller=tablas&amp;action=view&amp;id=<?= $table->getId() ?>"><?= htmlentities( $activitie['nombre'] ) ?></a>
+        </td>
+        <td>
+          <a href="index.php?controller=tablas&amp;action=view&amp;id=<?= $table->getId() ?>"><?= htmlentities( $activitie['horario'] ) ?></a>
+        </td>
+        <td>
+          <a href="index.php?controller=tablas&amp;action=view&amp;id=<?= $table->getId() ?>"><?= htmlentities( $activitie['nombre_usuario'] ) ?></a>
+        </td>
+      </tr>
+    <?php
       endforeach;
     ?>
   </table>

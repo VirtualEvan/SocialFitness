@@ -52,8 +52,7 @@
       <tr class="info">
         <th></th>
         <th><?= i18n("Name")?></th>
-        <th><?= i18n("Schedule")?></th>
-        <th><?= i18n("Seating Capacity")?></th>
+        <th><?= i18n("Description")?></th>
         <th><?= i18n("Coach")?></th>
       </tr>
       <?php foreach ($activities as $actividad): ?>
@@ -65,10 +64,7 @@
           <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getNombre() ) ?></a>
         </td>
         <td>
-          <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getHorario() ) ?></a>
-        </td>
-         <td>
-          <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getNum_plazas() ) ?></a>
+          <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getDescripcion() ) ?></a>
         </td>
          <td>
            <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getEntrenador()->getName() ) ?></a>

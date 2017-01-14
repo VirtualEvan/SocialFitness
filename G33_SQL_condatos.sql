@@ -454,6 +454,18 @@ INSERT INTO reserva_usuario (id_usuario, id_reserva)
     VALUES (3,1);
 INSERT INTO reserva_usuario (id_usuario, id_reserva)
     VALUES (3,4);
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
+    VALUES (1,4);
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
+    VALUES (1,11);
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
+    VALUES (2,9);
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
+    VALUES (2,4);
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
+    VALUES (3,6);
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
+    VALUES (3,8);
 
 /* Then insert some relations machines_activities for testing: */
 INSERT INTO actividad_maquina (id_maquina, id_actividad)

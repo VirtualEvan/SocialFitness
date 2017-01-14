@@ -375,6 +375,11 @@ class UsersController extends BaseController {
     // Put the Tables visible to the view
     $tables = $this->tableMapper->findAll();
     $selected = $this->userMapper->tablesByUserId($userid);
+
+    $activitymapper = new ActividadMapper();
+    $activities = $activitymapper->getFullActivity($userid);
+
+    $this->view->setVariable("activities", $activities);
     $this->view->setVariable("tables", $tables);
     $this->view->setVariable("selected", $selected);
 
@@ -429,10 +434,12 @@ class UsersController extends BaseController {
 
             if(isset($_POST["activities"])){
               foreach($_POST["activities"] as $act){
-                foreach($activitymapper->usersByActivityId($act) as $usr ){
-                  $mail = $this->userMapper->findById($usr)->getEmail();
-                  if(!in_array($mail, $usermails))
-                    array_push($usermails, $mail);
+                foreach($activitymapper->reservationsByActivityId($act) as $res){
+                  foreach($activitymapper->usersByReservationId($res) as $usr ){
+                    $mail = $this->userMapper->findById($usr)->getEmail();
+                    if(!in_array($mail, $usermails))
+                      array_push($usermails, $mail);
+                  }
                 }
               }
             }

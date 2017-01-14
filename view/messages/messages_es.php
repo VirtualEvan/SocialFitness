@@ -113,8 +113,7 @@
     "Reservation suscessfully updated" => "Reserva modificada satisfactoriamente",
     "Edit reservation" => "Editar reserva",
     "Activity successfully added" => "Actividad añadida satisfactoriamente",
-    "" => "",
-    "" => "",
+    "Activities reservations" => "Reservas de actividades",
     "" => "",
   )
 ?>
