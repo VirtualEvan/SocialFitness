@@ -26,8 +26,8 @@ class ActividadMapper {
    * @return void
    */
   public function add($actividad) {
-    $stmt = $this->db->prepare( "INSERT INTO actividad (id_actividad, nombre, horario, descripcion, num_plazas, entrenador) values (?,?,?,?,?,?)" );
-   $stmt->execute(array($actividad->getID(), $actividad->getNombre(),$actividad->getHorario(), $actividad->getDescripcion(), $actividad->getNum_plazas(), $actividad->getEntrenador() ) );
+    $stmt = $this->db->prepare( "INSERT INTO actividad (id_actividad, nombre, descripcion, entrenador) values (?,?,?,?)" );
+   $stmt->execute(array($actividad->getID(), $actividad->getNombre(), $actividad->getDescripcion(), $actividad->getEntrenador() ) );
 
   }
   /**
@@ -49,8 +49,8 @@ class ActividadMapper {
    * @return void
    */
   public function update(Actividad $actividad) {
-    $stmt = $this->db->prepare("UPDATE actividad SET nombre=?, horario=?, descripcion=?, num_plazas=?, entrenador=? WHERE id_actividad=?");
-    $stmt->execute( array( $actividad->getNombre(),$actividad->getHorario(), $actividad->getDescripcion(), $actividad->getNum_plazas(), $actividad->getEntrenador(), $actividad->getId() ) );
+    $stmt = $this->db->prepare("UPDATE actividad SET nombre=?, descripcion=?, entrenador=? WHERE id_actividad=?");
+    $stmt->execute( array( $actividad->getNombre(), $actividad->getDescripcion(), $actividad->getEntrenador(), $actividad->getId() ) );
   }
   /**
    * Loads a User from the database given its id
@@ -66,7 +66,7 @@ class ActividadMapper {
 
     if($actividad != null) {
       $entrenador = new User( $actividad['id_usuario'],NULL,NULL, $actividad['nombre_usuario'] );
-      return new Actividad( $actividad["id_actividad"], $actividad["nombre"], $actividad["horario"], $actividad['descripcion'], $actividad["num_plazas"], $entrenador );
+      return new Actividad( $actividad["id_actividad"], $actividad["nombre"], $actividad['descripcion'], $entrenador );
     } else {
       return NULL;
     }
@@ -84,7 +84,7 @@ class ActividadMapper {
 
     foreach ($actividades_db as $actividad) {
         $entrenador = new User( $actividad['id_usuario'],NULL,NULL, $actividad['nombre_usuario'] );
-      array_push( $actividades, new Actividad( $actividad["id_actividad"], $actividad["nombre"], $actividad["horario"], $actividad['descripcion'], $actividad["num_plazas"], $entrenador ) );
+      array_push( $actividades, new Actividad( $actividad["id_actividad"], $actividad["nombre"], $actividad['descripcion'], $entrenador ) );
     }
 
     return $actividades;

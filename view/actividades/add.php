@@ -22,26 +22,10 @@
     </div>
 
     <div class="form-group">
-      <label><?= i18n("Schedule")?>:</label>
-      <input type="text" class="form-control" name="horario"   value="">
-      <div class="help-block">
-        <?= isset($errors["horario"])?$errors["horario"]:"" ?>
-      </div>
-    </div>
-
-    <div class="form-group">
       <label><?= i18n("Description")?>:</label>
       <input type="text" class="form-control" name="descripcion"   value="">
       <div class="help-block">
         <?= isset($errors["descripcion"])?$errors["descripcion"]:"" ?>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label><?= i18n("Seating Capacity")?>:</label>
-      <input type="text" class="form-control" name="num_plazas"   value="">
-      <div class="help-block">
-        <?= isset($errors["num_plazas"])?$errors["num_plazas"]:"" ?>
       </div>
     </div>
 

@@ -35,8 +35,11 @@
   <table class="table table-striped table-condensed">
       <tr class="info">
         <th><?= i18n("Name")?></th>
+        <th><?= i18n("Schedule")?></th>
         <th><?= i18n("Description")?></th>
+        <th><?= i18n("Seating Capacity")?></th>
         <th><?= i18n("Coach")?></th>
+        <th><?= i18n("Inscription")?></th>
         <?php
           if( $currentusertype == "admin"): ?>
             <th><?= i18n("Management options")?></th>
@@ -50,12 +53,20 @@
           <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getNombre() ) ?></a>
         </td>
         <td>
-          <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getDescripcion() ) ?></a>
+          <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getHorario() ) ?></a>
         </td>
         <td>
-          <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getEntrenador()->getName() ) ?></a>
+          <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getDescripcion() ) ?></a>
         </td>
-
+         <td>
+          <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getNum_plazas() ) ?></a>
+        </td>
+         <td>
+           <a href="index.php?controller=actividades&amp;action=view&amp;id=<?= $actividad->getId() ?>"><?= htmlentities( $actividad->getEntrenador()->getName() ) ?></a>
+         </td>
+         <td>
+           <a href="index.php?controller=actividades&amp;action=inscription&amp;id=<?= $actividad->getId() ?>" class="btn btn-success"><?= i18n("Sign up") ?></a>
+         </td>
         <?php
           if( $currentusertype == "admin"): ?>
             <td>

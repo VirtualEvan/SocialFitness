@@ -5,24 +5,21 @@
  $view = ViewManager::getInstance();
 
  $actividad = $view->getVariable("actividad");
- $users = $view->getVariable("users");
- $selected = $view->getVariable("selected");
+ $reservations = $view->getVariable("reservations");
  $currentuserid = $view->getVariable("currentuserid");
-
-
+ $currentusertype = $view->getVariable("currentusertype");
+ $applys = $view->getVariable("applys");
  $view->setVariable("title", i18n("View activity"));
 
 ?>
-<div class="col-md-12">
+<div class="col-md-6">
 
   <h1><?=i18n("View Activity")?></h1>
 
   <table class="table table-striped table-condensed">
     <tr class="info">
         <th><?= i18n("Name")?></th>
-        <th><?= i18n("Schedule")?></th>
         <th><?= i18n("Description")?></th>
-        <th><?= i18n("Seating Capacity")?></th>
         <th><?= i18n("Coach")?></th>
     </tr>
 
@@ -31,13 +28,7 @@
       <?= htmlentities( $actividad->getNombre() ) ?></a>
     </td>
     <td>
-      <?= htmlentities( $actividad->getHorario() ) ?></a>
-    </td>
-    <td>
       <?= htmlentities( $actividad->getDescripcion() ) ?></a>
-    </td>
-    <td>
-      <?= htmlentities( $actividad->getNum_plazas() ) ?></a>
     </td>
     <td>
       <?= htmlentities( $actividad->getEntrenador()->getName() ) ?></a>
@@ -45,45 +36,66 @@
 
   </tr>
 </table>
+</div>
+<div class="col-md-6">
 
-<h4><?=i18n("Inscribed users")?></h4>
+
+<h1><?=i18n("Reservations")?>
+  <?php
+    if( $currentusertype == "admin"): ?>
+      <a href="index.php?controller=reservations&amp;action=add&amp;id=<?=$actividad->getId()?>" class="btn btn-info"><?= i18n("Add reservation") ?></a>
+  <?php
+    endif
+  ?>
+</h1>
 <table class="table table-striped table-condensed">
   <tr class="info">
-    <th><?= i18n("Name")?></th>
-    <th><?= i18n("Number of exercises")?></th>
-    <th><?= i18n("Type")?></th>
-    <th><?= i18n("Dificulty")?></th>
-    <th><?= i18n("Management options")?></th>
+    <th><?= i18n("Schedule")?></th>
+    <th><?= i18n("Seating Capacity")?></th>
+    <th><?= i18n("Application")?></th>
+    <?php
+      if( $currentusertype == "admin" || $currentusertype == "coach"): ?>
+        <th><?= i18n("Management options")?></th>
+    <?php
+      endif;
+    ?>
   </tr>
 
   <?php
-    foreach ($users as $user):
-      if ( in_array($user->getId(),$selected) ){
+    foreach ($reservations as $reservation):
   ?>
     <tr>
       <td>
-        <a href="index.php?controller=users&amp;action=view&amp;id=<?= $user->getId() ?>"><?= htmlentities( $user->getName() ) ?></a>
+        <?= htmlentities( $reservation->getHorario() ) ?>
       </td>
       <td>
-        <a href="index.php?controller=users&amp;action=view&amp;id=<?= $user->getId() ?>"><?= htmlentities( $user->getEmail() ) ?></a>
-      </td>
-      <td>
-        <a href="index.php?controller=users&amp;action=view&amp;id=<?= $user->getId() ?>"><?= htmlentities( $user->getType() ) ?></a>
-      </td>
-      <td>
-        <a href="index.php?controller=users&amp;action=view&amp;id=<?= $user->getId() ?>"><?= htmlentities( $user->getPhone() ) ?></a>
+        <?= htmlentities( $reservation->getNum_plazas() ) ?>
       </td>
       <td>
         <?php
-          if( ($currentuserid == $actividad->getEntrenador()->getId()) || ($currentuserid == $user->getId() ) ): ?>
-              <a href="index.php?controller=actividades&amp;action=leave&amp;id=<?= $actividad->getId() ?>&amp;user=<?= $user->getId() ?>" class="btn btn-danger"><?= i18n("Leave") ?></a>
+          if(!in_array( $currentuserid, $applys[$reservation->getId()] ) ): ?>
+              <a href="index.php?controller=reservations&amp;action=apply&amp;activity=<?=$actividad->getId()?>&amp;id=<?= $reservation->getId() ?>" class="btn btn-success"><?= i18n("Apply") ?></a>        <?php
+          endif
+        ?>
+
+        <?php
+          if( ($currentuserid == $actividad->getEntrenador()->getId()) || (in_array( $currentuserid, $applys[$reservation->getId()] ) ) ): ?>
+              <a href="index.php?controller=reservations&amp;action=leave&amp;activity=<?=$actividad->getId()?>&amp;id=<?= $reservation->getId() ?>&amp;user=<?= $currentuserid ?>" class="btn btn-danger"><?= i18n("Cancel") ?></a>
         <?php
           endif
         ?>
       </td>
+      <?php
+        if( $currentusertype == "admin" || $currentusertype == "coach"): ?>
+          <td>
+            <a href="index.php?controller=reservations&amp;action=delete&amp;activity=<?=$actividad->getId()?>&amp;id=<?= $reservation->getId() ?>" class="btn btn-danger"><?= i18n("Delete") ?></a>
+            <a href="index.php?controller=reservations&amp;action=edit&amp;activity=<?=$actividad->getId()?>&amp;id=<?= $reservation->getId() ?>" class="btn btn-warning"><?= i18n("Edit") ?></a>
+          </td>
+      <?php
+        endif
+      ?>
     </tr>
   <?php
-    }
     endforeach;
   ?>
 </table>

@@ -44,15 +44,32 @@ DROP TABLE IF EXISTS `social_fitness`.`actividad` ;
 CREATE TABLE IF NOT EXISTS `social_fitness`.`actividad` (
   `id_actividad` INT(5) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(30) NOT NULL,
-  `horario` VARCHAR(45) NOT NULL,
   `descripcion` VARCHAR(200) NOT NULL,
-  `num_plazas` INT(3) NOT NULL,
   `entrenador` INT(5) NULL,
   PRIMARY KEY (`id_actividad`),
   INDEX `fk_actividad_usuario_idx` (`entrenador` ASC),
   CONSTRAINT `fk_actividad_usuario1`
     FOREIGN KEY (`entrenador`)
     REFERENCES `social_fitness`.`usuario` (`id_usuario`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `social_fitness`.`reserva`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `social_fitness`.`reserva` ;
+
+CREATE TABLE IF NOT EXISTS `social_fitness`.`reserva` (
+  `id_reserva` INT(5) NOT NULL AUTO_INCREMENT,
+  `horario` VARCHAR(45) NOT NULL,
+  `num_plazas` INT(3) NOT NULL,
+  `actividad` INT(5) NULL,
+  PRIMARY KEY (`id_reserva`),
+  INDEX `fk_reserva_actividad_idx` (`actividad` ASC),
+  CONSTRAINT `fk_reserva_actividad1`
+    FOREIGN KEY (`actividad`)
+    REFERENCES `social_fitness`.`actividad` (`id_actividad`)
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -204,24 +221,24 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `social_fitness`.`actividad_usuario`
+-- Table `social_fitness`.`reserva_usuario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `social_fitness`.`actividad_usuario` ;
+DROP TABLE IF EXISTS `social_fitness`.`reserva_usuario` ;
 
-CREATE TABLE IF NOT EXISTS `social_fitness`.`actividad_usuario` (
+CREATE TABLE IF NOT EXISTS `social_fitness`.`reserva_usuario` (
   `id_usuario` INT(5) NOT NULL,
-  `id_actividad` INT(5) NOT NULL,
-  PRIMARY KEY (`id_usuario`, `id_actividad`),
-  INDEX `fk_usuario_has_actividad_actividad1_idx` (`id_actividad` ASC),
-  INDEX `fk_usuario_has_actividad_usuario1_idx` (`id_usuario` ASC),
-  CONSTRAINT `fk_usuario_has_actividad_usuario1`
+  `id_reserva` INT(5) NOT NULL,
+  PRIMARY KEY (`id_usuario`, `id_reserva`),
+  INDEX `fk_usuario_has_reserva_reserva1_idx` (`id_reserva` ASC),
+  INDEX `fk_usuario_has_reserva_usuario1_idx` (`id_usuario` ASC),
+  CONSTRAINT `fk_usuario_has_reserva_usuario1`
     FOREIGN KEY (`id_usuario`)
     REFERENCES `social_fitness`.`usuario` (`id_usuario`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_usuario_has_actividad_actividad1`
-    FOREIGN KEY (`id_actividad`)
-    REFERENCES `social_fitness`.`actividad` (`id_actividad`)
+  CONSTRAINT `fk_usuario_has_reserva_reserva1`
+    FOREIGN KEY (`id_reserva`)
+    REFERENCES `social_fitness`.`reserva` (`id_reserva`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -309,18 +326,42 @@ INSERT INTO usuario (id_usuario, tipo, email, nombre_usuario, telefono, contrase
     VALUES (4, 'athlete', 'prueba@prueba.com', 'Usuario de prueba', '666666666','21232f297a57a5a743894a0e4a801fc3');
 
 /* Then insert some activites for testing: */
-INSERT INTO actividad (id_actividad, nombre, horario, descripcion, num_plazas, entrenador)
-    VALUES (1, 'Spinning', 'Lunes 9:00','Dar pedales',20,2);
-INSERT INTO actividad (id_actividad, nombre, horario, descripcion, num_plazas, entrenador)
-    VALUES (2, 'Aerobic', 'Lunes 11:00','Dar saltos',15,2);
-INSERT INTO actividad (id_actividad, nombre, horario, descripcion, num_plazas, entrenador)
-    VALUES (3, 'Escalada', 'Martes 14:00','Ir subiendo',10,2);
-INSERT INTO actividad (id_actividad, nombre, horario, descripcion, num_plazas, entrenador)
-    VALUES (4, 'Entrenamiento total', 'Martes 17:30','Ponerse tocho',15,2);
-INSERT INTO actividad (id_actividad, nombre, horario, descripcion, num_plazas, entrenador)
-    VALUES (5, 'Zumba', 'Miércoles 9:00','Bailar un poco',10,2);
-INSERT INTO actividad (id_actividad, nombre, horario, descripcion, num_plazas, entrenador)
-    VALUES (6, 'Kick boxing', 'Jueves 14:00','Lanzar golpes',5,2);
+INSERT INTO actividad (id_actividad, nombre, descripcion, entrenador)
+    VALUES (1, 'Spinning','Dar pedales',2);
+INSERT INTO actividad (id_actividad, nombre, descripcion, entrenador)
+    VALUES (2, 'Aerobic','Dar saltos',2);
+INSERT INTO actividad (id_actividad, nombre, descripcion, entrenador)
+    VALUES (3, 'Escalada','Ir subiendo',2);
+INSERT INTO actividad (id_actividad, nombre, descripcion, entrenador)
+    VALUES (4, 'Entrenamiento total','Ponerse tocho',2);
+INSERT INTO actividad (id_actividad, nombre, descripcion, entrenador)
+    VALUES (5, 'Zumba','Bailar un poco',2);
+INSERT INTO actividad (id_actividad, nombre, descripcion, entrenador)
+    VALUES (6, 'Kick boxing','Lanzar golpes',2);
+
+/* Then insert some reservations for testing: */
+INSERT INTO reserva (id_reserva, horario, num_plazas, actividad)
+    VALUES (1, '7/2/2017 9:00',20,1);
+INSERT INTO reserva (id_reserva, horario, num_plazas, actividad)
+    VALUES (7, '14/2/2017 9:00',20,1);
+INSERT INTO reserva (id_reserva, horario, num_plazas, actividad)
+    VALUES (8, '21/2/2017 9:00',20,1);
+INSERT INTO reserva (id_reserva, horario, num_plazas, actividad)
+    VALUES (9, '1/3/2017 11:00',15,2);
+INSERT INTO reserva (id_reserva, horario, num_plazas, actividad)
+    VALUES (10, '8/3/2017 11:00',15,2);
+INSERT INTO reserva (id_reserva, horario, num_plazas, actividad)
+    VALUES (11, '15/3/2017',15,2);
+INSERT INTO reserva (id_reserva, horario, num_plazas, actividad)
+    VALUES (2, 'Lunes 11:00',15,2);
+INSERT INTO reserva (id_reserva, horario, num_plazas, actividad)
+    VALUES (3, 'Martes 14:00',10,3);
+INSERT INTO reserva (id_reserva, horario, num_plazas, actividad)
+    VALUES (4, 'Martes 17:30',15,4);
+INSERT INTO reserva (id_reserva, horario, num_plazas, actividad)
+    VALUES (5, 'Miércoles 9:00',10,5);
+INSERT INTO reserva (id_reserva, horario, num_plazas, actividad)
+    VALUES (6, 'Jueves 14:00',5,6);
 
 /* Then insert some machines for testing: */
 INSERT INTO maquina (id_maquina, ubicacion, nombre_maquina)
@@ -400,18 +441,18 @@ INSERT INTO tabla_ejercicios_usuario (id_tabla_ejercicios, id_usuario)
 INSERT INTO tabla_ejercicios_usuario (id_tabla_ejercicios, id_usuario)
     VALUES (3,3);
 
-/* Then insert some relations users_activities for testing: */
-INSERT INTO actividad_usuario (id_usuario, id_actividad)
+/* Then insert some relations users_reservations for testing: */
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
     VALUES (1,3);
-INSERT INTO actividad_usuario (id_usuario, id_actividad)
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
     VALUES (1,6);
-INSERT INTO actividad_usuario (id_usuario, id_actividad)
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
     VALUES (2,2);
-INSERT INTO actividad_usuario (id_usuario, id_actividad)
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
     VALUES (2,5);
-INSERT INTO actividad_usuario (id_usuario, id_actividad)
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
     VALUES (3,1);
-INSERT INTO actividad_usuario (id_usuario, id_actividad)
+INSERT INTO reserva_usuario (id_usuario, id_reserva)
     VALUES (3,4);
 
 /* Then insert some relations machines_activities for testing: */

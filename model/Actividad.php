@@ -20,17 +20,11 @@ class Actividad {
    */
   private $nombre;
 
-  private $horario;
   /**
    * The type of the user
    * @var string
    */
   private $descripcion;
-  /**
-   * The email of the user
-   * @var string
-   */
-  private $num_plazas;
   /**
    * The difficulty of the activity
    * @var string
@@ -44,12 +38,10 @@ class Actividad {
    * @param string $username The name of the user
    * @param string $password The password of the user
    */
-  public function __construct($id=NULL, $nombre=NULL, $horario=NULL, $descripcion=NULL, $num_plazas=NULL,  $entrenador=NULL) {
+  public function __construct($id=NULL, $nombre=NULL, $descripcion=NULL, $entrenador=NULL) {
     $this->id = $id;
     $this->nombre = $nombre;
-    $this->horario = $horario;
     $this->descripcion = $descripcion;
-    $this->num_plazas = $num_plazas;
     $this->entrenador = $entrenador;
 
   }
@@ -79,19 +71,7 @@ class Actividad {
   public function setNombre($nombre) {
     $this->nombre = $nombre;
   }
-  public function getHorario() {
-    return $this->horario;
-  }
-  /**
-  * Sets the name of this activity
-  *
-  * @param string $name The name of this activity
-  * @return void
-  */
-  public function setHorario($horario) {
-    $this->horario = $horario;
-  }
-  /**
+    /**
    * Gets the Type of this activity
    *
    * @return string The Type of this activity
@@ -107,23 +87,6 @@ class Actividad {
    */
   public function setDescripcion($descripcion) {
     $this->descripcion = $descripcion;
-  }
-  /**
-   * Gets the details of this activity
-   *
-   * @return string The details of this activity
-   */
-  public function getNum_plazas() {
-    return $this->num_plazas;
-  }
-  /**
-   * Sets the phone of this user
-   *
-   * @param int $phone The phone of this user
-   * @return void
-   */
-  public function setNum_plazas($num_plazas) {
-    $this->num_plazas = $num_plazas;
   }
   /**
    * Gets the difficulty of this activity
@@ -158,16 +121,8 @@ class Actividad {
       if (strlen($this->nombre) < 2) {
          $errors["nombre"] = "El nombre tiene que tener al menos 2 caracteres";
       }
-      if (strlen($this->horario) < 3) {
-	       $errors["horario"] = "El horario tiene que tener al menos 3 caracteres";
-      }
-      //TODO:Sacar de la base de datos
-
       if (strlen($this->descripcion) < 3 ) {
          $errors["descripcion"] = "La descripcion debe tener  al menos 3 caracteres";
-      }
-       if ( strlen($this->num_plazas) < 1 ) {
-         $errors["num_plazas"] = "Tiene que haber al menos una plaza";
       }
       if ( strlen($this->entrenador) < 1 ) {
         $errors["coach"] = "Tiene que haber al menos un entrenador";
