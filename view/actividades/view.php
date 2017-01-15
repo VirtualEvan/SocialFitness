@@ -42,7 +42,7 @@
 
 <h1><?=i18n("Reservations")?>
   <?php
-    if( $currentusertype == "admin"): ?>
+    if( $currentusertype == "admin" || $currentusertype == "coach" ): ?>
       <a href="index.php?controller=reservations&amp;action=add&amp;id=<?=$actividad->getId()?>" class="btn btn-info"><?= i18n("Add reservation") ?></a>
   <?php
     endif
